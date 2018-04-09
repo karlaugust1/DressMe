@@ -20,12 +20,12 @@ public class EmpresaDAO extends DAO {
 	private String SQL_SELECT = "select e.id, e.cnpj, e.inscricao_estadual, e.razao_social,"
 			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
 			+ "FROM Empresa e INNER JOIN pessoa p ON (e.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
-			+ " WHERE status = true;";
+			+ " WHERE e.status = true;";
 
 	private String SQL_OBTAIN = "select e.id, e.cnpj, e.inscricao_estadual, e.razao_social,"
 			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
 			+ "FROM Empresa e INNER JOIN pessoa p ON (e.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
-			+ " WHERE status = true AND id = ?;";
+			+ " WHERE e.status = true AND e.id = ?;";
 
 	public void insert(Empresa e) {
 
