@@ -2,13 +2,15 @@ package br.com.vsetsistemas.model;
 
 public class Empresa extends Pessoa{
 
+
 	private long cnpj;
 	private String razaoSocial;
 	private long inscricaoEstadual;
 	
+
 	public Empresa(long id, String nome, String rua, int numero, String complemento, long cep, String cidade,
 			String estado, String pais, String email, long cnpj, String razaoSocial, long inscricaoEstadual) {
-	
+		
 		super(id, nome, rua, numero, complemento, cep, cidade, estado, pais, email);
 		
 		this.cnpj = cnpj;
