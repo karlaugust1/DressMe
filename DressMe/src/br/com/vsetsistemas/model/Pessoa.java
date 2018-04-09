@@ -4,27 +4,23 @@ public class Pessoa {
 
 	protected long id;
 	protected String nome;
-	protected String rua;
 	protected int numero;
 	protected String complemento;
 	protected long cep;
 	protected String cidade;
-	protected String estado;
-	protected String pais;
 	protected String email;
+	protected Boolean status;
 	
-	public Pessoa(long id, String nome, String rua, int numero, String complemento, long cep, String cidade,
-			String estado, String pais, String email) {
+	public Pessoa(long id, String nome, int numero, String complemento, long cep, String cidade,
+			String email, Boolean status) {
 		this.id = id;
 		this.nome = nome;
-		this.rua = rua;
 		this.numero = numero;
 		this.complemento = complemento;
 		this.cep = cep;
 		this.cidade = cidade;
-		this.estado = estado;
-		this.pais = pais;
 		this.email = email;
+		this.status = status;
 	}
 
 	public long getId() {
@@ -41,14 +37,6 @@ public class Pessoa {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getRua() {
-		return rua;
-	}
-
-	public void setRua(String rua) {
-		this.rua = rua;
 	}
 
 	public int getNumero() {
@@ -83,28 +71,20 @@ public class Pessoa {
 		this.cidade = cidade;
 	}
 
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public String getPais() {
-		return pais;
-	}
-
-	public void setPais(String pais) {
-		this.pais = pais;
-	}
-
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 	
 	

@@ -1,23 +1,21 @@
 package br.com.vsetsistemas.model;
 
-import java.util.Date;
 
 public class Funcionario extends Pessoa{
 
 	private String login;
 	private String senha;
 	private Cargo cargo;
-	private Date dataNascimento;
+
 	
-	public Funcionario(long id, String nome, String rua, int numero, String complemento, long cep, String cidade,
-			String estado, String pais, String email, String login, String senha, Cargo cargo, Date dataNascimento) {
+	public Funcionario(long id, String nome, int numero, String complemento, long cep, String cidade,
+			String email, String login, String senha, Cargo cargo, Boolean status) {
 		
-		super(id, nome, rua, numero, complemento, cep, cidade, estado, pais, email);
+		super(id, nome, numero, complemento, cep, cidade, email, status);
 		
 		this.login = login;
 		this.senha = senha;
 		this.cargo = cargo;
-		this.dataNascimento = dataNascimento;
 	}
 
 	public String getLogin() {
@@ -43,15 +41,6 @@ public class Funcionario extends Pessoa{
 	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
 	}
-
-	public Date getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
-	
-	
+		
 	
 }

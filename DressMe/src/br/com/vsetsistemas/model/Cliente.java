@@ -12,11 +12,11 @@ public class Cliente extends Pessoa {
 	private String telefoneResidencial;
 	private String telefoneComercial;
 
-	public Cliente(long id, String nome, String rua, int numero, String complemento, long cep, String cidade,
-			String estado, String pais, String email, long cpf, Date dataNascimento, long rg, long inscricaoEstadual,
-			String telefoneCelular, String telefoneResidencial, String telefoneComercial) {
+	public Cliente(long id, String nome, int numero, String complemento, long cep, String cidade,
+			String email, long cpf, Date dataNascimento, long rg, long inscricaoEstadual,
+			String telefoneCelular, String telefoneResidencial, String telefoneComercial, Boolean status) {
 
-		super(id, nome, rua, numero, complemento, cep, cidade, estado, pais, email);
+		super(id, nome, numero, complemento, cep, cidade, email, status);
 
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;

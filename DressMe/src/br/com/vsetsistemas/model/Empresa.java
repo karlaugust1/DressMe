@@ -6,10 +6,10 @@ public class Empresa extends Pessoa{
 	private String razaoSocial;
 	private long inscricaoEstadual;
 	
-	public Empresa(long id, String nome, String rua, int numero, String complemento, long cep, String cidade,
-			String estado, String pais, String email, long cnpj, String razaoSocial, long inscricaoEstadual) {
+	public Empresa(long id, String nome, int numero, String complemento, long cep, String cidade,
+			 String email, long cnpj, String razaoSocial, long inscricaoEstadual, Boolean status) {
 	
-		super(id, nome, rua, numero, complemento, cep, cidade, estado, pais, email);
+		super(id, nome, numero, complemento, cep, cidade, email, status);
 		
 		this.cnpj = cnpj;
 		this.razaoSocial = razaoSocial;
