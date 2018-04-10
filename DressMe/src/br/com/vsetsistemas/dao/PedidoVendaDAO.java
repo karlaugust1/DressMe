@@ -35,6 +35,7 @@ public class PedidoVendaDAO extends DAO {
 			+ " WHERE pv.situacao = true AND pv.id = ?;";
 
 	private String SQL_OBTAIN_Product = "select * from produto_pedidovenda WHERE idpedido = ? AND idproduto = ?;";
+	
 
 	public void insert(PedidoVenda p) {
 		
