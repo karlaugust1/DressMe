@@ -1,27 +1,27 @@
 package br.com.vsetsistemas.model;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class PedidoVenda {
 
 	private long numero;
-	private Orcamento orcamento;
+	private boolean orcamento;
 	private Date dataAbertura;
 	private Date dataFechamento;
 	private Cliente cliente;
 	private CondicaoPagamento condPagamento;
 	private Funcionario vendedor;
 	private List<Produto> listaProduto;
-	private boolean situacao;
+	private String situacao;
 	private double valorTotal;
 	private double valorSubtotal;
 	private double desconto;
-	private boolean status;
+
 	
-	public PedidoVenda(long numero, Orcamento orcamento, Date dataAbertura, Date dataFechamento, Cliente cliente,
-			CondicaoPagamento condPagamento, Funcionario vendedor, List<Produto> listaProduto, boolean situacao,
-			double valorTotal, double valorSubtotal, double desconto, boolean status) {
+	public PedidoVenda(long numero, boolean orcamento, Date dataAbertura, Date dataFechamento, Cliente cliente,
+			CondicaoPagamento condPagamento, Funcionario vendedor, List<Produto> listaProduto, String situacao,
+			double valorTotal, double valorSubtotal, double desconto) {
 		this.numero = numero;
 		this.orcamento = orcamento;
 		this.dataAbertura = dataAbertura;
@@ -34,7 +34,6 @@ public class PedidoVenda {
 		this.valorTotal = valorTotal;
 		this.valorSubtotal = valorSubtotal;
 		this.desconto = desconto;
-		this.status = status;
 	}
 
 	public long getNumero() {
@@ -45,11 +44,11 @@ public class PedidoVenda {
 		this.numero = numero;
 	}
 
-	public Orcamento getOrcamento() {
+	public Boolean isOrcamento() {
 		return orcamento;
 	}
 
-	public void setOrcamento(Orcamento orcamento) {
+	public void setOrcamento(Boolean orcamento) {
 		this.orcamento = orcamento;
 	}
 
@@ -101,11 +100,11 @@ public class PedidoVenda {
 		this.listaProduto = listaProduto;
 	}
 
-	public boolean isSituacao() {
+	public String getSituacao() {
 		return situacao;
 	}
 
-	public void setSituacao(boolean situacao) {
+	public void setSituacao(String situacao) {
 		this.situacao = situacao;
 	}
 
@@ -133,13 +132,6 @@ public class PedidoVenda {
 		this.desconto = desconto;
 	}
 
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
 	
 	
 	
