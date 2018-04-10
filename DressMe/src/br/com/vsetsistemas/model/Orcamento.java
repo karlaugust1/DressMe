@@ -1,6 +1,6 @@
 package br.com.vsetsistemas.model;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class Orcamento {
