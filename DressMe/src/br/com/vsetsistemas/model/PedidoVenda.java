@@ -17,11 +17,12 @@ public class PedidoVenda {
 	private double valorTotal;
 	private double valorSubtotal;
 	private double desconto;
+	private boolean status;
 
 	
 	public PedidoVenda(long numero, boolean orcamento, Date dataAbertura, Date dataFechamento, Cliente cliente,
 			CondicaoPagamento condPagamento, Funcionario vendedor, List<Produto> listaProduto, String situacao,
-			double valorTotal, double valorSubtotal, double desconto) {
+			double valorTotal, double valorSubtotal, double desconto, boolean status) {
 		this.numero = numero;
 		this.orcamento = orcamento;
 		this.dataAbertura = dataAbertura;
@@ -34,6 +35,7 @@ public class PedidoVenda {
 		this.valorTotal = valorTotal;
 		this.valorSubtotal = valorSubtotal;
 		this.desconto = desconto;
+		this.status = status;
 	}
 
 	public long getNumero() {
@@ -132,7 +134,9 @@ public class PedidoVenda {
 		this.desconto = desconto;
 	}
 
-	
-	
+	public boolean isStatus() {
+		return status;
+	}
+
 	
 }

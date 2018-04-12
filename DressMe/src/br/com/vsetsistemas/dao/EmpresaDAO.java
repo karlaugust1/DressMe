@@ -26,6 +26,11 @@ public class EmpresaDAO extends DAO {
 			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
 			+ "FROM Empresa e INNER JOIN pessoa p ON (e.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
 			+ " WHERE e.status = true AND e.id = ?;";
+	
+	private String SQL_OBTAIN_BY_CNPJ = "SELECT e.id, e.cnpj, e.inscricao_estadual, e.razao_social,"
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
+			+ "FROM Empresa e INNER JOIN pessoa p ON (e.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
+			+ " WHERE e.status = true AND e.cnpj = ?;";
 
 	public void insert(Empresa e) {
 
@@ -176,6 +181,37 @@ public class EmpresaDAO extends DAO {
 		}
 
 		return re;
+	}
+	
+	public Empresa obtainByCnpj(long l) {
+		
+		Empresa e = null;
+		
+		try {
+			conectar();
+			
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_CNPJ);
+			ps.setLong(1, l);;
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Empresa e1 = new Empresa(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
+						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
+						rs.getLong("cnpj"), rs.getString("razaoSocial"), rs.getLong("inscricaoEstadual"),
+						rs.getBoolean("status"));
+				
+				if(e1 != null) {
+					e = e1;
+					break;
+				}
+				
+			}
+			desconectar();
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		return e;
 	}
 
 }
