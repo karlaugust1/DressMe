@@ -10,6 +10,8 @@ import br.com.vsetsistemas.model.Fornecedor;
 public class FornecedorDAO extends DAO {
 
 	private String SQL_OBTAIN = "SELECT * FROM fornecedor WHERE id=?;";
+	
+	private String SQL_OBTAIN_BY_ID = "SELECT * FROM fornecedor WHERE id = ?";
 
 	private String SQL_SELECT = "SELECT * FROM fornecedor;";
 
@@ -39,6 +41,28 @@ public class FornecedorDAO extends DAO {
 		}
 		return reF;
 
+	}
+	
+	public Fornecedor obtainById(int i) {
+		Fornecedor f = null;
+		try {
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_ID);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Fornecedor newF = new Fornecedor(rs.getLong("id"), rs.getLong("cnpj"), rs.getString("razao_social"));
+				
+				if(newF != null) {
+					f = newF;
+					break;
+				}
+			}
+			desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return f;
 	}
 
 	public List<Fornecedor> select() {

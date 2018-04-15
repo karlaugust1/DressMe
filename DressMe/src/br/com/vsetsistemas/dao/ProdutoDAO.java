@@ -22,6 +22,7 @@ public class ProdutoDAO extends DAO {
 	private String SQL_SELECT = "select * from produto WHERE status = true;";
 
 	private String SQL_OBTAIN = "select * from produto WHERE status = true AND id = ?;";
+	private String SQL_OBTAIN_BY_ID = "SELECT * FROM produto WHERE status = true AND id = ?;";
 
 	public void insert(Produto p) {
 
@@ -140,8 +141,9 @@ public class ProdutoDAO extends DAO {
 			 * genero, String tamanho, String cor, double preco, Categoria categoria,
 			 * Fornecedor fornecedor
 			 */
-			
-			//falar com ally sobre categoria e fornecedor (como fazer se for assim ou mudar);
+
+			// falar com ally sobre categoria e fornecedor (como fazer se for assim ou
+			// mudar);
 			while (rs.next()) {
 				Produto p = new Produto(rs.getLong("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
@@ -187,6 +189,36 @@ public class ProdutoDAO extends DAO {
 		}
 
 		return rp;
+	}
+
+	public Produto obtainById(int i) {
+
+		Produto p = null;
+		try {
+			conectar();
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_ID);
+			ps.setInt(1, i);
+			ResultSet rs = ps.executeQuery();
+			
+			Categoria c = new CategoriaDAO().obtainById(rs.getInt("categoria"));
+			Fornecedor f = new FornecedorDAO().obtainById(rs.getInt(rs.getInt("fornecedor")));
+
+			while (rs.next()) {
+				Produto newP = new Produto(rs.getLong("id"), rs.getLong("ean"), rs.getString("descricao"),
+						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
+						rs.getString("cor"), rs.getDouble("preco"), c, f);
+				if (newP != null) {
+					p = newP;
+					break;
+				}
+			}
+			desconectar();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return p;
 	}
 
 }
