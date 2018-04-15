@@ -2,6 +2,7 @@ package br.com.vsetsistemas.model;
 
 public class Empresa extends Pessoa{
 
+
 	private long cnpj;
 	private String razaoSocial;
 	private long inscricaoEstadual;
@@ -10,7 +11,6 @@ public class Empresa extends Pessoa{
 			 String email, long cnpj, String razaoSocial, long inscricaoEstadual, Boolean status) {
 	
 		super(id, nome, numero, complemento, cep, cidade, email, status);
-		
 		this.cnpj = cnpj;
 		this.razaoSocial = razaoSocial;
 		this.inscricaoEstadual = inscricaoEstadual;

@@ -23,6 +23,10 @@ public class Pessoa {
 		this.status = status;
 	}
 
+	public Pessoa() {
+
+	}
+
 	public long getId() {
 		return id;
 	}
