@@ -26,6 +26,11 @@ public class ClienteDAO extends DAO {
 			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
 			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
 			+ " WHERE c.status = true AND c.id = ?;";
+	
+	private String SQL_OBTAIN_BY_CPF = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.Cpf"
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
+			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
+			+ " WHERE c.status = true AND c.cpf = ?;";
 
 	public void insert(Cliente c) {
 
@@ -190,6 +195,38 @@ public class ClienteDAO extends DAO {
 		}
 
 		return rc;
+	}
+	
+	public Cliente obtainByCpf(long l) {
+		
+		Cliente c = null;
+		
+		try {
+			conectar();
+			
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_CPF);
+			ps.setLong(1, l);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				Cliente c1 = new Cliente(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
+						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
+						rs.getLong("cpf"), rs.getDate("data_nascimento"), rs.getLong("rg"),
+						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
+						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
+						rs.getBoolean("status"));
+				
+				if(c1!=null) {
+					c=c1;
+					break;
+				}
+			}
+			
+			desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return c;
 	}
 
 }

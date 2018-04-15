@@ -1,0 +1,35 @@
+package br.com.vsetsistemas.session;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.vsetsistemas.dao.CondicaoPagamentoDAO;
+import br.com.vsetsistemas.model.CondicaoPagamento;
+
+public class CondicaoPagamentoSession {
+
+	private CondicaoPagamentoDAO dao;
+	
+	public CondicaoPagamento obtainCondicaoPagamento(CondicaoPagamento p) {
+		
+		CondicaoPagamento cp = null;
+		try {
+			cp = dao.obtain(p);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cp;
+	}
+	
+	public List<CondicaoPagamento> listAll(){
+		List<CondicaoPagamento> l = new ArrayList<>();
+		try {
+			l = dao.select();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return l;
+		
+	}
+}

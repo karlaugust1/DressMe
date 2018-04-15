@@ -66,4 +66,5 @@ public class PedidoVendaDAO extends DAO {
 		}
 
 	}
+
 }
