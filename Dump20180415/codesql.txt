@@ -1,0 +1,298 @@
+create database VSetManagerDB;  
+use VSetManagerDB;
+
+select * from log_logradouro where cep = 85803780;
+
+create table pessoa(
+id bigint not null primary key auto_increment,
+cep varchar(16) not null,
+numero int,
+complemento varchar(40),
+email varchar(45),
+nome varchar(45),
+cidade varchar(45),
+
+foreign key (cep) references log_logradouro(cep)
+);
+
+
+
+
+create table funcionario(
+id bigint not null primary key,
+login varchar(45) not null unique,
+senha varchar(100) not null,
+cargo bigint not null,
+
+foreign key (id) references pessoa(id),
+foreign key (cargo) references cargo(id)
+);
+
+
+create table Cargo(
+id bigint not null,
+descricao varchar(40) not null
+);
+
+alter table funcionario
+add constraint fk_cargo foreign key (cargo) references Cargo(id);
+
+alter table Cargo
+add constraint pk_cargo primary key (id);
+
+alter table cargo
+add column status boolean not null;
+
+create table permissao(
+id bigint not null primary key,
+descricao varchar(40) not null);
+
+create table funcionario_permissao(
+id_funcionario bigint not null,
+id_permissao bigint not null,
+
+foreign key (id_funcionario) references funcionario(id),
+foreign key (id_permissao) references permissao(id),
+
+primary key (id_funcionario, id_permissao)
+);
+
+create table empresa (
+id bigint not null primary key,
+cnpj bigint not null,
+razao_social varchar(60) not null,
+inscricao_estadual bigint,
+
+foreign key (id) references pessoa(id)
+);
+
+create table Cliente (
+id bigint not null primary key,
+data_nascimento date not null,
+rg bigint not null,
+inscricao_estadual bigint,
+telefoneCelular varchar(16),
+telefoneResidencial varchar(16),
+telefoneComercial varchar(16),
+
+foreign key (id) references pessoa(id)
+);
+
+create table condicao_pagamento(
+id int not null,
+descricao varchar(20) not null
+);
+
+alter table condicao_pagamento
+modify id int not null primary key;
+
+
+create table Orcamento (
+numero bigint not null primary key,
+dataAbertura datetime not null,
+dataFechamento datetime,
+reservaEstoque boolean not null,
+cliente bigint,
+condPag int not null,
+vendedor bigint not null,
+situacao boolean not null,
+valorTotal double not null,
+valorSubtotal double not null,
+desconto double,
+
+foreign key (condPag) references condicao_pagamento(id),
+foreign key (cliente) references cliente(id),
+foreign key (vendedor) references funcionario(id)
+);
+
+alter table NotaFiscal
+add status boolean not null;
+
+create table notafiscal (
+numero bigint not null primary key,
+serie int not null,
+chave_de_acesso bigint not null,
+data_emissao datetime not null,
+data_entrada_saida datetime not null,
+condpag int not null,
+pedidovenda bigint not null,
+empresa bigint not null,
+
+
+foreign key (condpag) references condicao_pagamento(id),
+foreign key (pedidovenda) references pedidovenda(numero),
+foreign key (empresa) references empresa(id)
+);
+
+
+/*CREATE TABLE vsetmanagerdb.log_bairro SELECT * FROM brasildb.log_bairro
+CREATE TABLE vsetmanagerdb.log_controle SELECT * FROM brasildb.log_controle;
+CREATE TABLE vsetmanagerdb.log_cpc SELECT * FROM brasildb.log_cpc;
+CREATE TABLE vsetmanagerdb.log_faixa_bairro SELECT * FROM brasildb.log_faixa_bairro;
+CREATE TABLE vsetmanagerdb.log_faixa_cpc SELECT * FROM brasildb.log_faixa_cpc;
+CREATE TABLE vsetmanagerdb.log_faixa_localidade SELECT * FROM brasildb.log_faixa_localidade;
+
+CREATE TABLE vsetmanagerdb.log_faixa_uop SELECT * FROM brasildb.log_faixa_uop;
+CREATE TABLE vsetmanagerdb.log_grande_usuario SELECT * FROM brasildb.log_grande_usuario;
+CREATE TABLE vsetmanagerdb.log_localidade SELECT * FROM brasildb.log_localidade;
+*/
+
+/*CREATE TABLE vsetmanagerdb.log_faixa_uf SELECT * FROM brasildb.log_faixa_uf;
+CREATE TABLE vsetmanagerdb.log_logradouro SELECT * FROM brasildb.log_logradouro;
+*/
+/*CREATE TABLE vsetmanagerdb.log_tipo_logr SELECT * FROM brasildb.log_tipo_logr;
+CREATE TABLE vsetmanagerdb.log_unid_oper SELECT * FROM brasildb.log_unid_oper;
+*/
+
+/*drop table log_bairro,log_controle,log_cpc,log_faixa_bairro,log_faixa_cpc,log_faixa_localidade,log_faixa_uf,log_faixa_uop,log_grande_usuario,log_localidade;
+drop table log_tipo_logr,log_unid_oper;*/
+
+/*
+alter table log_logradouro
+modify cep varchar(16) primary key;
+
+alter table log_faixa_uf
+modify ufe_sg varchar(2) primary key;
+
+alter table log_logradouro
+add constraint fk_uf foreign key (ufe_sg) references log_faixa_uf(ufe_sg);
+*/
+
+create table produto
+(id int not null primary key,
+ean bigint,
+descricao varchar(45)
+);
+
+create table inventario
+(
+id_produto int not null primary key,
+quantidade int not null,
+
+foreign key (id_produto) references produto(id)
+
+);
+
+alter table produto
+add fornecedor int;
+
+create table produto_pedidovenda
+(
+
+idpedido bigint not null,
+idproduto int not null,
+quantidade int not null,
+desconto double not null,
+subtotal double not null,
+vunitario double not null,
+
+foreign key (idpedido) references pedidovenda(numero),
+foreign key (idproduto) references produto(id),
+primary key(idpedido,idproduto)
+);
+
+
+create table produto_notafiscal
+(
+numeronota bigint not null,
+idproduto int not null,
+quantidade int not null,
+desconto double not null,
+subtotal double not null,
+vunitario double not null,
+
+foreign key (numeronota) references notafiscal(numero),
+foreign key (idproduto) references produto(id),
+primary key(numeronota,idproduto)
+);
+
+create table campanha(
+id int not null primary key,
+descricao varchar(45) not null,
+cupom varchar(20) not null,
+desconto double not null
+);
+
+
+create table PedidoVenda (
+
+numero bigint not null primary key,
+orcamento boolean not null,
+dataAbertura datetime not null,
+dataFechamento datetime,
+cliente bigint not null,
+condPag int not null,
+vendedor bigint not null,
+situacao boolean not null,
+valorTotal double not null,
+valorSubtotal double not null,
+desconto double,
+
+foreign key (condPag) references condicao_pagamento(id) ON UPDATE CASCADE,
+foreign key (cliente) references cliente(id) on update cascade,
+foreign key (vendedor) references funcionario(id) on update cascade
+);	
+
+
+drop table Orcamento;
+drop table pedidovenda;
+drop table produto_pedidovenda;
+drop table produto_notafiscal;
+drop table notafiscal;
+
+
+create table fornecedor (
+id bigint not null primary key,
+cnpj bigint not null,
+razao_social varchar(60) not null,
+
+foreign key (id) references pessoa(id)
+);
+
+create table categoria (
+id bigint not null primary key,
+descricao varchar(40) not null
+);
+
+alter table produto
+add constraint fk_cat foreign key (categoria) references categoria(id);
+
+alter table pedidovenda
+drop column status;
+
+SELECT * FROM log_logradouro WHERE cep=85803780;
+
+alter table cliente
+drop column cpf;
+
+alter table cliente
+add cpfcnpj varchar(14) not null;
+
+alter table cliente
+add juridico boolean not null;
+
+use vsetmanagerdb;
+
+alter table produto_pedidovenda
+add iditem bigint not null;
+
+/*private int id;
+	private Date dataVencimento;
+	private Date dataPagamento;
+	private String status;
+	private CondicaoPagamento condPagamento;
+	private int numeroParcela;*/
+    
+create table pagamento(
+
+id int not null primary key,
+data_vencimento date not null,
+data_pagamento date,
+status varchar(20) not null,
+condpag int not null,
+numero_parcela int not null,
+numero_nota bigint not null,
+
+foreign key (numero_nota) REFERENCES notafiscal(numero));
+    
+    
