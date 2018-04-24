@@ -40,7 +40,7 @@ public class ProdutoDAO extends DAO {
 			ps.setDouble(8, p.getPreco());
 
 			PreparedStatement newPs = db.getConnection().prepareStatement(SQL_INSERT_CATEGORIA);
-			newPs.setInt(1, p.getCategoria().getId());
+			newPs.setLong(1, p.getCategoria().getId());
 			newPs.setLong(2, p.getId());
 
 			PreparedStatement newPs2 = db.getConnection().prepareStatement(SQL_INSERT_FORNECEDOR);

@@ -52,7 +52,7 @@ public class CategoriaDAO extends DAO {
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN);
-			ps.setInt(1, c.getId());
+			ps.setLong(1, c.getId());
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {

@@ -8,9 +8,10 @@ import br.com.vsetsistemas.model.Cargo;
 
 public class CargoSession {
 
-	private CargoDAO dao;
+	private CargoDAO dao = new CargoDAO();
 	
 	public void insertCargo(Cargo c) {
+		
 		try {
 			dao.insert(c);
 		} catch (Exception e) {

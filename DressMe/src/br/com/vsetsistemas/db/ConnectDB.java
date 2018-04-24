@@ -13,9 +13,9 @@ public class ConnectDB {
 	
 	public ConnectDB(){
 		driver = "com.mysql.jdbc.Driver";
-		url = "jdbc:mysql://localhost:3306/VSetManagerDB?autoReconnect=true&useSSL=false";
+		url = "jdbc:mysql://localhost:3306/dressme?autoReconnect=true&useSSL=false";
 		username = "root";
-		password = "v1v14nj4m3sm41w41fu";
+		password = "87009008Karl1";
 	}
 	
 	public Connection getConnection() throws IOException, ClassNotFoundException, SQLException{
