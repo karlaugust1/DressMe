@@ -8,7 +8,7 @@ import br.com.vsetsistemas.model.Fornecedor;
 
 public class FornecedorSession {
 
-	private FornecedorDAO dao;
+	private FornecedorDAO dao = new FornecedorDAO();
 	
 	public Fornecedor obtainFornecedor(Fornecedor f) {
 		

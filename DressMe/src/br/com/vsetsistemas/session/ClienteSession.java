@@ -8,7 +8,7 @@ import br.com.vsetsistemas.model.Cliente;
 
 public class ClienteSession {
 
-	private ClienteDAO dao;
+	private ClienteDAO dao = new ClienteDAO();
 		
 	public void updateCliente(Cliente c) {
 		

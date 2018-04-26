@@ -5,7 +5,7 @@ import br.com.vsetsistemas.model.Pagamento;
 
 public class PagamentoSession {
 
-	private PagamentoDAO dao;
+	private PagamentoDAO dao = new PagamentoDAO();
 	
 	public void insertPagamento(Pagamento p) {
 		

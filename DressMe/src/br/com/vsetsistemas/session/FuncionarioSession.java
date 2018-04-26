@@ -8,7 +8,7 @@ import br.com.vsetsistemas.model.Funcionario;
 
 public class FuncionarioSession {
 
-	private FuncionarioDAO dao;
+	private FuncionarioDAO dao = new FuncionarioDAO();
 
 	public void insertFuncionario(Funcionario f) {
 

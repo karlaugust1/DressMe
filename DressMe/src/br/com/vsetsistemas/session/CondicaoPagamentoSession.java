@@ -8,7 +8,7 @@ import br.com.vsetsistemas.model.CondicaoPagamento;
 
 public class CondicaoPagamentoSession {
 
-	private CondicaoPagamentoDAO dao;
+	private CondicaoPagamentoDAO dao = new CondicaoPagamentoDAO();
 	
 	public CondicaoPagamento obtainCondicaoPagamento(CondicaoPagamento p) {
 		
