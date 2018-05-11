@@ -2,14 +2,15 @@ package br.com.vsetsistemas.model;
 
 public class Item {
 
-	private int id;
+	private long id;
 	private Produto produto;
 	private int quantidade;
 	private double desconto;
 	private double subtotal;
 	private double valorUnitario;
+	private PedidoVenda pedido;
 	
-	public Item(int id, Produto produto, int quantidade, double desconto, double subtotal, double valorUnitario) {
+	public Item(long id, Produto produto, int quantidade, double desconto, double subtotal, double valorUnitario, PedidoVenda pedido) {
 		
 		this.id = id;
 		this.produto = produto;
@@ -17,15 +18,12 @@ public class Item {
 		this.desconto = desconto;
 		this.subtotal = subtotal;
 		this.valorUnitario = valorUnitario;
+		this.pedido = pedido;
 	}
-	
-	public Item() {	
-	}
-	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public Produto getProduto() {
@@ -58,7 +56,11 @@ public class Item {
 	public void setValorUnitario(double valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
-	
-	
+	public PedidoVenda getPedido() {
+		return pedido;
+	}
+	public void setPedido(PedidoVenda pedido) {
+		this.pedido = pedido;
+	}
 	
 }

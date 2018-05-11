@@ -12,7 +12,7 @@ public class PedidoVenda {
 	private Cliente cliente;
 	private CondicaoPagamento condPagamento;
 	private Funcionario vendedor;
-	private List<Produto> listaProduto;
+	private List<Item> listaProduto;
 	private String situacao;
 	private double valorTotal;
 	private double valorSubtotal;
@@ -21,8 +21,9 @@ public class PedidoVenda {
 
 	
 	public PedidoVenda(long numero, boolean orcamento, Date dataAbertura, Date dataFechamento, Cliente cliente,
-			CondicaoPagamento condPagamento, Funcionario vendedor, List<Produto> listaProduto, String situacao,
+			CondicaoPagamento condPagamento, Funcionario vendedor, List<Item> listaProduto, String situacao,
 			double valorTotal, double valorSubtotal, double desconto, boolean status) {
+		
 		this.numero = numero;
 		this.orcamento = orcamento;
 		this.dataAbertura = dataAbertura;
@@ -36,6 +37,10 @@ public class PedidoVenda {
 		this.valorSubtotal = valorSubtotal;
 		this.desconto = desconto;
 		this.status = status;
+	}
+
+	public PedidoVenda() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public long getNumero() {
@@ -94,11 +99,11 @@ public class PedidoVenda {
 		this.vendedor = vendedor;
 	}
 
-	public List<Produto> getListaProduto() {
+	public List<Item> getListaProduto() {
 		return listaProduto;
 	}
 
-	public void setListaProduto(List<Produto> listaProduto) {
+	public void setListaProduto(List<Item> listaProduto) {
 		this.listaProduto = listaProduto;
 	}
 
@@ -136,6 +141,14 @@ public class PedidoVenda {
 
 	public boolean isStatus() {
 		return status;
+	}
+
+	public void setOrcamento(boolean orcamento) {
+		this.orcamento = orcamento;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	

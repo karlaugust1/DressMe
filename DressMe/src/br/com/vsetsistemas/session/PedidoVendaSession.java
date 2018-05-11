@@ -9,7 +9,7 @@ import br.com.vsetsistemas.model.Produto;
 
 public class PedidoVendaSession {
 
-	private PedidoVendaDAO dao;
+	private PedidoVendaDAO dao = new PedidoVendaDAO();
 	
 	public void insertPedidoVenda(PedidoVenda pv) {
 		

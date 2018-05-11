@@ -8,7 +8,7 @@ import br.com.vsetsistemas.model.Produto;
 
 public class ProdutoSession {
 
-	private ProdutoDAO dao;
+	private ProdutoDAO dao = new ProdutoDAO();
 	
 	public Produto obtain(Produto p) {
 		Produto retp = null;

@@ -8,7 +8,7 @@ import br.com.vsetsistemas.model.Categoria;
 
 public class CategoriaSession {
 
-	private CategoriaDAO dao;
+	private CategoriaDAO dao = new CategoriaDAO();
 	
 	public Categoria obtainCategoria(Categoria c) {
 		

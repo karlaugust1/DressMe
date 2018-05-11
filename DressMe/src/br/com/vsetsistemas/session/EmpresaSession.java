@@ -8,7 +8,7 @@ import br.com.vsetsistemas.model.Empresa;
 
 public class EmpresaSession {
 
-	private EmpresaDAO dao;
+	private EmpresaDAO dao = new EmpresaDAO();
 	
 	public void updateEmpresa(Empresa e) {
 		

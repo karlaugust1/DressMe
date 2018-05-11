@@ -7,7 +7,7 @@ import br.com.vsetsistemas.model.Permissao;
 
 public class PermissaoSession {
 	
-	private PermissaoDAO dao;
+	private PermissaoDAO dao = new PermissaoDAO();
 	
 	public List<Permissao> listAll(){
 		

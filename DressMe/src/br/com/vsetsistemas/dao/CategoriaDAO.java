@@ -9,6 +9,7 @@ import br.com.vsetsistemas.model.Categoria;
 
 public class CategoriaDAO extends DAO {
 
+	@SuppressWarnings("unused")
 	private String SQL_INSERT = "INSERT INTO Categoria (id, descricao) values (?, ?);";
 
 	private String SQL_OBTAIN = "SELECT * FROM Categoria WHERE id = ?";
@@ -52,7 +53,7 @@ public class CategoriaDAO extends DAO {
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN);
-			ps.setInt(1, c.getId());
+			ps.setLong(1, c.getId());
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {

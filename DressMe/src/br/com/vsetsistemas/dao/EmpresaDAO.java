@@ -28,7 +28,7 @@ public class EmpresaDAO extends DAO {
 			+ " WHERE e.status = true AND e.id = ?;";
 	
 	private String SQL_OBTAIN_BY_CNPJ = "SELECT e.id, e.cnpj, e.inscricao_estadual, e.razao_social,"
-			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome;"
 			+ "FROM Empresa e INNER JOIN pessoa p ON (e.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
 			+ " WHERE e.status = true AND e.cnpj = ?;";
 

@@ -27,6 +27,10 @@ public class Cliente extends Pessoa {
 		this.telefoneComercial = telefoneComercial;
 	}
 
+	public Cliente() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public long getCpf() {
 		return cpf;
 	}
