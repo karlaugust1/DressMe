@@ -6,6 +6,7 @@ import br.com.vsetsistemas.model.PedidoVenda;
 
 public class NotaFiscalSession {
 
+	@SuppressWarnings("unused")
 	private NotaFiscalDAO dao = new NotaFiscalDAO();
 	
 	//ver com o professor

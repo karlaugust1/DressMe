@@ -9,6 +9,7 @@ import br.com.vsetsistemas.model.Categoria;
 
 public class CategoriaDAO extends DAO {
 
+	@SuppressWarnings("unused")
 	private String SQL_INSERT = "INSERT INTO Categoria (id, descricao) values (?, ?);";
 
 	private String SQL_OBTAIN = "SELECT * FROM Categoria WHERE id = ?";

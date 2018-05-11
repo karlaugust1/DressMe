@@ -10,7 +10,6 @@ import br.com.vsetsistemas.model.CondicaoPagamento;
 import br.com.vsetsistemas.model.Funcionario;
 import br.com.vsetsistemas.model.Item;
 import br.com.vsetsistemas.model.PedidoVenda;
-import br.com.vsetsistemas.model.Produto;
 
 public class PedidoVendaDAO extends DAO {
 
@@ -273,7 +272,7 @@ public class PedidoVendaDAO extends DAO {
 			while (rs.next()) {
 				
 				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"),rs.getBoolean("orcamento"),rs.getDate("dataabertura"),
-						rs.getDate("datafechamento"),c,cp,f,selectProduct(),rs.getString("status"),rs.getDouble("valortotal"),rs.getDouble("valorsubtotal"),rs.getDouble("desconto"));
+						rs.getDate("datafechamento"),c,cp,f,selectProduct(),rs.getString("status"),rs.getDouble("valortotal"),rs.getDouble("valorsubtotal"),rs.getDouble("desconto"), rs.getBoolean("status"));
 				l.add(pv);
 			}
 			
@@ -291,7 +290,7 @@ public class PedidoVendaDAO extends DAO {
 	public List<Item> selectProduct() {
 
 		List<Item> l = new ArrayList<Item>();
-		ProdutoDAO pdao = new ProdutoDAO();
+		
 		
 		//select * from produto_pedidovenda WHERE idorcamento = ?;
 		
@@ -361,7 +360,7 @@ public class PedidoVendaDAO extends DAO {
 			while (rs.next()) {
 				
 				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"),rs.getBoolean("orcamento"),rs.getDate("dataabertura"),
-						rs.getDate("datafechamento"),c,cp,f,selectProduct(),rs.getString("status"),rs.getDouble("valortotal"),rs.getDouble("valorsubtotal"),rs.getDouble("desconto"));
+						rs.getDate("datafechamento"),c,cp,f,selectProduct(),rs.getString("status"),rs.getDouble("valortotal"),rs.getDouble("valorsubtotal"),rs.getDouble("desconto"), rs.getBoolean("status"));
 				rpv = pv;
 				break;
 			}
@@ -381,7 +380,7 @@ public class PedidoVendaDAO extends DAO {
 
 		Item ri = null;
 		
-ProdutoDAO pdao = new ProdutoDAO();
+
 		
 		//"select * from produto_pedidovenda WHERE idpedido = ? AND idproduto = ?;"
 		

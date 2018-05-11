@@ -22,7 +22,7 @@ public class PedidoVenda {
 	
 	public PedidoVenda(long numero, boolean orcamento, Date dataAbertura, Date dataFechamento, Cliente cliente,
 			CondicaoPagamento condPagamento, Funcionario vendedor, List<Item> listaProduto, String situacao,
-			double valorTotal, double valorSubtotal, double desconto) {
+			double valorTotal, double valorSubtotal, double desconto, boolean status) {
 		
 		this.numero = numero;
 		this.orcamento = orcamento;
@@ -141,6 +141,14 @@ public class PedidoVenda {
 
 	public boolean isStatus() {
 		return status;
+	}
+
+	public void setOrcamento(boolean orcamento) {
+		this.orcamento = orcamento;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	
