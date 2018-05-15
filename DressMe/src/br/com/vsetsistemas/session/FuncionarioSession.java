@@ -74,8 +74,10 @@ public class FuncionarioSession {
 	
 	public boolean authenticateFuncionario(Funcionario f) {
 		
+		
+		
 		boolean retorno = false;
-		Funcionario newF = dao.obtain(f);
+		Funcionario newF = dao.obtainByEmail("karl-august2011@hotmail.com");
 		if(f.getEmail().equals(newF.getEmail()) && f.getSenha().equals(newF.getSenha())) {
 			retorno = true;
 		}

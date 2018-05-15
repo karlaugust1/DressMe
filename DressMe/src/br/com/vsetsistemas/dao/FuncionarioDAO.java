@@ -20,13 +20,18 @@ public class FuncionarioDAO extends DAO {
 
 	private String SQL_SELECT = "select f.id, f.login, f.senha, f.cargo,"
 			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
-			+ "FROM Funcionario f INNER JOIN pessoa p ON (f.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
-			+ " WHERE f.status = true;";
+			+ "FROM Funcionario f INNER JOIN pessoa p ON (f.id = p.id)"
+			+ " INNER JOIN log_logradouro l ON (p.cep = l.cep)" + " WHERE f.status = true;";
 
 	private String SQL_OBTAIN = "select f.id, f.login, f.senha, f.cargo,"
-			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
-			+ "FROM Funcionario f INNER JOIN pessoa p ON (f.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
-			+ " WHERE f.status = true AND f.id = ?;";
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade,p.status, " + "l.ufe_sg, l.log_nome "
+			+ "FROM Funcionario f INNER JOIN pessoa p ON (f.id = p.id)"
+			+ " INNER JOIN log_logradouro l ON (p.cep = l.cep)" + " WHERE f.status = true AND f.id = ?;";
+
+	private String SQL_OBTAIN_BY_EMAIL = "select f.id, f.login, f.senha, f.cargo,"
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade,p.status, " + "l.ufe_sg, l.log_nome "
+			+ "FROM Funcionario f INNER JOIN pessoa p ON (f.id = p.id)"
+			+ " INNER JOIN log_logradouro l ON (p.cep = l.cep)" + " WHERE p.status = true AND p.email = ?;";
 
 	public void insert(Funcionario f) {
 
@@ -38,7 +43,7 @@ public class FuncionarioDAO extends DAO {
 			ps.setString(2, f.getLogin());
 			ps.setString(3, f.getSenha());
 			ps.setLong(4, f.getCargo().getId());
-			
+
 			ps.setLong(5, f.getId());
 			ps.setLong(6, f.getCep());
 			ps.setInt(7, f.getNumero());
@@ -71,7 +76,7 @@ public class FuncionarioDAO extends DAO {
 			ps.setString(2, f.getSenha());
 			ps.setLong(3, f.getCargo().getId());
 			ps.setLong(4, f.getId());
-			
+
 			ps.setLong(5, f.getCep());
 			ps.setInt(6, f.getNumero());
 			ps.setString(7, f.getComplemento());
@@ -80,7 +85,7 @@ public class FuncionarioDAO extends DAO {
 			ps.setString(10, f.getCidade());
 			ps.setBoolean(11, f.isStatus());
 			ps.setLong(12, f.getId());
-			
+
 			ps.executeUpdate();
 
 			desconectar();
@@ -126,13 +131,12 @@ public class FuncionarioDAO extends DAO {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Cargo c = new Cargo(rs.getInt("cargo"),"",true);
+				Cargo c = new Cargo(rs.getInt("cargo"), "", true);
 				c = cdao.obtain(c);
-				
+
 				Funcionario f = new Funcionario(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
 						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
-						rs.getString("login"), rs.getString("senha"), c,
-						rs.getBoolean("status"));
+						rs.getString("login"), rs.getString("senha"), c, rs.getBoolean("status"));
 				l.add(f);
 			}
 
@@ -160,18 +164,17 @@ public class FuncionarioDAO extends DAO {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Cargo c = new Cargo(rs.getInt("cargo"),"",true);
+				Cargo c = new Cargo(rs.getInt("cargo"), "", true);
 				c = cdao.obtain(c);
-				
+
 				Funcionario f1 = new Funcionario(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
 						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
-						rs.getString("login"), rs.getString("senha"), c,
-						rs.getBoolean("status"));
-				
-				if(f1!=null) {
-					fe=f1;
+						rs.getString("login"), rs.getString("senha"), c, rs.getBoolean("status"));
+
+				if (f1 != null) {
+					fe = f1;
 				}
-				
+
 			}
 
 			desconectar();
@@ -182,6 +185,34 @@ public class FuncionarioDAO extends DAO {
 			e1.printStackTrace();
 		}
 
+		return fe;
+	}
+
+	public Funcionario obtainByEmail(String e) {
+		CargoDAO cdao = new CargoDAO();
+		Funcionario fe = null;
+		try {
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_EMAIL);
+			ps.setString(1, e);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Cargo c = new Cargo(rs.getInt("cargo"), "", true);
+				c = cdao.obtain(c);
+
+				Funcionario f1 = new Funcionario(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
+						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
+						rs.getString("login"), rs.getString("senha"),c,rs.getBoolean("status") );
+
+				if (f1 != null) {
+					fe = f1;
+				}
+
+			}
+			desconectar();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		return fe;
 	}
 
