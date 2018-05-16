@@ -10,18 +10,18 @@ import br.com.vsetsistemas.model.Funcionario;
 
 public class FuncionarioDAO extends DAO {
 
-	private String SQL_INSERT = "INSERT INTO Funcionario (id, login, senha, cargo) values(?, ?, ?, ?);"
-			+ "INSERT INTO pessoa (id, cep, numero, complemento, email, nome, cidade, status) values (?, ?, ?, ?, ?, ?, ?, ?);";
+	private String SQL_INSERT = "INSERT INTO pessoa (id, cep, numero, complemento, email, nome, cidade, status) values (?, ?, ?, ?, ?, ?, ?, ?);";
+	private String SQL_INSERT_2= "INSERT INTO funcionario (id, login, senha, cargo) values(?,?,?,?);";
 
-	private String SQL_UPDATE = "UPDATE cliente SET login=?, senha=?, cargo=? WHERE id = ?;"
-			+ "UPDATE pessoa SET cep=?, numero=?, complemento=?, email=?, nome=?, cidade=?, status=? WHERE id=?";
+	private String SQL_UPDATE = "UPDATE funcionario SET login=?, senha=?, cargo=? WHERE id = ?;";
+	private String SQL_UPDATE_2 = "UPDATE pessoa SET cep=?, numero=?, complemento=?, email=?, nome=?, cidade=?, status=? WHERE id=?";
 
 	private String SQL_DELETE = "UPDATE pessoa SET status = ? WHERE id = ?;";
 
 	private String SQL_SELECT = "select f.id, f.login, f.senha, f.cargo,"
-			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade,p.status," + "l.ufe_sg, l.log_nome "
 			+ "FROM Funcionario f INNER JOIN pessoa p ON (f.id = p.id)"
-			+ " INNER JOIN log_logradouro l ON (p.cep = l.cep)" + " WHERE f.status = true;";
+			+ " INNER JOIN log_logradouro l ON (p.cep = l.cep)" + " WHERE p.status = true;";
 
 	private String SQL_OBTAIN = "select f.id, f.login, f.senha, f.cargo,"
 			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade,p.status, " + "l.ufe_sg, l.log_nome "
@@ -37,23 +37,30 @@ public class FuncionarioDAO extends DAO {
 
 		try {
 			conectar();
-
+//(2,"Alisson de Oliveira Teixeira", 8057, "Apartamento", 83703335, "Curitiba", "ally@waifu.club", "Ally","ALICELOVESYOU", c, true);
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_INSERT);
+		
+			/*
+			 * "INSERT INTO pessoa (id, cep, numero, complemento, email, nome, cidade, status) values (?, ?, ?, ?, ?, ?, ?, ?);"
+			+ "INSERT INTO Funcionario (id, login, senha, cargo) values(?, ?, ?, ?);";
+			 * */
 			ps.setLong(1, f.getId());
-			ps.setString(2, f.getLogin());
-			ps.setString(3, f.getSenha());
-			ps.setLong(4, f.getCargo().getId());
-
-			ps.setLong(5, f.getId());
-			ps.setLong(6, f.getCep());
-			ps.setInt(7, f.getNumero());
-			ps.setString(8, f.getComplemento());
-			ps.setString(9, f.getEmail());
-			ps.setString(10, f.getNome());
-			ps.setString(11, f.getCidade());
-			ps.setBoolean(12, true);
+			ps.setLong(2, f.getCep());
+			ps.setInt(3, f.getNumero());
+			ps.setString(4, f.getComplemento());
+			ps.setString(5, f.getEmail());
+			ps.setString(6, f.getNome());
+			ps.setString(7, f.getCidade());
+			ps.setBoolean(8, true);
+			
+			PreparedStatement ps2 = db.getConnection().prepareStatement(SQL_INSERT_2);
+			ps2.setLong(1, f.getId());
+			ps2.setString(2, f.getLogin());
+			ps2.setString(3, f.getSenha());
+			ps2.setLong(4, f.getCargo().getId());
 
 			ps.executeUpdate();
+			ps2.executeUpdate();
 
 			desconectar();
 		}
@@ -67,7 +74,9 @@ public class FuncionarioDAO extends DAO {
 	public void update(Funcionario f) {
 
 		try {
-
+/*UPDATE funcionario SET login=?, senha=?, cargo=? WHERE id = ?;";
+	private String SQL_UPDATE_2 = "UPDATE pessoa SET cep=?, numero=?, complemento=?, email=?, nome=?, cidade=?, status=? WHERE id=?";
+ * */
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE);
@@ -77,17 +86,19 @@ public class FuncionarioDAO extends DAO {
 			ps.setLong(3, f.getCargo().getId());
 			ps.setLong(4, f.getId());
 
-			ps.setLong(5, f.getCep());
-			ps.setInt(6, f.getNumero());
-			ps.setString(7, f.getComplemento());
-			ps.setString(8, f.getEmail());
-			ps.setString(9, f.getNome());
-			ps.setString(10, f.getCidade());
-			ps.setBoolean(11, f.isStatus());
-			ps.setLong(12, f.getId());
+			PreparedStatement ps2 = db.getConnection().prepareStatement(SQL_UPDATE_2);
+			ps2.setLong(1, f.getCep());
+			ps2.setInt(2, f.getNumero());
+			ps2.setString(3, f.getComplemento());
+			ps2.setString(4, f.getEmail());
+			ps2.setString(5, f.getNome());
+			ps2.setString(6, f.getCidade());
+			ps2.setBoolean(7, f.isStatus());
+			ps2.setLong(8, f.getId());
 
 			ps.executeUpdate();
-
+			ps2.executeUpdate();
+			
 			desconectar();
 
 		}

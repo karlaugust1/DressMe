@@ -77,9 +77,13 @@ public class FuncionarioSession {
 		
 		
 		boolean retorno = false;
-		Funcionario newF = dao.obtainByEmail("karl-august2011@hotmail.com");
-		if(f.getEmail().equals(newF.getEmail()) && f.getSenha().equals(newF.getSenha())) {
-			retorno = true;
+		Funcionario newF = dao.obtainByEmail("karl-august2011@hotmail.com1");
+		try{
+			if(f.getEmail().equals(newF.getEmail()) && f.getSenha().equals(newF.getSenha())) {
+				retorno = true;
+			}
+		}catch(Exception e) {
+			retorno = false;
 		}
 		
 		return retorno;
