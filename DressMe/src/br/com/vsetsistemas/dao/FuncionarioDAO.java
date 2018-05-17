@@ -11,25 +11,25 @@ import br.com.vsetsistemas.model.Funcionario;
 public class FuncionarioDAO extends DAO {
 
 	private String SQL_INSERT = "INSERT INTO pessoa (id, cep, numero, complemento, email, nome, cidade, status) values (?, ?, ?, ?, ?, ?, ?, ?);";
-	private String SQL_INSERT_2= "INSERT INTO funcionario (id, login, senha, cargo) values(?,?,?,?);";
+	private String SQL_INSERT_2= "INSERT INTO funcionario (id, login, senha, cargo,e_vendedor) values(?,?,?,?,?);";
 
-	private String SQL_UPDATE = "UPDATE funcionario SET login=?, senha=?, cargo=? WHERE id = ?;";
+	private String SQL_UPDATE = "UPDATE funcionario SET login=?, senha=?, cargo=?, e_vendedor=? WHERE id = ?;";
 	private String SQL_UPDATE_2 = "UPDATE pessoa SET cep=?, numero=?, complemento=?, email=?, nome=?, cidade=?, status=? WHERE id=?";
 
 	private String SQL_DELETE = "UPDATE pessoa SET status = ? WHERE id = ?;";
 
 	private String SQL_SELECT = "select f.id, f.login, f.senha, f.cargo,"
-			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade,p.status," + "l.ufe_sg, l.log_nome "
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade,p.status,f.e_vendedor," + "l.ufe_sg, l.log_nome "
 			+ "FROM Funcionario f INNER JOIN pessoa p ON (f.id = p.id)"
 			+ " INNER JOIN log_logradouro l ON (p.cep = l.cep)" + " WHERE p.status = true;";
 
-	private String SQL_OBTAIN = "select f.id, f.login, f.senha, f.cargo,"
+	private String SQL_OBTAIN = "select f.id, f.login, f.senha, f.cargo, f.e_vendedor,"
 			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade,p.status, " + "l.ufe_sg, l.log_nome "
 			+ "FROM Funcionario f INNER JOIN pessoa p ON (f.id = p.id)"
-			+ " INNER JOIN log_logradouro l ON (p.cep = l.cep)" + " WHERE f.status = true AND f.id = ?;";
+			+ " INNER JOIN log_logradouro l ON (p.cep = l.cep)" + " WHERE p.status = true AND f.id = ?;";
 
 	private String SQL_OBTAIN_BY_EMAIL = "select f.id, f.login, f.senha, f.cargo,"
-			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade,p.status, " + "l.ufe_sg, l.log_nome "
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade,p.status,f.e_vendedor, " + "l.ufe_sg, l.log_nome "
 			+ "FROM Funcionario f INNER JOIN pessoa p ON (f.id = p.id)"
 			+ " INNER JOIN log_logradouro l ON (p.cep = l.cep)" + " WHERE p.status = true AND p.email = ?;";
 
@@ -58,6 +58,7 @@ public class FuncionarioDAO extends DAO {
 			ps2.setString(2, f.getLogin());
 			ps2.setString(3, f.getSenha());
 			ps2.setLong(4, f.getCargo().getId());
+			ps2.setBoolean(5, f.getVendedor());
 
 			ps.executeUpdate();
 			ps2.executeUpdate();
@@ -74,9 +75,7 @@ public class FuncionarioDAO extends DAO {
 	public void update(Funcionario f) {
 
 		try {
-/*UPDATE funcionario SET login=?, senha=?, cargo=? WHERE id = ?;";
-	private String SQL_UPDATE_2 = "UPDATE pessoa SET cep=?, numero=?, complemento=?, email=?, nome=?, cidade=?, status=? WHERE id=?";
- * */
+
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE);
@@ -84,7 +83,8 @@ public class FuncionarioDAO extends DAO {
 			ps.setString(1, f.getLogin());
 			ps.setString(2, f.getSenha());
 			ps.setLong(3, f.getCargo().getId());
-			ps.setLong(4, f.getId());
+			ps.setBoolean(4, f.getVendedor());
+			ps.setLong(5, f.getId());
 
 			PreparedStatement ps2 = db.getConnection().prepareStatement(SQL_UPDATE_2);
 			ps2.setLong(1, f.getCep());
@@ -147,7 +147,7 @@ public class FuncionarioDAO extends DAO {
 
 				Funcionario f = new Funcionario(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
 						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
-						rs.getString("login"), rs.getString("senha"), c, rs.getBoolean("status"));
+						rs.getString("login"), rs.getString("senha"), c, rs.getBoolean("status"), rs.getBoolean("e_vendedor"));
 				l.add(f);
 			}
 
@@ -180,7 +180,7 @@ public class FuncionarioDAO extends DAO {
 
 				Funcionario f1 = new Funcionario(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
 						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
-						rs.getString("login"), rs.getString("senha"), c, rs.getBoolean("status"));
+						rs.getString("login"), rs.getString("senha"), c, rs.getBoolean("status"), rs.getBoolean("e_vendedor"));
 
 				if (f1 != null) {
 					fe = f1;
@@ -208,12 +208,12 @@ public class FuncionarioDAO extends DAO {
 			ps.setString(1, e);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Cargo c = new Cargo(rs.getInt("cargo"), "", true);
-				c = cdao.obtain(c);
+				Cargo c = null;// new Cargo(rs.getInt("cargo"), "", true);
+				c = cdao.obtainById(rs.getLong("cargo"));
 
 				Funcionario f1 = new Funcionario(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
 						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
-						rs.getString("login"), rs.getString("senha"),c,rs.getBoolean("status") );
+						rs.getString("login"), rs.getString("senha"),c,rs.getBoolean("status"),rs.getBoolean("e_vendedor"));
 
 				if (f1 != null) {
 					fe = f1;

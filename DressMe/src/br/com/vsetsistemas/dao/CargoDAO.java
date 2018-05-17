@@ -142,4 +142,32 @@ public class CargoDAO extends DAO {
 		return rc;
 	}
 
+	public Cargo obtainById(long id) {
+		
+		Cargo rc = null;
+
+		try {
+
+			conectar();
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN);
+			ps.setLong(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				rc = new Cargo(rs.getInt("id"), rs.getString("descricao"), rs.getBoolean("status"));
+				break;
+			}
+
+			desconectar();
+
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return rc;
+	}
+
 }

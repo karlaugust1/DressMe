@@ -23,6 +23,7 @@ public class FuncionarioSession {
 		
 		try {
 			dao.update(f);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,9 +84,32 @@ public class FuncionarioSession {
 				retorno = true;
 			}
 		}catch(Exception e) {
+			System.out.println("Nome de usuário e/ou senha informados estão incorretos");
 			retorno = false;
 		}
 		
 		return retorno;
+	}
+	
+	public void alterCargoFuncionario(Funcionario f) {
+		/*
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		Funcionario f1 = fdao.obtain(f);
+		if(f.getVendedor() == false) {
+			f.setVendedor(true);
+			fdao.update(f);
+		}else{
+			f.setVendedor(false);
+			fdao.update(f);
+		}	
+		*/
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		if(f.getVendedor()) {
+			f.setVendedor(false);
+			fdao.update(f);
+		}else {
+			f.setVendedor(true);
+			fdao.update(f);
+		}
 	}
 }
