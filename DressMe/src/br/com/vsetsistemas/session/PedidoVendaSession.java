@@ -23,7 +23,7 @@ public class PedidoVendaSession {
 	public void updatePedidoVenda(PedidoVenda pv) {
 		
 		try {
-			//dao.update(pv);
+			dao.update(pv);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -32,7 +32,7 @@ public class PedidoVendaSession {
 	public void deletePedidoVenda(PedidoVenda pv) {
 		
 		try {
-			//dao.delete(pv);
+			dao.delete(pv);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -41,7 +41,7 @@ public class PedidoVendaSession {
 	public List<PedidoVenda> listAll(){
 		List<PedidoVenda> l = new ArrayList<>();
 		try {
-			//l = dao.select();
+			l = dao.select();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,7 +51,7 @@ public class PedidoVendaSession {
 	public PedidoVenda obtain(PedidoVenda pv) {
 		PedidoVenda retPv = null;
 		try {
-			//retPv = dao.obtain(pv);
+			retPv = dao.obtain(pv);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

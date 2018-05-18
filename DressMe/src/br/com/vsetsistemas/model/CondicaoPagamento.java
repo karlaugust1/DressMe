@@ -10,6 +10,10 @@ public class CondicaoPagamento {
 		this.descricao = descricao;
 	}
 
+	public CondicaoPagamento() {
+		
+	}
+
 	public int getId() {
 		return id;
 	}

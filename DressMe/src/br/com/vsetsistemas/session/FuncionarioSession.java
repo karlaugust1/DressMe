@@ -78,13 +78,13 @@ public class FuncionarioSession {
 		
 		
 		boolean retorno = false;
-		Funcionario newF = dao.obtainByEmail("karl-august2011@hotmail.com1");
+		Funcionario newF = dao.obtainByEmail(f.getEmail());
+		
 		try{
 			if(f.getEmail().equals(newF.getEmail()) && f.getSenha().equals(newF.getSenha())) {
 				retorno = true;
 			}
 		}catch(Exception e) {
-			System.out.println("Nome de usuário e/ou senha informados estão incorretos");
 			retorno = false;
 		}
 		

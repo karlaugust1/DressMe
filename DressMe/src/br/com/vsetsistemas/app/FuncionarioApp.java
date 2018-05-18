@@ -14,7 +14,7 @@ public class FuncionarioApp {
 	public static void main(String[] args) {
 		
 		Cargo c = new Cargo(5, "Estoquista", true);
-		Funcionario f = new Funcionario(1, "Karl August Harder", 7805, "Casa", 8370335, "Araucária", "karl-august2011@hotmail.com", "KARL", "666", c, true, false);
+		Funcionario f = new Funcionario(1, "Karl August Harder", 7805, "Casa", 8370335, "Araucária", "karl-august2011@hotmail.com", "karl", "666", c, true, false);
 
 		FuncionarioSession fs = new FuncionarioSession();
 		if(fs.authenticateFuncionario(f)) {
@@ -25,12 +25,12 @@ public class FuncionarioApp {
 		
 		//DELETAR APARTIR DAQUI, POIS É SÓ UM TESTE
 		//INSERIR
-		Funcionario newF = new Funcionario(2,"Alisson de Oliveira Teixeira", 8057, "Apartamento", 83703335, "Curitiba", "ally@waifu.club", "Allyiunininun","ALICELOVESYOU", c, true, true);
-		//fs.insertFuncionario(newF);
+		Funcionario newF = new Funcionario(4,"Edu", 946, "Casa", 85816780, "Cascavel", "edu@facear.edu", "edu","edu123", c, true, false);
+		fs.insertFuncionario(newF);
 		
 		//ALTERAR
-		//newF.setLogin("ALLLLLY ");
-		fs.updateFuncionario(newF);
+		//newF.setLogin("EDUUU");
+		//fs.updateFuncionario(newF);	
 		
 		//DELETAR
 		//newF.setStatus(false);
@@ -40,9 +40,9 @@ public class FuncionarioApp {
 		List<Funcionario> lista = new ArrayList<>();
 		lista = fs.listAll();
 		for(Funcionario f9 : lista) {
-			System.out.println(f9.getLogin() + f9.getSenha());
+			System.out.println(f9.getLogin());
 		}
-		
+		/*
 		fs.alterCargoFuncionario(newF);
 		
 		
@@ -51,6 +51,6 @@ public class FuncionarioApp {
 		//FuncionarioSession fs = new FuncionarioSession();
 		Funcionario f1 = fdao.obtainByEmail("ally@waifu.club");
 		System.out.println(f1.getVendedor());
-		fs.alterCargoFuncionario(f1);
+		fs.alterCargoFuncionario(f1);*/
 	}
 }

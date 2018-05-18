@@ -13,7 +13,7 @@ import br.com.vsetsistemas.model.PedidoVenda;
 
 public class PedidoVendaDAO extends DAO {
 
-	private String SQL_INSERT = "INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao, valorTotal, valorSubtotal, desconto) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	private String SQL_INSERT = "INSERT INTO PedidoVenda (numero, orcamento, SYSDATETIME(), dataFechamento, cliente, condPag, vendedor, situacao, valorTotal, valorSubtotal, desconto) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 	private String SQL_INSERT_Product = "INSERT INTO produto_pedidovenda (idpedido, idproduto, quantidade, desconto, subtotal, vunitario) values (?, ?, ?, ?, ?, ?);";
 
@@ -27,13 +27,15 @@ public class PedidoVendaDAO extends DAO {
 
 	private String SQL_DELETE_PRODUCT = "DELETE FROM produto_pedidovenda WHERE idpedido=? AND idproduto=?";
 
-	private String SQL_SELECT = "select pv.numero, pv.DataAbertura,pv.DataFechamento, pv.reservaEstoque,"
+	private String SQL_SELECT = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where pv.status = true;";
+
+	private String SQL_SELECT1 = "select pv.numero, pv.DataAbertura,pv.DataFechamento, pv.reservaEstoque,"
 			+ "pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto,"
 			+ "pp.idproduto, pp.quantidade, pp.desconto, pp.subtotal, pp.vunitario"
 			+ "FROM PedidoVenda pv INNER JOIN produto_pedidovenda pp ON (pv.numero = pp.idpedido)"
 			+ " WHERE pv.situacao = true;";
 
-	private String SQL_SELECT_Product = "select * from produto_pedidovenda WHERE idorcamento = ?;";
+	private String SQL_SELECT_PRODUCT = "select * from produto_pedidovenda WHERE id = ?;";
 
 	private String SQL_OBTAIN = "select pv.numero, pv.DataAbertura,pv.DataFechamento, pv.reservaEstoque,"
 			+ "pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto,"
@@ -80,7 +82,7 @@ public class PedidoVendaDAO extends DAO {
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_INSERT_Product);
 
 			ps.setLong(1, i.getPedido().getNumero());
-			//ps.setLong(2, i.getProduto().getId());
+			// ps.setLong(2, i.getProduto().getId());
 			ps.setInt(3, i.getQuantidade());
 			ps.setDouble(4, i.getDesconto());
 			ps.setDouble(5, i.getSubtotal());
@@ -138,7 +140,7 @@ public class PedidoVendaDAO extends DAO {
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE_Product);
 
-			//ps.setLong(1, i.getProduto().getId());
+			// ps.setLong(1, i.getProduto().getId());
 			ps.setInt(2, i.getQuantidade());
 			ps.setDouble(3, i.getDesconto());
 			ps.setDouble(4, i.getSubtotal());
@@ -167,14 +169,14 @@ public class PedidoVendaDAO extends DAO {
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE_Single_Product);
 
-			//ps.setInt(1, i.getProduto().getId());
+			// ps.setInt(1, i.getProduto().getId());
 			ps.setInt(2, i.getQuantidade());
 			ps.setDouble(3, i.getDesconto());
 			ps.setDouble(4, i.getSubtotal());
 			ps.setDouble(5, i.getValorUnitario());
 
 			ps.setLong(6, i.getPedido().getNumero());
-			//ps.setLong(7, i.getProduto().getId());
+			// ps.setLong(7, i.getProduto().getId());
 
 			ps.executeUpdate();
 
@@ -221,7 +223,7 @@ public class PedidoVendaDAO extends DAO {
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_DELETE_PRODUCT);
 
 			ps.setLong(1, i.getPedido().getNumero());
-			//ps.setInt(2, i.getProduto().getId());
+			// ps.setInt(2, i.getProduto().getId());
 
 			ps.executeUpdate();
 
@@ -235,54 +237,47 @@ public class PedidoVendaDAO extends DAO {
 	}
 
 	public List<PedidoVenda> select() {
+
 		ClienteDAO cdao = new ClienteDAO();
 		FuncionarioDAO fdao = new FuncionarioDAO();
 		CondicaoPagamentoDAO cpdao = new CondicaoPagamentoDAO();
-		
+
 		List<PedidoVenda> l = new ArrayList<PedidoVenda>();
-		
-		/*
-		 * "select pv.numero, pv.DataAbertura,pv.DataFechamento, pv.reservaEstoque," +
-		 * "pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto,"
-		 * + "pp.idproduto, pp.quantidade, pp.desconto, pp.subtotal, pp.vunitario" +
-		 * "FROM PedidoVenda pv INNER JOIN produto_pedidovenda pp ON (pv.numero = pp.idpedido)"
-		 * + " WHERE pv.situacao = true;"
-		 */
-		
+
 		try {
-		
-			
-			
+
 			conectar();
-			
+
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_SELECT);
 			ResultSet rs = ps.executeQuery();
-			
-			Cliente c = new Cliente();
-			c.setId(rs.getLong("cliente"));
-			c = cdao.obtain(c);
-			
-			Funcionario f = new Funcionario();
-			f.setId(rs.getLong("vendedor"));
-			f = fdao.obtain(f);
-			
-			CondicaoPagamento cp = new CondicaoPagamento(rs.getInt("id"),"");
-			cp = cpdao.obtain(cp);
-			
+
 			while (rs.next()) {
-				
-				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"),rs.getBoolean("orcamento"),rs.getDate("dataabertura"),
-						rs.getDate("datafechamento"),c,cp,f,selectProduct(),rs.getString("status"),rs.getDouble("valortotal"),rs.getDouble("valorsubtotal"),rs.getDouble("desconto"), rs.getBoolean("status"));
+
+				Cliente c = new Cliente();
+				c.setId(rs.getLong("cliente"));
+				c = cdao.obtain(c);
+
+				Funcionario f = new Funcionario();
+				f.setId(rs.getLong("vendedor"));
+				f = fdao.obtain(f);
+
+				CondicaoPagamento cp = new CondicaoPagamento();
+				cp.setId(rs.getInt("condPag"));
+				cp = cpdao.obtain(cp);
+
+				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"), rs.getBoolean("orcamento"),
+						rs.getDate("dataabertura"), rs.getDate("datafechamento"), c, cp, f, selectProduct(),
+						rs.getString("situacao"), rs.getDouble("valortotal"), rs.getDouble("valorsubtotal"),
+						rs.getDouble("desconto"), rs.getBoolean("status"), rs.getInt("numero_pontos"));
 				l.add(pv);
 			}
-			
-			
+
 		}
-		
+
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return l;
 
 	}
@@ -290,35 +285,33 @@ public class PedidoVendaDAO extends DAO {
 	public List<Item> selectProduct() {
 
 		List<Item> l = new ArrayList<Item>();
-		
-		
-		//select * from produto_pedidovenda WHERE idorcamento = ?;
-		
+
+		// select * from produto_pedidovenda WHERE idorcamento = ?;
+
 		try {
 			conectar();
-			
-			PreparedStatement ps = db.getConnection().prepareStatement(SQL_SELECT_Product);
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_SELECT_PRODUCT);
 			ResultSet rs = ps.executeQuery();
-			
-			//Produto p = new Produto(rs.getInt("idproduto"),0,"",true);
-			//p=pdao.obtain(p);
+
+			// Produto p = new Produto(rs.getInt("idproduto"),0,"",true);
+			// p=pdao.obtain(p);
 			PedidoVenda pv = new PedidoVenda();
 			pv = obtain(pv);
-			
-			
+
 			while (rs.next()) {
-			//	Item i = new Item(rs.getLong("iditem"),p,rs.getInt("quantidade"),rs.getDouble("desconto"),rs.getDouble("subtotal"),rs.getDouble("vunitario"),pv);
-			//	l.add(i);
+				// Item i = new
+				// Item(rs.getLong("iditem"),p,rs.getInt("quantidade"),rs.getDouble("desconto"),rs.getDouble("subtotal"),rs.getDouble("vunitario"),pv);
+				// l.add(i);
 			}
 		}
-		
-		catch(Exception e) {
+
+		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return l;
-		
+
 	}
 
 	public PedidoVenda obtain(PedidoVenda p) {
@@ -326,92 +319,80 @@ public class PedidoVendaDAO extends DAO {
 		ClienteDAO cdao = new ClienteDAO();
 		FuncionarioDAO fdao = new FuncionarioDAO();
 		CondicaoPagamentoDAO cpdao = new CondicaoPagamentoDAO();
-		
+
 		PedidoVenda rpv = null;
-		
-		/*"select pv.numero, pv.DataAbertura,pv.DataFechamento, pv.reservaEstoque,"
-			+ "pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto,"
-			+ "pp.idproduto, pp.quantidade, pp.desconto, pp.subtotal, pp.vunitario\"\r\n"
-			+ "FROM PedidoVenda pv INNER JOIN produto_pedidovenda pp ON (pv.numero = pp.idpedido)"
-			+ " WHERE pv.situacao = true AND pv.id = ?;"*/
-		
-		
+
 		try {
-		
-			
-			
+
 			conectar();
-			
+
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN);
 			ps.setLong(1, p.getNumero());
 			ResultSet rs = ps.executeQuery();
-			
+
 			Cliente c = new Cliente();
 			c.setId(rs.getLong("cliente"));
 			c = cdao.obtain(c);
-			
+
 			Funcionario f = new Funcionario();
 			f.setId(rs.getLong("vendedor"));
 			f = fdao.obtain(f);
-			
-			CondicaoPagamento cp = new CondicaoPagamento(rs.getInt("id"),"");
+
+			CondicaoPagamento cp = new CondicaoPagamento(rs.getInt("id"), "");
 			cp = cpdao.obtain(cp);
-			
+
 			while (rs.next()) {
-				
-				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"),rs.getBoolean("orcamento"),rs.getDate("dataabertura"),
-						rs.getDate("datafechamento"),c,cp,f,selectProduct(),rs.getString("status"),rs.getDouble("valortotal"),rs.getDouble("valorsubtotal"),rs.getDouble("desconto"), rs.getBoolean("status"));
+
+				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"), rs.getBoolean("orcamento"),
+						rs.getDate("dataabertura"), rs.getDate("datafechamento"), c, cp, f, selectProduct(),
+						rs.getString("status"), rs.getDouble("valortotal"), rs.getDouble("valorsubtotal"),
+						rs.getDouble("desconto"), rs.getBoolean("status"), rs.getInt("numero_pontos"));
 				rpv = pv;
 				break;
 			}
-			
-			
+
 		}
-		
+
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return rpv;
-		
+
 	}
 
 	public Item obtainProduct(Item i) {
 
 		Item ri = null;
-		
 
-		
-		//"select * from produto_pedidovenda WHERE idpedido = ? AND idproduto = ?;"
-		
+		// "select * from produto_pedidovenda WHERE idpedido = ? AND idproduto = ?;"
+
 		try {
 			conectar();
-			
+
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_Product);
-			//ps.setLong(1, i.getPedido().getNumero());
-			//ps.setInt(2, i.getProduto().getId());
-			
+			// ps.setLong(1, i.getPedido().getNumero());
+			// ps.setInt(2, i.getProduto().getId());
+
 			ResultSet rs = ps.executeQuery();
-			
-			
-			//Produto p = new Produto(rs.getInt("idproduto"),0,"",true);
-			//p=pdao.obtain(p);
+
+			// Produto p = new Produto(rs.getInt("idproduto"),0,"",true);
+			// p=pdao.obtain(p);
 			PedidoVenda pv = new PedidoVenda();
 			pv = obtain(pv);
-			
-			
+
 			while (rs.next()) {
-				//Item i1 = new Item(rs.getLong("iditem"),p,rs.getInt("quantidade"),rs.getDouble("desconto"),rs.getDouble("subtotal"),rs.getDouble("vunitario"),pv);
-			//	ri = i1;
+				// Item i1 = new
+				// Item(rs.getLong("iditem"),p,rs.getInt("quantidade"),rs.getDouble("desconto"),rs.getDouble("subtotal"),rs.getDouble("vunitario"),pv);
+				// ri = i1;
 				break;
 			}
 		}
-		
-		catch(Exception e) {
+
+		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return ri;
 	}
 

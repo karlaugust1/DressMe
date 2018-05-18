@@ -18,11 +18,12 @@ public class PedidoVenda {
 	private double valorSubtotal;
 	private double desconto;
 	private boolean status;
+	private int numeroPontos;
 
 	
 	public PedidoVenda(long numero, boolean orcamento, Date dataAbertura, Date dataFechamento, Cliente cliente,
 			CondicaoPagamento condPagamento, Funcionario vendedor, List<Item> listaProduto, String situacao,
-			double valorTotal, double valorSubtotal, double desconto, boolean status) {
+			double valorTotal, double valorSubtotal, double desconto, boolean status, int numeroPontos) {
 		
 		this.numero = numero;
 		this.orcamento = orcamento;
@@ -37,6 +38,7 @@ public class PedidoVenda {
 		this.valorSubtotal = valorSubtotal;
 		this.desconto = desconto;
 		this.status = status;
+		this.numeroPontos = numeroPontos;
 	}
 
 	public PedidoVenda() {
@@ -149,6 +151,14 @@ public class PedidoVenda {
 
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+
+	public int getNumeroPontos() {
+		return numeroPontos;
+	}
+
+	public void setNumeroPontos(int numeroPontos) {
+		this.numeroPontos = numeroPontos;
 	}
 
 	
