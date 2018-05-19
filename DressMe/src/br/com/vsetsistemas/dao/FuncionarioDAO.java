@@ -33,6 +33,11 @@ public class FuncionarioDAO extends DAO {
 			+ "FROM Funcionario f INNER JOIN pessoa p ON (f.id = p.id)"
 			+ " INNER JOIN log_logradouro l ON (p.cep = l.cep)" + " WHERE p.status = true AND p.email = ?;";
 
+	private String SQL_OBTAIN_BY_ID = "select p.id, f.login, f.senha, f.cargo,"
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade,p.status,f.e_vendedor, " + "l.ufe_sg, l.log_nome "
+			+ "FROM Funcionario f INNER JOIN pessoa p ON (f.id = p.id)"
+			+ " INNER JOIN log_logradouro l ON (p.cep = l.cep)" + " WHERE p.status = true AND p.id = ?;";
+
 	public void insert(Funcionario f) {
 
 		try {
@@ -227,4 +232,32 @@ public class FuncionarioDAO extends DAO {
 		return fe;
 	}
 
+	public Funcionario obtainById(long id) {
+		CargoDAO cdao = new CargoDAO();
+		Funcionario fe = null;
+		try {
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_ID);
+			ps.setLong(1, id);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Cargo c = null;
+				c = cdao.obtainById(rs.getLong("cargo"));
+
+				Funcionario f1 = new Funcionario(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
+						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
+						rs.getString("login"), rs.getString("senha"),c,rs.getBoolean("status"),rs.getBoolean("e_vendedor"));
+
+				if (f1 != null) {
+					fe = f1;
+				}
+
+			}
+			desconectar();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		return fe;
+	}
+	
 }

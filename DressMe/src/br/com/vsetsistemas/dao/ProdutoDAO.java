@@ -176,7 +176,7 @@ public class ProdutoDAO extends DAO {
 			while (rs.next()) {
 				rp = new Produto(rs.getLong("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
-						rs.getString("cor"), rs.getDouble("preco"), new Categoria(), new Fornecedor());
+						rs.getString("cor"), rs.getDouble("vunitario"), new Categoria(), new Fornecedor());
 				break;
 			}
 
@@ -207,7 +207,7 @@ public class ProdutoDAO extends DAO {
 			while (rs.next()) {
 				Produto newP = new Produto(rs.getLong("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
-						rs.getString("cor"), rs.getDouble("preco"), c, f);
+						rs.getString("cor"), rs.getDouble("vunitario"), c, f);
 				if (newP != null) {
 					p = newP;
 					break;

@@ -2,7 +2,7 @@ package br.com.vsetsistemas.model;
 
 public class Item {
 
-	private long id;
+	private long idItem;
 	private Produto produto;
 	private int quantidade;
 	private double desconto;
@@ -10,9 +10,9 @@ public class Item {
 	private double valorUnitario;
 	private PedidoVenda pedido;
 	
-	public Item(long id, Produto produto, int quantidade, double desconto, double subtotal, double valorUnitario, PedidoVenda pedido) {
+	public Item(long idItem, Produto produto, int quantidade, double desconto, double subtotal, double valorUnitario, PedidoVenda pedido) {
 		
-		this.id = id;
+		this.idItem = idItem;
 		this.produto = produto;
 		this.quantidade = quantidade;
 		this.desconto = desconto;
@@ -21,10 +21,10 @@ public class Item {
 		this.pedido = pedido;
 	}
 	public long getId() {
-		return id;
+		return idItem;
 	}
 	public void setId(long id) {
-		this.id = id;
+		this.idItem = id;
 	}
 	public Produto getProduto() {
 		return produto;

@@ -26,11 +26,16 @@ public class ClienteDAO extends DAO {
 			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
 			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
 			+ " WHERE c.status = true AND c.id = ?;";
-	
+
 	private String SQL_OBTAIN_BY_CPF = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.Cpf"
 			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
 			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
 			+ " WHERE c.status = true AND c.cpf = ?;";
+
+	private String SQL_OBTAIN_BY_ID = "select c.cpfcnpj, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.Cpf"
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
+			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
+			+ " WHERE c.status = true AND c.id = ?;";
 
 	public void insert(Cliente c) {
 
@@ -45,9 +50,7 @@ public class ClienteDAO extends DAO {
 			ps.setString(5, c.getTelefoneCelular());
 			ps.setString(6, c.getTelefoneResidencial());
 			ps.setString(7, c.getTelefoneComercial());
-	
-			
-			
+
 			ps.setLong(8, c.getCpf());
 			ps.setLong(9, c.getId());
 			ps.setLong(10, c.getCep());
@@ -142,7 +145,7 @@ public class ClienteDAO extends DAO {
 			while (rs.next()) {
 				Cliente c = new Cliente(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
 						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
-						rs.getLong("cpf"), rs.getDate("data_nascimento"), rs.getLong("rg"),
+						rs.getLong("cpfcnpj"), rs.getDate("data_nascimento"), rs.getLong("rg"),
 						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
 						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
 						rs.getBoolean("status"));
@@ -179,11 +182,11 @@ public class ClienteDAO extends DAO {
 						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
 						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
 						rs.getBoolean("status"));
-				
-				if(c1!=null) {
-					rc=c1;
+
+				if (c1 != null) {
+					rc = c1;
 				}
-				
+
 			}
 
 			desconectar();
@@ -196,37 +199,71 @@ public class ClienteDAO extends DAO {
 
 		return rc;
 	}
-	
+
 	public Cliente obtainByCpf(long l) {
-		
+
 		Cliente c = null;
-		
+
 		try {
 			conectar();
-			
+
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_CPF);
 			ps.setLong(1, l);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				Cliente c1 = new Cliente(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
 						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
-						rs.getLong("cpf"), rs.getDate("data_nascimento"), rs.getLong("rg"),
+						rs.getLong("cpfcnpj"), rs.getDate("data_nascimento"), rs.getLong("rg"),
 						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
 						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
 						rs.getBoolean("status"));
-				
-				if(c1!=null) {
-					c=c1;
+
+				if (c1 != null) {
+					c = c1;
 					break;
 				}
 			}
-			
+
 			desconectar();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return c;
 	}
 
+	public Cliente obtainById(long l) {
+
+		Cliente c = null;
+
+		try {
+			conectar();
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_ID);
+			
+			ps.setLong(1, l);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				Cliente c1 = new Cliente(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
+						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
+						rs.getLong("cpfcnpj"), rs.getDate("data_nascimento"), rs.getLong("rg"),
+						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
+						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
+						rs.getBoolean("status"));
+
+				if (c1 != null) {
+					c = c1;
+					break;
+				}
+			}
+
+			desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return c;
+	}
 }

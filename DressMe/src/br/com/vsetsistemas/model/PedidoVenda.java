@@ -53,11 +53,11 @@ public class PedidoVenda {
 		this.numero = numero;
 	}
 
-	public Boolean isOrcamento() {
+	public boolean isOrcamento() {
 		return orcamento;
 	}
 
-	public void setOrcamento(Boolean orcamento) {
+	public void setOrcamento(boolean orcamento) {
 		this.orcamento = orcamento;
 	}
 
@@ -145,10 +145,6 @@ public class PedidoVenda {
 		return status;
 	}
 
-	public void setOrcamento(boolean orcamento) {
-		this.orcamento = orcamento;
-	}
-
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
@@ -160,6 +156,8 @@ public class PedidoVenda {
 	public void setNumeroPontos(int numeroPontos) {
 		this.numeroPontos = numeroPontos;
 	}
+
+	
 
 	
 }
