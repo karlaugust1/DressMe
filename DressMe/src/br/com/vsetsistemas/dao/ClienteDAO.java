@@ -27,15 +27,15 @@ public class ClienteDAO extends DAO {
 			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
 			+ " WHERE c.status = true AND c.id = ?;";
 
-	private String SQL_OBTAIN_BY_CPF = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.Cpf"
-			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
+	private String SQL_OBTAIN_BY_CPF = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.cpfcnpj,"
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, p.status," + "l.ufe_sg, l.log_nome "
 			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
-			+ " WHERE c.status = true AND c.cpf = ?;";
+			+ " WHERE p.status = true AND c.cpf = ?;";
 
-	private String SQL_OBTAIN_BY_ID = "select c.cpfcnpj, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.Cpf"
-			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
+	private String SQL_OBTAIN_BY_ID = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.cpfcnpj,"
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, p.status," + "l.ufe_sg, l.log_nome "
 			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
-			+ " WHERE c.status = true AND c.id = ?;";
+			+ " WHERE p.status = true AND c.id = ?;";
 
 	public void insert(Cliente c) {
 

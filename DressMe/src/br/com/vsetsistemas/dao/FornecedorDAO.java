@@ -43,11 +43,12 @@ public class FornecedorDAO extends DAO {
 
 	}
 	
-	public Fornecedor obtainById(int i) {
+	public Fornecedor obtainById(long i) {
 		Fornecedor f = null;
 		try {
 			conectar();
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_ID);
+			ps.setLong(1, i);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Fornecedor newF = new Fornecedor(rs.getLong("id"), rs.getLong("cnpj"), rs.getString("razao_social"));

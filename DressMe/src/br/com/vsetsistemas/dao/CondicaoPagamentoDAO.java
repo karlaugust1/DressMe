@@ -18,6 +18,7 @@ public class CondicaoPagamentoDAO extends DAO {
 	private String SQL_SELECT = "select * from condicao_pagamento;";
 
 	private String SQL_OBTAIN = "select * from condicao_pagamento WHERE id = ?;";
+	
 
 	public void insert(CondicaoPagamento cp) {
 
@@ -119,6 +120,33 @@ public class CondicaoPagamentoDAO extends DAO {
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN);
 			ps.setInt(1, cp.getId());
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				rcp = new CondicaoPagamento(rs.getInt("id"), rs.getString("descricao"));
+				break;
+			}
+
+			desconectar();
+
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return rcp;
+	}
+	
+	public CondicaoPagamento obtainById(int id) {
+		
+		CondicaoPagamento rcp = null;
+		try {
+
+			conectar();
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN);
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {

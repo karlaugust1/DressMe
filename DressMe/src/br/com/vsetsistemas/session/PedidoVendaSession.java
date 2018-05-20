@@ -102,5 +102,12 @@ public class PedidoVendaSession {
 		return p;
 	}
 	
+	public int converterEmPontos(double valor) {
+		
+		return (int) Math.round(valor);
+		
+	}
+	
+	
 	
 }

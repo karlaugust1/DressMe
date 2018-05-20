@@ -71,7 +71,7 @@ public class CategoriaDAO extends DAO {
 		return retC;
 	}
 
-	public Categoria obtainById(int id) {
+	public Categoria obtainById(long id) {
 
 		Categoria retC = new Categoria();
 
@@ -80,7 +80,7 @@ public class CategoriaDAO extends DAO {
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN);
-			ps.setInt(1, id);
+			ps.setLong(1, id);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {

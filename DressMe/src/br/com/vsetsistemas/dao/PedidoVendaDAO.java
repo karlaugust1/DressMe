@@ -34,7 +34,9 @@ public class PedidoVendaDAO extends DAO {
 
 	/* DONE */private String SQL_OBTAIN = "select pv.numero, pv.orcamento, pv.DataAbertura, pv.DataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status FROM PedidoVenda pv WHERE pv.status = true AND pv.numero = ?;";
 
-	private String SQL_OBTAIN_PRODUCT = "SELECT * FROM produto_pedidovenda WHERE (idpedido = ? AND idproduto = ? AND iditem = ?);";
+	/* DONE */private String SQL_OBTAIN_BY_ID = "select pv.numero, pv.orcamento, pv.DataAbertura, pv.DataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status FROM PedidoVenda pv WHERE pv.status = true AND pv.numero = ?;";
+
+	/* DONE */private String SQL_OBTAIN_PRODUCT = "SELECT * FROM produto_pedidovenda WHERE (idpedido = ? AND idproduto = ? AND iditem = ?);";
 
 	public void insert(PedidoVenda p) {
 
@@ -259,6 +261,7 @@ public class PedidoVendaDAO extends DAO {
 				l.add(pv);
 			}
 
+			desconectar();
 		}
 
 		catch (Exception e) {
@@ -293,6 +296,7 @@ public class PedidoVendaDAO extends DAO {
 						rs.getDouble("subtotal"), rs.getDouble("vunitario"), pv);
 				l.add(i);
 			}
+			desconectar();
 		}
 
 		catch (Exception e) {
@@ -324,6 +328,57 @@ public class PedidoVendaDAO extends DAO {
 
 			while (rs.next()) {
 
+				Cliente c = new Cliente();
+				c = cdao.obtainById(rs.getLong("cliente"));
+
+				Funcionario f = new Funcionario();
+				f = fdao.obtainById(rs.getLong("vendedor"));
+
+				CondicaoPagamento cp = new CondicaoPagamento(rs.getInt("condPag"), "");
+				cp.setDescricao(cpdao.obtain(cp).getDescricao());
+
+				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"), rs.getBoolean("orcamento"),
+						rs.getDate("dataabertura"), rs.getDate("datafechamento"), c, cp, f,
+						selectProduct(rs.getLong("numero")), rs.getString("situacao"), rs.getDouble("valortotal"),
+						rs.getDouble("valorsubtotal"), rs.getDouble("desconto"), rs.getBoolean("status"),
+						rs.getInt("numero_pontos"));
+
+				if (pv != null)
+					rpv = pv;
+				break;
+			}
+
+			desconectar();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return rpv;
+
+	}
+
+	public PedidoVenda obtainById(long id) {
+
+		ClienteDAO cdao = new ClienteDAO();
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		CondicaoPagamentoDAO cpdao = new CondicaoPagamentoDAO();
+		PedidoVenda rpv = null;
+
+		try {
+
+			conectar();
+			// select pv.numero, pv.orcamento, pv.DataAbertura, pv.DataFechamento,
+			// pv.cliente, pv.condPag, pv.vendedor,
+			// pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto, pv.numero_pontos,
+			// pv.status FROM PedidoVenda
+			// pv WHERE pv.status = true AND pv.numero = ?;
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_ID);
+			ps.setLong(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
 
 				Cliente c = new Cliente();
 				c = cdao.obtainById(rs.getLong("cliente"));
@@ -358,9 +413,11 @@ public class PedidoVendaDAO extends DAO {
 
 	public Item obtainProduct(Item i) {
 
+		ProdutoDAO pdao = new ProdutoDAO();
 		Item ri = null;
 
-		// SELECT * FROM produto_pedidovenda WHERE (idpedido = ? AND idproduto = ? AND iditem = ?);
+		// SELECT * FROM produto_pedidovenda WHERE (idpedido = ? AND idproduto = ? AND
+		// iditem = ?);
 
 		try {
 			conectar();
@@ -372,17 +429,22 @@ public class PedidoVendaDAO extends DAO {
 
 			ResultSet rs = ps.executeQuery();
 
-			// Produto p = new Produto(rs.getInt("idproduto"),0,"",true);
-			// p=pdao.obtain(p);
-			PedidoVenda pv = new PedidoVenda();
-			pv = obtain(pv);
-
 			while (rs.next()) {
-				//Item i1 = new
-				//Item(rs.getLong("iditem"),p,rs.getInt("quantidade"),rs.getDouble("desconto"),rs.getDouble("subtotal"),rs.getDouble("vunitario"),pv);
-				//ri = i1;
-				break;
+
+				Produto p = null;
+				p = pdao.obtain(p);
+
+				PedidoVenda pv = this.obtainById(i.getPedido().getNumero());
+
+				Item i1 = new Item(rs.getLong("iditem"), p, rs.getInt("quantidade"), rs.getDouble("desconto"),
+						rs.getDouble("subtotal"), rs.getDouble("vunitario"), pv);
+
+				if (i1 != null) {
+					ri = i1;
+					break;
+				}
 			}
+			desconectar();
 		}
 
 		catch (Exception e) {

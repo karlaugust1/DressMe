@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.com.vsetsistemas.model.Categoria;
 import br.com.vsetsistemas.model.Fornecedor;
+import br.com.vsetsistemas.model.Item;
 import br.com.vsetsistemas.model.Produto;
 
 public class ProdutoDAO extends DAO {
@@ -191,23 +192,32 @@ public class ProdutoDAO extends DAO {
 		return rp;
 	}
 
-	public Produto obtainById(int i) {
+	public Produto obtainById(long id) {
 
 		Produto p = null;
+		
 		try {
+			
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_ID);
-			ps.setInt(1, i);
+			ps.setLong(1, id);
 			ResultSet rs = ps.executeQuery();
 			
-			Categoria c = new CategoriaDAO().obtainById(rs.getInt("categoria"));
-			Fornecedor f = new FornecedorDAO().obtainById(rs.getInt(rs.getInt("fornecedor")));
+			//Item i = new Item(1, pdao.obtainById(1), 1, 0, 99.99, 99.99, pv);
+			//SELECT * FROM produto WHERE status = true AND id = ?;
+			CategoriaDAO cdao = new CategoriaDAO();
+			Categoria c = null;
+					//cdao.obtainById(rs.getLong("categoria"));
+			
+			FornecedorDAO fdao = new FornecedorDAO();
+			Fornecedor f = null;
+					//fdao.obtainById(rs.getLong("fornecedor"));
 
 			while (rs.next()) {
 				Produto newP = new Produto(rs.getLong("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
-						rs.getString("cor"), rs.getDouble("vunitario"), c, f);
+						rs.getString("cor"), rs.getDouble("vunitario"), (c = cdao.obtainById(rs.getLong("categoria"))), (fdao.obtainById(rs.getLong("fornecedor"))));
 				if (newP != null) {
 					p = newP;
 					break;
