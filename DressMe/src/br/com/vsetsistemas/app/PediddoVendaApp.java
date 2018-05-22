@@ -22,6 +22,8 @@ public class PediddoVendaApp {
 		
 		//INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao
 		//, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, ?, sysdate(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+		
+		//INSERIR PEDIDO DE VENDA
 		/*
 		
 		ClienteDAO cdao = new ClienteDAO();
@@ -35,7 +37,7 @@ public class PediddoVendaApp {
 		
 		PedidoVendaSession pvs = new PedidoVendaSession();
 		
-		PedidoVenda pv = new PedidoVenda(1, false, null, null, c, cp, f, null,"Realizado", 263.98, 260.00, 3.98, true, pvs.converterEmPontos(260.00));
+		PedidoVenda pv = new PedidoVenda(1, false, null, null, c, cp, f, null,"Realizado", 263.98, 260.00, 3.98, true, pvs.convertIntoPoints(260.00));
 		
 		ProdutoDAO pdao = new ProdutoDAO();
 				
@@ -51,8 +53,8 @@ public class PediddoVendaApp {
 		pvdao.insert(pv);
 		
 		*/
-		
-		//consultar pedido de venda
+		/*
+		//CONSULTAR PEDIDO DE VENDA
 		PedidoVenda pv1 = null;
 		PedidoVendaDAO pdao1 = new PedidoVendaDAO();
 		pv1 = pdao1.obtainById(1);
@@ -73,6 +75,33 @@ public class PediddoVendaApp {
 		for (int i2 = 0; i2<pv1.getListaProduto().size();i2++) {
 			System.out.println(pv1.getListaProduto().get(i2).getId());
 		}
+		*/
+		/*
+		//EDITAR PEDIDO DE VENDA
+		PedidoVenda pv = null;
+		PedidoVendaDAO pdao = new PedidoVendaDAO();
+		pv = pdao.obtainById(1);
+		
+		System.out.println("Nome vendedor antes da alteração: " + pv.getVendedor().getNome());
+		
+		Funcionario v = null;
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		v = fdao.obtainById(2);
+		
+		pv.setVendedor(v);
+		System.out.println("Nome do vendedor depois da alteração: "+pv.getVendedor().getNome());
+		pdao.update(pv);
+		*/
+		
+		/*
+		//CANCELAR PEDIDO DE VENDA
+		PedidoVenda pv = null;
+		PedidoVendaDAO pdao = new PedidoVendaDAO();
+		pv = pdao.obtainById(1);
+		
+		pdao.cancel(pv);
+		*/
+		
 	}
 
 }

@@ -14,7 +14,7 @@ import br.com.vsetsistemas.model.Produto;
 
 public class PedidoVendaDAO extends DAO {
 
-	/* DONE */private String SQL_INSERT = "INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, ?, sysdate(), ? , ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	/* DONE */private String SQL_INSERT = "INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, ?, (date(sysdate()), (date(sysdate())+interval '30' day) , ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 	/* DONE */private String SQL_INSERT_PRODUCT = "INSERT INTO produto_pedidovenda (idpedido, idproduto, quantidade, desconto, subtotal, vunitario, iditem) values (?, ?, ?, ?, ?, ?, ?);";
 
@@ -25,6 +25,8 @@ public class PedidoVendaDAO extends DAO {
 	/* DONE */private String SQL_UPDATE_SINGLE_PRODUCT = "UPDATE produto_pedidovenda SET quantidade=?, desconto=?, subtotal=?, vunitario=? WHERE (idpedido=? AND idproduto=? AND iditem=?);";
 
 	/* DONE */private String SQL_DELETE = "UPDATE PedidoVenda SET status = false, situacao='Cancelado' WHERE numero = ?;";
+
+	private String SQL_CANCEL = "UPDATE PedidoVenda SET status = false, situacao='Cancelado' WHERE numero = ?;";
 
 	/* DONE */private String SQL_DELETE_PRODUCT = "DELETE FROM produto_pedidovenda WHERE (idpedido=? AND idproduto=? AND iditem=?);";
 
@@ -37,6 +39,8 @@ public class PedidoVendaDAO extends DAO {
 	/* DONE */private String SQL_OBTAIN_BY_ID = "select pv.numero, pv.orcamento, pv.DataAbertura, pv.DataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status FROM PedidoVenda pv WHERE pv.status = true AND pv.numero = ?;";
 
 	/* DONE */private String SQL_OBTAIN_PRODUCT = "SELECT * FROM produto_pedidovenda WHERE (idpedido = ? AND idproduto = ? AND iditem = ?);";
+
+	private String SQL_SEARCH = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where (pv.numero = ? or pv.orcamento = ? or pv.dataAbertura = ? or pv.dataFechamento = ? or pv.cliente = ? or pv.condPag = ? or pv.vendedor = ? or pv.situacao = ? or pv.valorTotal = ? or pv.valorSubtotal = ? or pv.desconto = ? or pv.numero_pontos = ? or pv.status);";
 
 	public void insert(PedidoVenda p) {
 
@@ -63,7 +67,7 @@ public class PedidoVendaDAO extends DAO {
 			// subtotal, vunitario, iditem) values (?, ?, ?, ?, ?, ?, ?);
 			for (int i = 0; i < p.getListaProduto().size(); i++) {
 
-				long iditem = i+1;
+				long iditem = i + 1;
 				PreparedStatement ps2 = db.getConnection().prepareStatement(SQL_INSERT_PRODUCT);
 				ps2.setLong(1, p.getListaProduto().get(i).getPedido().getNumero());
 				ps2.setInt(2, p.getListaProduto().get(i).getProduto().getId());
@@ -113,6 +117,9 @@ public class PedidoVendaDAO extends DAO {
 		try {
 			conectar();
 
+			// UPDATE PedidoVenda SET dataFechamento=?, orcamento=?, cliente=?, condPag=?
+			// , vendedor=?, situacao=?, valorTotal=?, valorSubtotal=?, desconto=?,
+			// numero_pontos=?, status=? WHERE numero = ?;
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE);
 
 			ps.setDate(1, p.getDataFechamento());
@@ -204,6 +211,29 @@ public class PedidoVendaDAO extends DAO {
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_DELETE);
+
+			ps.setLong(1, p.getNumero());
+
+			ps.executeUpdate();
+
+			desconectar();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void cancel(PedidoVenda p) {
+
+		// UPDATE PedidoVenda SET status = false, situacao='Cancelado' WHERE numero = ?;
+
+		try {
+
+			conectar();
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_CANCEL);
 
 			ps.setLong(1, p.getNumero());
 
@@ -468,6 +498,18 @@ public class PedidoVendaDAO extends DAO {
 		}
 
 		return ri;
+	}
+
+	public List<PedidoVenda> search(PedidoVenda pv) {
+
+		List<PedidoVenda> lista = new ArrayList<>();
+		
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
 	}
 
 }
