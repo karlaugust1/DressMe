@@ -2,9 +2,6 @@ package br.com.vsetsistemas.app;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ForkJoinPool.ForkJoinWorkerThreadFactory;
-
-import br.com.vsetsistemas.dao.FuncionarioDAO;
 import br.com.vsetsistemas.model.Cargo;
 import br.com.vsetsistemas.model.Funcionario;
 import br.com.vsetsistemas.session.FuncionarioSession;

@@ -146,7 +146,7 @@ public class ProdutoDAO extends DAO {
 			// falar com ally sobre categoria e fornecedor (como fazer se for assim ou
 			// mudar);
 			while (rs.next()) {
-				Produto p = new Produto(rs.getLong("id"), rs.getLong("ean"), rs.getString("descricao"),
+				Produto p = new Produto(rs.getInt("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
 						rs.getString("cor"), rs.getDouble("preco"), new Categoria(), new Fornecedor());
 				l.add(p);
@@ -175,7 +175,7 @@ public class ProdutoDAO extends DAO {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				rp = new Produto(rs.getLong("id"), rs.getLong("ean"), rs.getString("descricao"),
+				rp = new Produto(rs.getInt("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
 						rs.getString("cor"), rs.getDouble("vunitario"), new Categoria(), new Fornecedor());
 				break;
@@ -215,7 +215,7 @@ public class ProdutoDAO extends DAO {
 					//fdao.obtainById(rs.getLong("fornecedor"));
 
 			while (rs.next()) {
-				Produto newP = new Produto(rs.getLong("id"), rs.getLong("ean"), rs.getString("descricao"),
+				Produto newP = new Produto(rs.getInt("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
 						rs.getString("cor"), rs.getDouble("vunitario"), (c = cdao.obtainById(rs.getLong("categoria"))), (fdao.obtainById(rs.getLong("fornecedor"))));
 				if (newP != null) {

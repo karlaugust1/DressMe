@@ -14,7 +14,7 @@ import br.com.vsetsistemas.model.Produto;
 
 public class PedidoVendaDAO extends DAO {
 
-	/* DONE */private String SQL_INSERT = "INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, ?, sysdate(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	/* DONE */private String SQL_INSERT = "INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, ?, sysdate(), ? , ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 	/* DONE */private String SQL_INSERT_PRODUCT = "INSERT INTO produto_pedidovenda (idpedido, idproduto, quantidade, desconto, subtotal, vunitario, iditem) values (?, ?, ?, ?, ?, ?, ?);";
 
@@ -30,7 +30,7 @@ public class PedidoVendaDAO extends DAO {
 
 	/* DONE */private String SQL_SELECT = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where pv.status = true;";
 
-	/* DONE */private String SQL_SELECT_PRODUCT = "select * from produto_pedidovenda WHERE id = ?;";
+	/* DONE */private String SQL_SELECT_PRODUCT = "select * from produto_pedidovenda WHERE idpedido = ?;";
 
 	/* DONE */private String SQL_OBTAIN = "select pv.numero, pv.orcamento, pv.DataAbertura, pv.DataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status FROM PedidoVenda pv WHERE pv.status = true AND pv.numero = ?;";
 
@@ -57,8 +57,24 @@ public class PedidoVendaDAO extends DAO {
 			ps.setDouble(10, p.getDesconto());
 			ps.setInt(11, p.getNumeroPontos());
 			ps.setBoolean(12, p.isStatus());
-
 			ps.executeUpdate();
+
+			// INSERT INTO produto_pedidovenda (idpedido, idproduto, quantidade, desconto,
+			// subtotal, vunitario, iditem) values (?, ?, ?, ?, ?, ?, ?);
+			for (int i = 0; i < p.getListaProduto().size(); i++) {
+
+				long iditem = i+1;
+				PreparedStatement ps2 = db.getConnection().prepareStatement(SQL_INSERT_PRODUCT);
+				ps2.setLong(1, p.getListaProduto().get(i).getPedido().getNumero());
+				ps2.setInt(2, p.getListaProduto().get(i).getProduto().getId());
+				ps2.setInt(3, p.getListaProduto().get(i).getQuantidade());
+				ps2.setDouble(4, p.getListaProduto().get(i).getDesconto());
+				ps2.setDouble(5, p.getListaProduto().get(i).getSubtotal());
+				ps2.setDouble(6, p.getListaProduto().get(i).getValorUnitario());
+				ps2.setLong(7, iditem);
+
+				ps2.executeUpdate();
+			}
 
 			desconectar();
 		}

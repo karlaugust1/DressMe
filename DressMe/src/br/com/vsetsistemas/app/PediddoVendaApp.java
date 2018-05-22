@@ -22,6 +22,8 @@ public class PediddoVendaApp {
 		
 		//INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao
 		//, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, ?, sysdate(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+		/*
+		
 		ClienteDAO cdao = new ClienteDAO();
 		Cliente c = cdao.obtainById(3);
 		
@@ -47,6 +49,30 @@ public class PediddoVendaApp {
 		
 		PedidoVendaDAO pvdao = new PedidoVendaDAO();
 		pvdao.insert(pv);
+		
+		*/
+		
+		//consultar pedido de venda
+		PedidoVenda pv1 = null;
+		PedidoVendaDAO pdao1 = new PedidoVendaDAO();
+		pv1 = pdao1.obtainById(1);
+		
+		System.out.println("Numero: " + pv1.getNumero());
+		System.out.println("Orçamento: "+pv1.isOrcamento());
+		System.out.println("Data Abertura: "+pv1.getDataAbertura());
+		System.out.println("Data fechamento: "+pv1.getDataFechamento());
+		System.out.println("Cliente: "+pv1.getCliente().getId());
+		System.out.println("Condição pagamento: "+pv1.getCondPagamento().getId());
+		System.out.println("Vendedor: "+pv1.getVendedor().getId());
+		System.out.println("Situacao: "+pv1.getSituacao());
+		System.out.println("Valor total: "+pv1.getValorTotal());
+		System.out.println("Valor subtotal: "+pv1.getValorSubtotal());
+		System.out.println("Desconto: "+pv1.getDesconto());
+		System.out.println("Numero pontos: "+pv1.getNumeroPontos());
+		System.out.println("Status: "+pv1.isStatus());
+		for (int i2 = 0; i2<pv1.getListaProduto().size();i2++) {
+			System.out.println(pv1.getListaProduto().get(i2).getId());
+		}
 	}
 
 }

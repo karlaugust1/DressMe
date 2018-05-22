@@ -2,7 +2,7 @@ package br.com.vsetsistemas.model;
 
 public class Produto {
 
-	private long id;
+	private int id;
 	private long ean;
 	private String descricao;
 	private boolean status;
@@ -16,7 +16,7 @@ public class Produto {
 	
 	
 
-	public Produto(long id, long ean, String descricao, boolean status, String nome, String genero, String tamanho,
+	public Produto(int id, long ean, String descricao, boolean status, String nome, String genero, String tamanho,
 			String cor, double preco, Categoria categoria, Fornecedor fornecedor) {
 		this.id = id;
 		this.ean = ean;
@@ -35,11 +35,11 @@ public class Produto {
 	}
 
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
