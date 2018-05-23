@@ -14,35 +14,33 @@ import br.com.vsetsistemas.model.Produto;
 
 public class PedidoVendaDAO extends DAO {
 
-	private String SQL_INSERT = "INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao, valorTotal, valorSubtotal, desconto) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	/* DONE */private String SQL_INSERT = "INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, ?, (date(sysdate()), (date(sysdate())+interval '30' day) , ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-	private String SQL_INSERT_Product = "INSERT INTO produto_pedidovenda (idpedido, idproduto, quantidade, desconto, subtotal, vunitario) values (?, ?, ?, ?, ?, ?);";
+	/* DONE */private String SQL_INSERT_PRODUCT = "INSERT INTO produto_pedidovenda (idpedido, idproduto, quantidade, desconto, subtotal, vunitario, iditem) values (?, ?, ?, ?, ?, ?, ?);";
 
-	private String SQL_UPDATE = "UPDATE PedidoVenda SET DataFechamento=?, orcamento=?, cliente=?, condPag=?, vendedor=?, situacao=?, valorTotal=?, valorSubtotal=?, desconto=? WHERE numero = ?;";
+	/* DONE */private String SQL_UPDATE = "UPDATE PedidoVenda SET dataFechamento=?, orcamento=?, cliente=?, condPag=?, vendedor=?, situacao=?, valorTotal=?, valorSubtotal=?, desconto=?, numero_pontos=?, status=? WHERE numero = ?;";
 
-	private String SQL_UPDATE_Product = "UPDATE produto_pedidovenda SET idproduto=?, quantidade=?, desconto=?, subtotal=?, vunitario=? WHERE idpedido=?";
+	/* DONE */private String SQL_UPDATE_PRODUCT = "UPDATE produto_pedidovenda SET quantidade=?, desconto=?, subtotal=?, vunitario=? WHERE idpedido=?;";
 
-	private String SQL_UPDATE_Single_Product = "UPDATE produto_pedidovenda SET idproduto=?, quantidade=?, desconto=?, subtotal=?, vunitario=? WHERE idpedido=? AND idproduto=?";
+	/* DONE */private String SQL_UPDATE_SINGLE_PRODUCT = "UPDATE produto_pedidovenda SET quantidade=?, desconto=?, subtotal=?, vunitario=? WHERE (idpedido=? AND idproduto=? AND iditem=?);";
 
-	private String SQL_DELETE = "UPDATE PedidoVenda SET status = ? WHERE numero = ?;";
+	/* DONE */private String SQL_DELETE = "UPDATE PedidoVenda SET status = false, situacao='Cancelado' WHERE numero = ?;";
 
-	private String SQL_DELETE_PRODUCT = "DELETE FROM produto_pedidovenda WHERE idpedido=? AND idproduto=?";
+	/* DONE */private String SQL_CANCEL = "UPDATE PedidoVenda SET status = false, situacao='Cancelado' WHERE numero = ?;";
 
-	private String SQL_SELECT = "select pv.numero, pv.DataAbertura,pv.DataFechamento, pv.reservaEstoque,"
-			+ "pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto,"
-			+ "pp.idproduto, pp.quantidade, pp.desconto, pp.subtotal, pp.vunitario"
-			+ "FROM PedidoVenda pv INNER JOIN produto_pedidovenda pp ON (pv.numero = pp.idpedido)"
-			+ " WHERE pv.situacao = true;";
+	/* DONE */private String SQL_DELETE_PRODUCT = "DELETE FROM produto_pedidovenda WHERE (idpedido=? AND idproduto=? AND iditem=?);";
 
-	private String SQL_SELECT_Product = "select * from produto_pedidovenda WHERE idorcamento = ?;";
+	/* DONE */private String SQL_SELECT = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where pv.status = true;";
 
-	private String SQL_OBTAIN = "select pv.numero, pv.DataAbertura,pv.DataFechamento, pv.reservaEstoque,"
-			+ "pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto,"
-			+ "pp.idproduto, pp.quantidade, pp.desconto, pp.subtotal, pp.vunitario\"\r\n"
-			+ "FROM PedidoVenda pv INNER JOIN produto_pedidovenda pp ON (pv.numero = pp.idpedido)"
-			+ " WHERE pv.situacao = true AND pv.id = ?;";
+	/* DONE */private String SQL_SELECT_PRODUCT = "select * from produto_pedidovenda WHERE idpedido = ?;";
 
-	private String SQL_OBTAIN_Product = "select * from produto_pedidovenda WHERE idpedido = ? AND idproduto = ?;";
+	/* DONE */private String SQL_OBTAIN = "select pv.numero, pv.orcamento, pv.DataAbertura, pv.DataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status FROM PedidoVenda pv WHERE pv.status = true AND pv.numero = ?;";
+
+	/* DONE */private String SQL_OBTAIN_BY_ID = "select pv.numero, pv.orcamento, pv.DataAbertura, pv.DataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status FROM PedidoVenda pv WHERE pv.status = true AND pv.numero = ?;";
+
+	/* DONE */private String SQL_OBTAIN_PRODUCT = "SELECT * FROM produto_pedidovenda WHERE (idpedido = ? AND idproduto = ? AND iditem = ?);";
+
+	private String SQL_SEARCH = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where (pv.numero = ? or pv.orcamento = ? or pv.dataAbertura = ? or pv.dataFechamento = ? or pv.cliente = ? or pv.condPag = ? or pv.vendedor = ? or pv.situacao = ? or pv.valorTotal = ? or pv.valorSubtotal = ? or pv.desconto = ? or pv.numero_pontos = ? or pv.status);";
 
 	public void insert(PedidoVenda p) {
 
@@ -53,17 +51,34 @@ public class PedidoVendaDAO extends DAO {
 
 			ps.setLong(1, p.getNumero());
 			ps.setBoolean(2, p.isOrcamento());
-			ps.setDate(3, p.getDataAbertura());
-			ps.setDate(4, p.getDataFechamento());
-
-			ps.setLong(5, p.getCliente().getId());
-			ps.setLong(6, p.getCondPagamento().getId());
-			ps.setLong(7, p.getVendedor().getId());
-			ps.setString(8, p.getSituacao());
-			ps.setDouble(9, p.getValorTotal());
-			ps.setDouble(10, p.getValorSubtotal());
-			ps.setDouble(11, p.getDesconto());
+			ps.setDate(3, p.getDataFechamento());
+			ps.setLong(4, p.getCliente().getId());
+			ps.setLong(5, p.getCondPagamento().getId());
+			ps.setLong(6, p.getVendedor().getId());
+			ps.setString(7, p.getSituacao());
+			ps.setDouble(8, p.getValorTotal());
+			ps.setDouble(9, p.getValorSubtotal());
+			ps.setDouble(10, p.getDesconto());
+			ps.setInt(11, p.getNumeroPontos());
+			ps.setBoolean(12, p.isStatus());
 			ps.executeUpdate();
+
+			// INSERT INTO produto_pedidovenda (idpedido, idproduto, quantidade, desconto,
+			// subtotal, vunitario, iditem) values (?, ?, ?, ?, ?, ?, ?);
+			for (int i = 0; i < p.getListaProduto().size(); i++) {
+
+				long iditem = i + 1;
+				PreparedStatement ps2 = db.getConnection().prepareStatement(SQL_INSERT_PRODUCT);
+				ps2.setLong(1, p.getListaProduto().get(i).getPedido().getNumero());
+				ps2.setInt(2, p.getListaProduto().get(i).getProduto().getId());
+				ps2.setInt(3, p.getListaProduto().get(i).getQuantidade());
+				ps2.setDouble(4, p.getListaProduto().get(i).getDesconto());
+				ps2.setDouble(5, p.getListaProduto().get(i).getSubtotal());
+				ps2.setDouble(6, p.getListaProduto().get(i).getValorUnitario());
+				ps2.setLong(7, iditem);
+
+				ps2.executeUpdate();
+			}
 
 			desconectar();
 		}
@@ -75,17 +90,19 @@ public class PedidoVendaDAO extends DAO {
 	}
 
 	public void insertProduct(Item i) {
+
 		try {
 			conectar();
 
-			PreparedStatement ps = db.getConnection().prepareStatement(SQL_INSERT_Product);
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_INSERT_PRODUCT);
 
 			ps.setLong(1, i.getPedido().getNumero());
-			ps.setInt(2, i.getProduto().getId());
+			ps.setLong(2, i.getProduto().getId());
 			ps.setInt(3, i.getQuantidade());
 			ps.setDouble(4, i.getDesconto());
 			ps.setDouble(5, i.getSubtotal());
 			ps.setDouble(6, i.getValorUnitario());
+			ps.setLong(7, i.getId());
 
 			ps.executeUpdate();
 
@@ -97,25 +114,26 @@ public class PedidoVendaDAO extends DAO {
 
 	public void update(PedidoVenda p) {
 
-		// UPDATE PedidoVenda SET DataFechamento=?, orcamento=?, cliente=?, condPag=?,
-		// vendedor=?, situacao=?, valorTotal=?, valorSubtotal=?, desconto=? WHERE
-		// numero = ?;"
-
 		try {
 			conectar();
 
+			// UPDATE PedidoVenda SET dataFechamento=?, orcamento=?, cliente=?, condPag=?
+			// , vendedor=?, situacao=?, valorTotal=?, valorSubtotal=?, desconto=?,
+			// numero_pontos=?, status=? WHERE numero = ?;
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE);
 
 			ps.setDate(1, p.getDataFechamento());
 			ps.setBoolean(2, p.isOrcamento());
 			ps.setLong(3, p.getCliente().getId());
-			ps.setLong(4, p.getVendedor().getId());
-			ps.setString(5, p.getSituacao());
-			ps.setDouble(6, p.getValorTotal());
-			ps.setDouble(7, p.getValorSubtotal());
-			ps.setDouble(8, p.getDesconto());
-
-			ps.setLong(9, p.getNumero());
+			ps.setInt(4, p.getCondPagamento().getId());
+			ps.setLong(5, p.getVendedor().getId());
+			ps.setString(6, p.getSituacao());
+			ps.setDouble(7, p.getValorTotal());
+			ps.setDouble(8, p.getValorSubtotal());
+			ps.setDouble(9, p.getDesconto());
+			ps.setInt(10, p.getNumeroPontos());
+			ps.setBoolean(11, p.isStatus());
+			ps.setLong(12, p.getNumero());
 
 			ps.executeUpdate();
 
@@ -131,21 +149,19 @@ public class PedidoVendaDAO extends DAO {
 
 	public void updateProduct(Item i) {
 
-		// "UPDATE produto_pedidovenda SET idproduto=?, quantidade=?, desconto=?,
-		// subtotal=?, vunitario=? WHERE idpedido=?"
+		// UPDATE produto_pedidovenda SET quantidade=?, desconto=?, subtotal=?,
+		// vunitario=? WHERE idpedido=?;
 
 		try {
 			conectar();
 
-			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE_Product);
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE_PRODUCT);
 
-			ps.setInt(1, i.getProduto().getId());
-			ps.setInt(2, i.getQuantidade());
-			ps.setDouble(3, i.getDesconto());
-			ps.setDouble(4, i.getSubtotal());
-			ps.setDouble(5, i.getValorUnitario());
-
-			ps.setLong(6, i.getPedido().getNumero());
+			ps.setInt(1, i.getQuantidade());
+			ps.setDouble(2, i.getDesconto());
+			ps.setDouble(3, i.getSubtotal());
+			ps.setDouble(4, i.getValorUnitario());
+			ps.setLong(5, i.getPedido().getNumero());
 
 			ps.executeUpdate();
 
@@ -159,23 +175,20 @@ public class PedidoVendaDAO extends DAO {
 
 	public void updateSingleProduct(Item i) {
 
-		// "UPDATE produto_pedidovenda SET idproduto=?, quantidade=?, desconto=?,
-		// subtotal=?, vunitario=? WHERE idpedido=? AND idproduto=?"
-
 		try {
 
 			conectar();
 
-			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE_Single_Product);
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE_SINGLE_PRODUCT);
 
-			ps.setInt(1, i.getProduto().getId());
-			ps.setInt(2, i.getQuantidade());
-			ps.setDouble(3, i.getDesconto());
-			ps.setDouble(4, i.getSubtotal());
-			ps.setDouble(5, i.getValorUnitario());
+			ps.setInt(1, i.getQuantidade());
+			ps.setDouble(2, i.getDesconto());
+			ps.setDouble(3, i.getSubtotal());
+			ps.setDouble(4, i.getValorUnitario());
 
-			ps.setLong(6, i.getPedido().getNumero());
-			ps.setInt(7, i.getProduto().getId());
+			ps.setLong(5, i.getPedido().getNumero());
+			ps.setLong(6, i.getProduto().getId());
+			ps.setLong(7, i.getId());
 
 			ps.executeUpdate();
 
@@ -191,15 +204,38 @@ public class PedidoVendaDAO extends DAO {
 
 	public void delete(PedidoVenda p) {
 
-		// "UPDATE PedidoVenda SET status = ? WHERE numero = ?;"
+		// UPDATE PedidoVenda SET status = false, situacao='Cancelado' WHERE numero = ?;
 
 		try {
+
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_DELETE);
 
-			ps.setString(1, p.getSituacao());
-			ps.setLong(2, p.getNumero());
+			ps.setLong(1, p.getNumero());
+
+			ps.executeUpdate();
+
+			desconectar();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void cancel(PedidoVenda p) {
+
+		// UPDATE PedidoVenda SET status = false, situacao='Cancelado' WHERE numero = ?;
+
+		try {
+
+			conectar();
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_CANCEL);
+
+			ps.setLong(1, p.getNumero());
 
 			ps.executeUpdate();
 
@@ -214,15 +250,14 @@ public class PedidoVendaDAO extends DAO {
 
 	public void deleteProduct(Item i) {
 
-		// "DELETE FROM produto_pedidovenda WHERE idpedido=? AND idproduto=?"
-
 		try {
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_DELETE_PRODUCT);
 
 			ps.setLong(1, i.getPedido().getNumero());
-			ps.setInt(2, i.getProduto().getId());
+			ps.setLong(2, i.getProduto().getId());
+			ps.setLong(3, i.getId());
 
 			ps.executeUpdate();
 
@@ -236,90 +271,86 @@ public class PedidoVendaDAO extends DAO {
 	}
 
 	public List<PedidoVenda> select() {
+
 		ClienteDAO cdao = new ClienteDAO();
 		FuncionarioDAO fdao = new FuncionarioDAO();
 		CondicaoPagamentoDAO cpdao = new CondicaoPagamentoDAO();
-		
+
 		List<PedidoVenda> l = new ArrayList<PedidoVenda>();
-		
-		/*
-		 * "select pv.numero, pv.DataAbertura,pv.DataFechamento, pv.reservaEstoque," +
-		 * "pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto,"
-		 * + "pp.idproduto, pp.quantidade, pp.desconto, pp.subtotal, pp.vunitario" +
-		 * "FROM PedidoVenda pv INNER JOIN produto_pedidovenda pp ON (pv.numero = pp.idpedido)"
-		 * + " WHERE pv.situacao = true;"
-		 */
-		
+
 		try {
-		
-			
-			
+
 			conectar();
-			
+
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_SELECT);
 			ResultSet rs = ps.executeQuery();
-			
-			Cliente c = new Cliente();
-			c.setId(rs.getLong("cliente"));
-			c = cdao.obtain(c);
-			
-			Funcionario f = new Funcionario();
-			f.setId(rs.getLong("vendedor"));
-			f = fdao.obtain(f);
-			
-			CondicaoPagamento cp = new CondicaoPagamento(rs.getInt("id"),"");
-			cp = cpdao.obtain(cp);
-			
+
 			while (rs.next()) {
-				
-				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"),rs.getBoolean("orcamento"),rs.getDate("dataabertura"),
-						rs.getDate("datafechamento"),c,cp,f,selectProduct(),rs.getString("status"),rs.getDouble("valortotal"),rs.getDouble("valorsubtotal"),rs.getDouble("desconto"));
+
+				Cliente c = new Cliente();
+				c.setId(rs.getLong("cliente"));
+				c = cdao.obtain(c);
+
+				Funcionario f = new Funcionario();
+				f.setId(rs.getLong("vendedor"));
+				f = fdao.obtain(f);
+
+				CondicaoPagamento cp = new CondicaoPagamento();
+				cp.setId(rs.getInt("condPag"));
+				cp = cpdao.obtain(cp);
+
+				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"), rs.getBoolean("orcamento"),
+						rs.getDate("dataabertura"), rs.getDate("datafechamento"), c, cp, f,
+						selectProduct(rs.getLong("numero")), rs.getString("situacao"), rs.getDouble("valortotal"),
+						rs.getDouble("valorsubtotal"), rs.getDouble("desconto"), rs.getBoolean("status"),
+						rs.getInt("numero_pontos"));
 				l.add(pv);
 			}
-			
-			
+
+			desconectar();
 		}
-		
+
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return l;
 
 	}
 
-	public List<Item> selectProduct() {
+	public List<Item> selectProduct(long idPedidoVenda) {
 
 		List<Item> l = new ArrayList<Item>();
-		ProdutoDAO pdao = new ProdutoDAO();
-		
-		//select * from produto_pedidovenda WHERE idorcamento = ?;
-		
+
 		try {
 			conectar();
-			
-			PreparedStatement ps = db.getConnection().prepareStatement(SQL_SELECT_Product);
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_SELECT_PRODUCT);
+			ps.setLong(1, idPedidoVenda);
+			// private String SQL_SELECT_PRODUCT = "select * from produto_pedidovenda WHERE
+			// id = ?;";
 			ResultSet rs = ps.executeQuery();
-			
-			Produto p = new Produto(rs.getInt("idproduto"),0,"",true);
-			p=pdao.obtain(p);
+
 			PedidoVenda pv = new PedidoVenda();
-			pv = obtain(pv);
-			
-			
+			pv.setNumero(idPedidoVenda);
+
 			while (rs.next()) {
-				Item i = new Item(rs.getLong("iditem"),p,rs.getInt("quantidade"),rs.getDouble("desconto"),rs.getDouble("subtotal"),rs.getDouble("vunitario"),pv);
+				ProdutoDAO pdao = new ProdutoDAO();
+				Produto p = null;
+				p = pdao.obtainById(rs.getInt("idproduto"));
+				Item i = new Item(rs.getLong("iditem"), p, rs.getInt("quantidade"), rs.getDouble("desconto"),
+						rs.getDouble("subtotal"), rs.getDouble("vunitario"), pv);
 				l.add(i);
 			}
+			desconectar();
 		}
-		
-		catch(Exception e) {
+
+		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return l;
-		
+
 	}
 
 	public PedidoVenda obtain(PedidoVenda p) {
@@ -327,92 +358,160 @@ public class PedidoVendaDAO extends DAO {
 		ClienteDAO cdao = new ClienteDAO();
 		FuncionarioDAO fdao = new FuncionarioDAO();
 		CondicaoPagamentoDAO cpdao = new CondicaoPagamentoDAO();
-		
 		PedidoVenda rpv = null;
-		
-		/*"select pv.numero, pv.DataAbertura,pv.DataFechamento, pv.reservaEstoque,"
-			+ "pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto,"
-			+ "pp.idproduto, pp.quantidade, pp.desconto, pp.subtotal, pp.vunitario\"\r\n"
-			+ "FROM PedidoVenda pv INNER JOIN produto_pedidovenda pp ON (pv.numero = pp.idpedido)"
-			+ " WHERE pv.situacao = true AND pv.id = ?;"*/
-		
-		
+
 		try {
-		
-			
-			
+
 			conectar();
-			
+			// select pv.numero, pv.orcamento, pv.DataAbertura, pv.DataFechamento,
+			// pv.cliente, pv.condPag, pv.vendedor,
+			// pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto, pv.numero_pontos,
+			// pv.status FROM PedidoVenda
+			// pv WHERE pv.status = true AND pv.numero = ?;
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN);
 			ps.setLong(1, p.getNumero());
 			ResultSet rs = ps.executeQuery();
-			
-			Cliente c = new Cliente();
-			c.setId(rs.getLong("cliente"));
-			c = cdao.obtain(c);
-			
-			Funcionario f = new Funcionario();
-			f.setId(rs.getLong("vendedor"));
-			f = fdao.obtain(f);
-			
-			CondicaoPagamento cp = new CondicaoPagamento(rs.getInt("id"),"");
-			cp = cpdao.obtain(cp);
-			
+
 			while (rs.next()) {
-				
-				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"),rs.getBoolean("orcamento"),rs.getDate("dataabertura"),
-						rs.getDate("datafechamento"),c,cp,f,selectProduct(),rs.getString("status"),rs.getDouble("valortotal"),rs.getDouble("valorsubtotal"),rs.getDouble("desconto"));
-				rpv = pv;
+
+				Cliente c = new Cliente();
+				c = cdao.obtainById(rs.getLong("cliente"));
+
+				Funcionario f = new Funcionario();
+				f = fdao.obtainById(rs.getLong("vendedor"));
+
+				CondicaoPagamento cp = new CondicaoPagamento(rs.getInt("condPag"), "");
+				cp.setDescricao(cpdao.obtain(cp).getDescricao());
+
+				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"), rs.getBoolean("orcamento"),
+						rs.getDate("dataabertura"), rs.getDate("datafechamento"), c, cp, f,
+						selectProduct(rs.getLong("numero")), rs.getString("situacao"), rs.getDouble("valortotal"),
+						rs.getDouble("valorsubtotal"), rs.getDouble("desconto"), rs.getBoolean("status"),
+						rs.getInt("numero_pontos"));
+
+				if (pv != null)
+					rpv = pv;
 				break;
 			}
-			
-			
+
+			desconectar();
 		}
-		
+
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return rpv;
-		
+
+	}
+
+	public PedidoVenda obtainById(long id) {
+
+		ClienteDAO cdao = new ClienteDAO();
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		CondicaoPagamentoDAO cpdao = new CondicaoPagamentoDAO();
+		PedidoVenda rpv = null;
+
+		try {
+
+			conectar();
+			// select pv.numero, pv.orcamento, pv.DataAbertura, pv.DataFechamento,
+			// pv.cliente, pv.condPag, pv.vendedor,
+			// pv.situacao, pv.valorTotal, pv.valorSubtotal, pv.desconto, pv.numero_pontos,
+			// pv.status FROM PedidoVenda
+			// pv WHERE pv.status = true AND pv.numero = ?;
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_ID);
+			ps.setLong(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				Cliente c = new Cliente();
+				c = cdao.obtainById(rs.getLong("cliente"));
+
+				Funcionario f = new Funcionario();
+				f = fdao.obtainById(rs.getLong("vendedor"));
+
+				CondicaoPagamento cp = new CondicaoPagamento(rs.getInt("condPag"), "");
+				cp.setDescricao(cpdao.obtain(cp).getDescricao());
+
+				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"), rs.getBoolean("orcamento"),
+						rs.getDate("dataabertura"), rs.getDate("datafechamento"), c, cp, f,
+						selectProduct(rs.getLong("numero")), rs.getString("situacao"), rs.getDouble("valortotal"),
+						rs.getDouble("valorsubtotal"), rs.getDouble("desconto"), rs.getBoolean("status"),
+						rs.getInt("numero_pontos"));
+
+				if (pv != null)
+					rpv = pv;
+				break;
+			}
+
+			desconectar();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return rpv;
+
 	}
 
 	public Item obtainProduct(Item i) {
 
+		ProdutoDAO pdao = new ProdutoDAO();
 		Item ri = null;
-		
-ProdutoDAO pdao = new ProdutoDAO();
-		
-		//"select * from produto_pedidovenda WHERE idpedido = ? AND idproduto = ?;"
+
+		// SELECT * FROM produto_pedidovenda WHERE (idpedido = ? AND idproduto = ? AND
+		// iditem = ?);
+
+		try {
+			conectar();
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_PRODUCT);
+			ps.setLong(1, i.getPedido().getNumero());
+			ps.setLong(2, i.getProduto().getId());
+			ps.setLong(3, i.getId());
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				Produto p = null;
+				p = pdao.obtain(p);
+
+				PedidoVenda pv = this.obtainById(i.getPedido().getNumero());
+
+				Item i1 = new Item(rs.getLong("iditem"), p, rs.getInt("quantidade"), rs.getDouble("desconto"),
+						rs.getDouble("subtotal"), rs.getDouble("vunitario"), pv);
+
+				if (i1 != null) {
+					ri = i1;
+					break;
+				}
+			}
+			desconectar();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return ri;
+	}
+
+	public List<PedidoVenda> search(PedidoVenda pv) {
+
+		List<PedidoVenda> lista = new ArrayList<>();
 		
 		try {
 			conectar();
-			
-			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_Product);
-			ps.setLong(1, i.getPedido().getNumero());
-			ps.setInt(2, i.getProduto().getId());
-			
-			ResultSet rs = ps.executeQuery();
-			
-			
-			Produto p = new Produto(rs.getInt("idproduto"),0,"",true);
-			p=pdao.obtain(p);
-			PedidoVenda pv = new PedidoVenda();
-			pv = obtain(pv);
-			
-			
-			while (rs.next()) {
-				Item i1 = new Item(rs.getLong("iditem"),p,rs.getInt("quantidade"),rs.getDouble("desconto"),rs.getDouble("subtotal"),rs.getDouble("vunitario"),pv);
-				ri = i1;
-				break;
-			}
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_SEARCH);
+			ps.setLong(1, pv.getNumero());
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
-		
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		return ri;
+		return null;
 	}
+
 }

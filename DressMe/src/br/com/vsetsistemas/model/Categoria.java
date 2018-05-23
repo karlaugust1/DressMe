@@ -1,24 +1,23 @@
 package br.com.vsetsistemas.model;
 
-public class CondicaoPagamento {
+public class Categoria {
 
-	private int id;
+	private long id;
 	private String descricao;
 	
-	public CondicaoPagamento(int id, String descricao) {
+	public Categoria(long id, String descricao) {
 		this.id = id;
 		this.descricao = descricao;
 	}
-
-	public CondicaoPagamento() {
-		
+	
+	public Categoria() {
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -28,6 +27,11 @@ public class CondicaoPagamento {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}	
+	}
+
+	
+
+	
+	
 	
 }

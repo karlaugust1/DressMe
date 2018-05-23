@@ -22,10 +22,11 @@ public class CargoDAO extends DAO {
 	public void insert(Cargo c) {
 
 		try {
+
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_INSERT);
-			ps.setInt(1, c.getId());
+			ps.setLong(1, c.getId());
 			ps.setString(2, c.getDescricao());
 			ps.setBoolean(3, c.isStatus());
 
@@ -50,7 +51,7 @@ public class CargoDAO extends DAO {
 
 			ps.setString(1, c.getDescricao());
 			ps.setBoolean(2, c.isStatus());
-			ps.setInt(3, c.getId());
+			ps.setLong(3, c.getId());
 			;
 
 			ps.executeUpdate();
@@ -72,7 +73,7 @@ public class CargoDAO extends DAO {
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_DELETE);
 
 			ps.setBoolean(1, c.isStatus());
-			ps.setInt(2, c.getId());
+			ps.setLong(2, c.getId());
 
 			ps.executeUpdate();
 
@@ -99,7 +100,8 @@ public class CargoDAO extends DAO {
 
 			while (rs.next()) {
 				Cargo c = new Cargo(rs.getInt("id"), rs.getString("descricao"), rs.getBoolean("status"));
-				l.add(c);
+				if (c.isStatus() != false)
+					l.add(c);
 			}
 
 			desconectar();
@@ -121,7 +123,35 @@ public class CargoDAO extends DAO {
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN);
-			ps.setInt(1, c.getId());
+			ps.setLong(1, c.getId());
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				rc = new Cargo(rs.getInt("id"), rs.getString("descricao"), rs.getBoolean("status"));
+				break;
+			}
+
+			desconectar();
+
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return rc;
+	}
+
+	public Cargo obtainById(long id) {
+		
+		Cargo rc = null;
+
+		try {
+
+			conectar();
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN);
+			ps.setLong(1, id);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {

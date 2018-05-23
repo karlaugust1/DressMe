@@ -3,16 +3,37 @@ package br.com.vsetsistemas.model;
 public class Produto {
 
 	private int id;
-	private long EAN;
+	private long ean;
 	private String descricao;
-	private Boolean status;
+	private boolean status;
+	private String nome;
+	private String genero;
+	private String tamanho;
+	private String cor;
+	private double preco;
+	private Categoria categoria;
+	private Fornecedor fornecedor;
 	
-	public Produto(int id, long eAN, String descricao, Boolean status) {
+	
+
+	public Produto(int id, long ean, String descricao, boolean status, String nome, String genero, String tamanho,
+			String cor, double preco, Categoria categoria, Fornecedor fornecedor) {
 		this.id = id;
-		EAN = eAN;
+		this.ean = ean;
 		this.descricao = descricao;
-		this.setStatus(status);
+		this.status = status;
+		this.nome = nome;
+		this.genero = genero;
+		this.tamanho = tamanho;
+		this.cor = cor;
+		this.preco = preco;
+		this.categoria = categoria;
+		this.fornecedor = fornecedor;
 	}
+
+	public Produto() {
+	}
+
 
 	public int getId() {
 		return id;
@@ -22,12 +43,12 @@ public class Produto {
 		this.id = id;
 	}
 
-	public long getEAN() {
-		return EAN;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setEAN(long eAN) {
-		EAN = eAN;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getDescricao() {
@@ -38,12 +59,68 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public Boolean isStatus() {
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public String getTamanho() {
+		return tamanho;
+	}
+
+	public void setTamanho(String tamanho) {
+		this.tamanho = tamanho;
+	}
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
+
+	public double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(double preco) {
+		this.preco = preco;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
+	public boolean isStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(boolean status) {
 		this.status = status;
+	}
+
+	public long getEan() {
+		return ean;
+	}
+
+	public void setEan(long ean) {
+		this.ean = ean;
 	}
 	
 	

@@ -46,7 +46,7 @@ public class Pessoa {
 	public int getNumero() {
 		return numero;
 	}
-
+	
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
@@ -90,8 +90,6 @@ public class Pessoa {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-	
-	
-	
+
 	
 }
