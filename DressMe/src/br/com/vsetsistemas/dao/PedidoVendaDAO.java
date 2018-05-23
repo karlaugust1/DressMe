@@ -26,7 +26,7 @@ public class PedidoVendaDAO extends DAO {
 
 	/* DONE */private String SQL_DELETE = "UPDATE PedidoVenda SET status = false, situacao='Cancelado' WHERE numero = ?;";
 
-	private String SQL_CANCEL = "UPDATE PedidoVenda SET status = false, situacao='Cancelado' WHERE numero = ?;";
+	/* DONE */private String SQL_CANCEL = "UPDATE PedidoVenda SET status = false, situacao='Cancelado' WHERE numero = ?;";
 
 	/* DONE */private String SQL_DELETE_PRODUCT = "DELETE FROM produto_pedidovenda WHERE (idpedido=? AND idproduto=? AND iditem=?);";
 
@@ -505,7 +505,9 @@ public class PedidoVendaDAO extends DAO {
 		List<PedidoVenda> lista = new ArrayList<>();
 		
 		try {
-			
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_SEARCH);
+			ps.setLong(1, pv.getNumero());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

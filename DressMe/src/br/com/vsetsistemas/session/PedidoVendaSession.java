@@ -58,6 +58,16 @@ public class PedidoVendaSession {
 		return retPv;
 	}
 	
+	public PedidoVenda obtainById(long numero) {
+		PedidoVenda retPv = null;
+		try {
+			retPv = dao.obtainById(numero);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retPv;
+	}
+	
 	public void insertProduct(Produto p) {
 		try {
 			//dao.insertProduct(p);
