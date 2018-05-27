@@ -40,7 +40,13 @@ public class PedidoVendaDAO extends DAO {
 
 	/* DONE */private String SQL_OBTAIN_PRODUCT = "SELECT * FROM produto_pedidovenda WHERE (idpedido = ? AND idproduto = ? AND iditem = ?);";
 
-	private String SQL_SEARCH = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where (pv.numero = ? or pv.orcamento = ? or pv.dataAbertura = ? or pv.dataFechamento = ? or pv.cliente = ? or pv.condPag = ? or pv.vendedor = ? or pv.situacao = ? or pv.valorTotal = ? or pv.valorSubtotal = ? or pv.desconto = ? or pv.numero_pontos = ? or pv.status);";
+	private String SQL_SEARCH = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where (pv.numero = ? or pv.orcamento = ? or pv.dataAbertura = ? or pv.dataFechamento = ? or pv.cliente = ? or pv.condPag = ? or pv.vendedor = ? or pv.situacao = ? or pv.valorTotal = ? or pv.valorSubtotal = ? or pv.desconto = ? or pv.numero_pontos = ? or pv.status = ?);";
+
+	private String SQL_INVOICE = "insert into contas_receber (id_cliente, valor_receber, data_lancamento, id_cond_pagamento) values (?,?,(date(sysdate())),?);";
+
+	private String SQL_INVOICE_PEDIDO = "UPDATE PedidoVenda SET status = false, situacao='Faturado' WHERE numero = ?;";
+
+	private String SQL_OBTAIN_LAST_REGISTER = "select count(numero)+1 ultimo from pedidovenda;";
 
 	public void insert(PedidoVenda p) {
 
@@ -503,15 +509,124 @@ public class PedidoVendaDAO extends DAO {
 	public List<PedidoVenda> search(PedidoVenda pv) {
 
 		List<PedidoVenda> lista = new ArrayList<>();
-		
+		ClienteDAO cdao = new ClienteDAO();
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		CondicaoPagamentoDAO cpdao = new CondicaoPagamentoDAO();
+
 		try {
 			conectar();
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_SEARCH);
+
+			/*
+			 * select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento,
+			 * pv.cliente, pv.condPag, pv.vendedor, pv.situacao,
+			 * pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from
+			 * pedidovenda pv where (pv.numero = ? or pv.orcamento = ? or pv.dataAbertura =
+			 * ? or pv.dataFechamento = ? or pv.cliente = ? or pv.condPag = ? or pv.vendedor
+			 * = ? or pv.situacao = ? or pv.valorTotal = ? or pv.valorSubtotal = ? or
+			 * pv.desconto = ? or pv.numero_pontos = ? or pv.status);
+			 */
 			ps.setLong(1, pv.getNumero());
+			ps.setBoolean(2, pv.isOrcamento());
+			ps.setDate(3, pv.getDataAbertura());
+			ps.setDate(4, pv.getDataFechamento());
+			if (pv.getCliente() != null)
+				ps.setLong(5, pv.getCliente().getId());
+			else
+				ps.setLong(5, 0);
+			if (pv.getCondPagamento() != null)
+				ps.setInt(6, pv.getCondPagamento().getId());
+			else {
+				ps.setInt(6, 0);
+			}
+			if (pv.getVendedor() != null)
+				ps.setLong(7, pv.getVendedor().getId());
+			else
+				ps.setLong(7, 0);
+			ps.setString(8, pv.getSituacao());
+			ps.setDouble(9, pv.getValorTotal());
+			ps.setDouble(10, pv.getValorSubtotal());
+			ps.setDouble(11, pv.getDesconto());
+			ps.setInt(12, pv.getNumeroPontos());
+			ps.setBoolean(13, pv.isStatus());
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+
+				Cliente c = new Cliente();
+				c = cdao.obtainById(rs.getLong("cliente"));
+
+				Funcionario f = new Funcionario();
+				f = fdao.obtainById(rs.getLong("vendedor"));
+
+				CondicaoPagamento cp = new CondicaoPagamento(rs.getInt("condPag"), "");
+				cp.setDescricao(cpdao.obtain(cp).getDescricao());
+
+				PedidoVenda p = new PedidoVenda();
+				p.setNumero(rs.getLong("numero"));
+				p.setOrcamento(rs.getBoolean("orcamento"));
+				p.setDataAbertura(rs.getDate("dataAbertura"));
+				p.setDataFechamento(rs.getDate("dataFechamento"));
+				p.setCliente(c);
+				p.setCondPagamento(cp);
+				p.setVendedor(f);
+				p.setSituacao(rs.getString("situacao"));
+				p.setValorTotal(rs.getDouble("valorTotal"));
+				p.setValorSubtotal(rs.getDouble("valorSubtotal"));
+				p.setDesconto(rs.getDouble("desconto"));
+				p.setNumeroPontos(rs.getInt("numero_pontos"));
+				p.setStatus(rs.getBoolean("status"));
+
+				lista.add(p);
+			}
+
+			desconectar();
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
-		return null;
+		return lista;
+	}
+
+	public void invoice(PedidoVenda pv) {
+
+		try {
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_INVOICE);
+
+			// insert into contas_receber (id_cliente, valor_receber, data_lancamento,
+			// id_cond_pagamento) values (?,?,(date(sysdate())),?);
+			ps.setLong(1, pv.getCliente().getId());
+			ps.setDouble(2, pv.getValorTotal());
+			ps.setInt(3, pv.getCondPagamento().getId());
+			ps.executeUpdate();
+
+			// UPDATE PedidoVenda SET status = false, situacao='Faturado' WHERE numero = ?;
+			PreparedStatement ps1 = db.getConnection().prepareStatement(SQL_INVOICE_PEDIDO);
+			ps1.setLong(1, pv.getNumero());
+			ps1.executeUpdate();
+
+			desconectar();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public long obtainLastRegister() {
+
+		long i = 0;
+		try {
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_LAST_REGISTER);
+			ResultSet rs = ps.executeQuery();
+			i = rs.getInt("ultimo");
+			desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return i;
 	}
 
 }

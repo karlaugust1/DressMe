@@ -10,104 +10,110 @@ public class FuncionarioSession {
 
 	private FuncionarioDAO dao = new FuncionarioDAO();
 
-	public void insertFuncionario(Funcionario f) {
+	public boolean insertFuncionario(Funcionario f) {
 
 		try {
-			dao.insert(f);
+			if (verifyFuncionario(f)) {
+				dao.insert(f);
+				return true;
+			} else {
+				return false;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
-	
-	public void updateFuncionario(Funcionario f) {
-		
+
+	public boolean updateFuncionario(Funcionario f) {
+
 		try {
-			dao.update(f);
-			
+			if (verifyFuncionario(f)) {
+				dao.update(f);
+				return true;
+			} else {
+				return false;
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		return false;
+
 	}
-	
-	public void deleteFuncionario(Funcionario f) {
-		
+
+	public boolean deleteFuncionario(Funcionario f) {
+
 		try {
 			dao.delete(f);
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
-	
-	public List<Funcionario> listAll(){
-		
+
+	public List<Funcionario> listAll() {
+
 		List<Funcionario> lista = new ArrayList<>();
-		
+
 		try {
 			lista = dao.select();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return lista;
 	}
-	
+
 	public boolean verifyFuncionario(Funcionario f) {
 
 		boolean retorno = true;
 
-		if(f.getId() == 0) {
+		if (f.getId() == 0) {
 			retorno = false;
-		}else if(f.getLogin() == null) {
+		} else if (f.getLogin() == null) {
 			retorno = false;
-		}else if(f.getSenha() == null) {
+		} else if (f.getSenha() == null) {
 			retorno = false;
-		}else if(f.getCargo() == null) {
+		} else if (f.getCargo() == null) {
 			retorno = false;
-		}else if(f.getCep() == 0) {
+		} else if (f.getCep() == 0) {
 			retorno = false;
-		}else if(f.isStatus() == null) {
+		} else if (f.isStatus() == null) {
 			retorno = false;
 		}
-	
+
 		return retorno;
 	}
-	
+
 	public boolean authenticateFuncionario(Funcionario f) {
-		
-		
-		
+
 		boolean retorno = false;
 		Funcionario newF = dao.obtainByEmail(f.getEmail());
-		
-		try{
-			if(f.getEmail().equals(newF.getEmail()) && f.getSenha().equals(newF.getSenha())) {
+
+		try {
+			if (f.getEmail().equals(newF.getEmail()) && f.getSenha().equals(newF.getSenha())) {
 				retorno = true;
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			retorno = false;
 		}
-		
+
 		return retorno;
 	}
-	
+
 	public void alterCargoFuncionario(Funcionario f) {
 		/*
+		 * FuncionarioDAO fdao = new FuncionarioDAO(); Funcionario f1 = fdao.obtain(f);
+		 * if(f.getVendedor() == false) { f.setVendedor(true); fdao.update(f); }else{
+		 * f.setVendedor(false); fdao.update(f); }
+		 */
 		FuncionarioDAO fdao = new FuncionarioDAO();
-		Funcionario f1 = fdao.obtain(f);
-		if(f.getVendedor() == false) {
-			f.setVendedor(true);
-			fdao.update(f);
-		}else{
+		if (f.getVendedor()) {
 			f.setVendedor(false);
 			fdao.update(f);
-		}	
-		*/
-		FuncionarioDAO fdao = new FuncionarioDAO();
-		if(f.getVendedor()) {
-			f.setVendedor(false);
-			fdao.update(f);
-		}else {
+		} else {
 			f.setVendedor(true);
 			fdao.update(f);
 		}

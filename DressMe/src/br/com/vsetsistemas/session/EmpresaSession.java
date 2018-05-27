@@ -10,13 +10,15 @@ public class EmpresaSession {
 
 	private EmpresaDAO dao = new EmpresaDAO();
 	
-	public void updateEmpresa(Empresa e) {
+	public boolean updateEmpresa(Empresa e) {
 		
 		try {
 			dao.update(e);
+			return true;
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
+		return false;
 		
 	}
 	

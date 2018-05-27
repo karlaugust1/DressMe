@@ -10,12 +10,12 @@ public class FornecedorSession {
 
 	private FornecedorDAO dao = new FornecedorDAO();
 	
-	public Fornecedor obtainFornecedor(Fornecedor f) {
+	public Fornecedor obtainFornecedor(long id) {
 		
 		Fornecedor newF = null;
 		try {
 			
-			newF = dao.obtain(f);
+			newF = dao.obtain(new Fornecedor(id, 0, null));
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -10,36 +10,38 @@ public class ClienteSession {
 
 	private ClienteDAO dao = new ClienteDAO();
 		
-	public void updateCliente(Cliente c) {
+	public boolean updateCliente(Cliente c) {
 		
 		try {
 			
 			dao.update(c);
-			
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 		
 	}
 	
-	public void deleteCliente(Cliente c) {
+	public boolean deleteCliente(Cliente c) {
 		
 		try {
 			
 			dao.delete(c);
-			
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	
-	public Cliente obtainByCpf(Cliente c) {
+	public Cliente obtainByCpf(long cpf) {
 	
 		Cliente c1 = null;
 		
 		try {
-			c1 = dao.obtainByCpf(c.getId());
+			c1 = dao.obtainByCpf(cpf);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -11,31 +11,40 @@ public class PedidoVendaSession {
 
 	private PedidoVendaDAO dao = new PedidoVendaDAO();
 	
-	public void insertPedidoVenda(PedidoVenda pv) {
+	public boolean insertPedidoVenda(PedidoVenda pv) {
+		
+		pv.setNumero(obtainLastRegister());
+		pv.setNumeroPontos(convertIntoPoints(pv.getValorTotal()));
 		
 		try {
 			dao.insert(pv);
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
-	public void updatePedidoVenda(PedidoVenda pv) {
+	public boolean updatePedidoVenda(PedidoVenda pv) {
 		
 		try {
 			dao.update(pv);
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
-	public void deletePedidoVenda(PedidoVenda pv) {
+	public boolean deletePedidoVenda(PedidoVenda pv) {
 		
 		try {
 			dao.delete(pv);
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	public List<PedidoVenda> listAll(){
@@ -118,6 +127,25 @@ public class PedidoVendaSession {
 		
 	}
 	
+	public boolean invoicePedidoVenda(PedidoVenda pv) {
+		
+		if(pv != null) {
+			dao.invoice(pv);
+			return true;
+		}else {
+			return false;
+		}		
+	}
 	
+	public long obtainLastRegister() {
+		
+		long i = dao.obtainLastRegister();
+		return i;
+	}
+	
+	public List<PedidoVenda> searchPedidoVenda(PedidoVenda pv){
+		List<PedidoVenda> l = dao.search(pv);
+		return l;
+	}
 	
 }

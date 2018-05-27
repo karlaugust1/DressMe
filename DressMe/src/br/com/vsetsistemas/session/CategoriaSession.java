@@ -10,12 +10,12 @@ public class CategoriaSession {
 
 	private CategoriaDAO dao = new CategoriaDAO();
 	
-	public Categoria obtainCategoria(Categoria c) {
+	public Categoria obtainCategoria(long id) {
 		
 		Categoria retC = null;
 		
 		try {
-			retC = dao.obtain(c);
+			retC = dao.obtain(new Categoria(id, ""));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

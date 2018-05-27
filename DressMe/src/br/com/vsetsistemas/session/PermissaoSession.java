@@ -24,10 +24,10 @@ public class PermissaoSession {
 		return list;
 	}
 	
-	public Permissao obtainById(Permissao p) {
+	public Permissao obtainById(int id) {
 		
 		Permissao newP = null;
-		newP = dao.obtain(p);
+		newP = dao.obtain(new Permissao(id,""));
 		return newP;
 		
 	}

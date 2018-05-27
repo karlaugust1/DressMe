@@ -102,6 +102,29 @@ public class PediddoVendaApp {
 		pdao.cancel(pv);
 		*/
 		
+		//FATURAR PEDIDO DE VENDA
+		/*
+		PedidoVenda pv = null;
+		PedidoVendaDAO pdao = new PedidoVendaDAO();
+		pv = pdao.obtainById(1);
+		
+		PedidoVendaSession session = new PedidoVendaSession();
+		session.invoicePedidoVenda(pv);
+		*/
+		
+		//PESQUISAR PEDIDO DE VENDA
+		/*
+		PedidoVenda pv = new PedidoVenda();
+		pv.setNumero(1);
+		
+		PedidoVendaSession s = new PedidoVendaSession();
+		List<PedidoVenda> l = s.searchPedidoVenda(pv);
+		for(PedidoVenda p : l){
+			System.out.println(p.getNumero());
+		}
+		*/
+		
+		
 	}
 
 }

@@ -22,7 +22,7 @@ public class CategoriaApp {
 	
 		System.out.println("------------------");
 		c.setId(1);
-		Categoria c2 = cs.obtainCategoria(c);
+		Categoria c2 = cs.obtainCategoria(c.getId());
 		System.out.println(c2.getId() + " - "+ c2.getDescricao());
 		
 	}

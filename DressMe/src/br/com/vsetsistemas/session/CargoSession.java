@@ -10,29 +10,36 @@ public class CargoSession {
 
 	private CargoDAO dao = new CargoDAO();
 	
-	public void insertCargo(Cargo c) {
+	public boolean insertCargo(Cargo c) {
 		
 		try {
 			dao.insert(c);
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return false;
 	}
 	
-	public void updateCargo(Cargo c) {
+	public boolean updateCargo(Cargo c) {
 		try {
 			dao.update(c);
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
-	public void deleteCargo(Cargo c) {
+	public boolean deleteCargo(Cargo c) {
 		try {
 			dao.delete(c);
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	public List<Cargo> listAll(){
@@ -48,10 +55,10 @@ public class CargoSession {
 		return l;
 	}
 	
-	public Cargo obtainCargo(Cargo c) {
+	public Cargo obtainCargo(long id) {
 		Cargo c1 = null;
 		try {
-			c1 = dao.obtain(c);
+			c1 = dao.obtain(new Cargo(id,"",true));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
