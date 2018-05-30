@@ -1,5 +1,6 @@
 package br.com.vsetsistemas.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -12,6 +13,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.com.vsetsistemas.model.Item;
 import br.com.vsetsistemas.model.PedidoVenda;
 import br.com.vsetsistemas.session.PedidoVendaSession;
 
@@ -19,7 +21,16 @@ import br.com.vsetsistemas.session.PedidoVendaSession;
 public class PedidoVendaService {
 	
 	PedidoVendaSession session = new PedidoVendaSession();
-
+/*
+	@GET
+	@Path("/")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Reponse loadInitialParameters() {
+		
+		session.
+		
+	}
+*/	
 	@GET
 	@Path("/obtain")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -57,6 +68,27 @@ public class PedidoVendaService {
 		return Response.status(400).entity(result).build();
 	}
 	
+	@POST
+	@Path("/insert/iten")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response inserirProduto(Item i) {
+						
+			Double[] sum = session.insertProduct(i);
+			
+			return Response.status(200).entity(sum).build();
+	}
+	
+	@GET
+	@Path("list/itens")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listItens(PedidoVenda pv){
+		
+		List<Item> itemList = new ArrayList<>();
+		itemList = this.session.listAllProduct(pv);
+		return Response.status(200).entity(itemList).build();
+		
+	}
+	
 	@PUT
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -85,4 +117,6 @@ public class PedidoVendaService {
 			return Response.status(400).entity(result).build();
 		}
 	}
+	
+	
 }

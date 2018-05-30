@@ -47,6 +47,8 @@ public class PedidoVendaDAO extends DAO {
 	private String SQL_INVOICE_PEDIDO = "UPDATE PedidoVenda SET status = false, situacao='Faturado' WHERE numero = ?;";
 
 	private String SQL_OBTAIN_LAST_REGISTER = "select count(numero)+1 ultimo from pedidovenda;";
+	
+	private String SQL_OBTAIN_SUM_VALUES = "SELECT SUM(VUNITARIO*QUANTIDADE) as total_geral, SUM(desconto) as total_desconto FROM produto_pedidovenda WHERE idpedido=?;";
 
 	public void insert(PedidoVenda p) {
 
@@ -95,7 +97,7 @@ public class PedidoVendaDAO extends DAO {
 
 	}
 
-	public void insertProduct(Item i) {
+	public Double[] insertProduct(Item i) {
 
 		try {
 			conectar();
@@ -111,11 +113,14 @@ public class PedidoVendaDAO extends DAO {
 			ps.setLong(7, i.getId());
 
 			ps.executeUpdate();
-
+			
 			desconectar();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return this.sumValues(i.getPedido().getNumero());
+		
 	}
 
 	public void update(PedidoVenda p) {
@@ -627,6 +632,28 @@ public class PedidoVendaDAO extends DAO {
 		}
 
 		return i;
+	}
+	
+	public Double[] sumValues(long idPedidoVenda) {
+		
+		Double[] sumValues = {0.00};
+		try { 
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareCall(SQL_OBTAIN_SUM_VALUES);
+			ps.setLong(1, idPedidoVenda);
+			ResultSet rs = ps.executeQuery();
+			//SELECT SUM(VUNITARIO*QUANTIDADE) as total_geral, SUM(desconto) as total_desconto FROM produto_pedidovenda WHERE idpedido=?;
+			while(rs.next()) {
+				sumValues[0] = rs.getDouble("total_geral");
+				sumValues[1] = rs.getDouble("total_desconto");
+				sumValues[2] = (rs.getDouble("total_geral")-rs.getDouble("total_desconto"));
+			}
+			desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return sumValues;
 	}
 
 }

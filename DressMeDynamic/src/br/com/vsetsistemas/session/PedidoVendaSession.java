@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.vsetsistemas.dao.PedidoVendaDAO;
+import br.com.vsetsistemas.model.Item;
 import br.com.vsetsistemas.model.PedidoVenda;
 import br.com.vsetsistemas.model.Produto;
 
@@ -77,12 +78,15 @@ public class PedidoVendaSession {
 		return retPv;
 	}
 	
-	public void insertProduct(Produto p) {
+	public Double[] insertProduct(Item i) {
+		
 		try {
-			//dao.insertProduct(p);
+			return dao.insertProduct(i);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return null;
 	}
 	
 	public void deleteProduct(Produto p) {
@@ -101,10 +105,10 @@ public class PedidoVendaSession {
 		}
 	}
 	
-	public List<Produto> listAllProduct(){
-		List<Produto> l = new ArrayList<>();
+	public List<Item> listAllProduct(PedidoVenda pv){
+		List<Item> l = new ArrayList<>();
 		try {
-			//l = dao.selectProduct();
+			l = dao.selectProduct(pv.getNumero());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
