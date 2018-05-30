@@ -12,6 +12,10 @@ public class Cargo {
 		this.status = status;
 	}
 
+	public Cargo() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public long getId() {
 		return id;
 	}

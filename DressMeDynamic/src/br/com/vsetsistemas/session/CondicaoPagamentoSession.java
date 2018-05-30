@@ -32,4 +32,15 @@ public class CondicaoPagamentoSession {
 		return l;
 		
 	}
+	
+public CondicaoPagamento obtainById(int id) {
+		
+		CondicaoPagamento cp = null;
+		try {
+			cp = dao.obtainById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cp;
+	}
 }
