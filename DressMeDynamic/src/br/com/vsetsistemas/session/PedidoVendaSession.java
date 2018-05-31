@@ -1,6 +1,10 @@
 package br.com.vsetsistemas.session;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import br.com.vsetsistemas.dao.PedidoVendaDAO;
@@ -14,7 +18,7 @@ public class PedidoVendaSession {
 	
 	public boolean insertPedidoVenda(PedidoVenda pv) {
 		
-		pv.setNumero(obtainLastRegister());
+		//pv.setNumero(obtainLastRegister());
 		pv.setNumeroPontos(convertIntoPoints(pv.getValorTotal()));
 		
 		try {
@@ -141,12 +145,21 @@ public class PedidoVendaSession {
 		}		
 	}
 	
-	public long obtainLastRegister() {
+	public PedidoVenda loadInitialParameters(){
 		
-		long i = dao.obtainLastRegister();
-		return i;
+		PedidoVenda pv = new PedidoVenda();
+		pv.setNumero(dao.obtainLastRegister());
+		java.util.Date data = new java.util.Date();
+		java.sql.Date dataSql = new java.sql.Date(data.getTime());
+		pv.setDataAbertura(dataSql);
+		return pv;
 	}
 	
+	public long obtainLastRegister() {
+		return dao.obtainLastRegister();
+		
+	}
+
 	public List<PedidoVenda> searchPedidoVenda(PedidoVenda pv){
 		List<PedidoVenda> l = dao.search(pv);
 		return l;

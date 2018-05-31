@@ -21,16 +21,17 @@ import br.com.vsetsistemas.session.PedidoVendaSession;
 public class PedidoVendaService {
 	
 	PedidoVendaSession session = new PedidoVendaSession();
-/*
+
 	@GET
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Reponse loadInitialParameters() {
+	public Response loadInitialParameters() {
 		
-		session.
-		
+		PedidoVenda pv = null;
+		pv = session.loadInitialParameters();
+		return Response.status(200).entity(pv).build();
 	}
-*/	
+
 	@GET
 	@Path("/obtain")
 	@Produces(MediaType.APPLICATION_JSON)
