@@ -639,7 +639,7 @@ public class PedidoVendaDAO extends DAO {
 		Double[] sumValues = {0.00};
 		try { 
 			conectar();
-			PreparedStatement ps = db.getConnection().prepareCall(SQL_OBTAIN_SUM_VALUES);
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_SUM_VALUES);
 			ps.setLong(1, idPedidoVenda);
 			ResultSet rs = ps.executeQuery();
 			//SELECT SUM(VUNITARIO*QUANTIDADE) as total_geral, SUM(desconto) as total_desconto FROM produto_pedidovenda WHERE idpedido=?;

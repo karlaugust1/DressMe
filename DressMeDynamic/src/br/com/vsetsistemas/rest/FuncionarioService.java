@@ -29,7 +29,7 @@ public class FuncionarioService {
 		List<Funcionario> lf = session.listAll();
 		
 		if(lf == null || lf.size()==0) {
-		return Response.status(400).entity("Não existem funcionários cadastrados!").build();
+		return Response.status(400).entity("Nﾃ｣o existem funcionﾃ｡rios cadastrados!").build();
 		}
 		return Response.status(200).entity(lf).build();
 		
@@ -40,13 +40,13 @@ public class FuncionarioService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response insertFuncionario(Funcionario f) {
 		
-		String result = "Funcionário cadastrado com sucesso!";
+		String result = "Funcionﾃ｡rio cadastrado com sucesso!";
 		
 		if(this.session.insertFuncionario(f)) {
 			return Response.status(201).entity(result).build();
 		}
 		
-		result = "Funcionário não foi inserido com sucesso";
+		result = "Funcionﾃ｡rio nﾃ｣o foi inserido com sucesso";
 		return Response.status(400).entity(result).build();
 		
 	}
@@ -56,11 +56,11 @@ public class FuncionarioService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updatePedidoVenda(Funcionario f){
 		
-		String result = "Funcionário alterado com sucesso!";
+		String result = "Funcionﾃ｡rio alterado com sucesso!";
 		if(this.session.updateFuncionario(f)){
 			return Response.status(201).entity(result).build();			
 		}
-		result = "Funcionário n縊 foi alterado com sucesso";
+		result = "Funcionﾃ｡rio n邵� foi alterado com sucesso";
 		return Response.status(400).entity(result).build();	
 	}
 	
@@ -71,11 +71,11 @@ public class FuncionarioService {
 		
 		Funcionario f = new Funcionario();
 		f.setId(id);
-		String result = "Pedido de venda excluído com sucesso";
+		String result = "Funcionário excluﾃｭdo com sucesso";
 		if(session.deleteFuncionario(f)) {
 			return Response.status(200).entity(result).build();
 		}else {
-			result = "Pedido de venda n縊 foi excluido com sucesso";
+			result = "Funcionário não foi excluído com sucesso";
 			return Response.status(400).entity(result).build();
 		}
 	}
@@ -91,7 +91,7 @@ public class FuncionarioService {
 		if(session.authenticateFuncionario(f)==true)
 			return Response.status(200).entity(result).build();
 		else {
-			result = "Usuário ou senha inválidos!";
+			result = "Usuﾃ｡rio ou senha invﾃ｡lidos!";
 			return Response.status(400).entity(result).build();
 		}
 	}
