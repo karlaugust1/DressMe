@@ -12,6 +12,7 @@ import br.com.vsetsistemas.model.Funcionario;
 import br.com.vsetsistemas.model.Item;
 import br.com.vsetsistemas.model.PedidoVenda;
 import br.com.vsetsistemas.model.Produto;
+import br.com.vsetsistemas.session.ProdutoSession;
 
 public class PedidoVendaDAO extends DAO {
 
@@ -87,6 +88,8 @@ public class PedidoVendaDAO extends DAO {
 			
 			for (int i = 0; i < pv.getListaProduto().size(); i++) {
 
+				ProdutoSession p = new ProdutoSession();
+				
 				long iditem = i + 1;
 				//insert into produto_notafiscal (numeronota, idproduto, quantidade,desconto,subtotal,vunitario,iditem) values (?,?,?,?,?,?,?);
 				PreparedStatement ps3 = db.getConnection().prepareStatement(SQL_INSERT_PRODUCT_NF);
@@ -99,6 +102,8 @@ public class PedidoVendaDAO extends DAO {
 				ps3.setLong(7, iditem);
 
 				ps3.executeUpdate();
+				
+				p.updateEstoque(pv.getListaProduto().get(i));
 			}
 			
 

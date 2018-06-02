@@ -74,10 +74,13 @@ public class PedidoVendaService {
 	@Path("/insert/iten")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response inserirProduto(Item i) {
-						
+					
+			String result = "Não foi possível inserir o item";
 			Double[] sum = session.insertProduct(i);
-			
-			return Response.status(200).entity(sum).build();
+			if(sum[0] == 0.0) {
+				return Response.status(200).entity(result).build();				
+			}else
+				return Response.status(200).entity(sum).build();
 	}
 	
 	@GET

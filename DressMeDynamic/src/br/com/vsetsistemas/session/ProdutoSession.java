@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.vsetsistemas.dao.ProdutoDAO;
+import br.com.vsetsistemas.model.Item;
 import br.com.vsetsistemas.model.Produto;
 
 public class ProdutoSession {
@@ -38,5 +39,18 @@ public class ProdutoSession {
 			e.printStackTrace();
 		}
 		return p;
+	}
+	
+	public void updateEstoque(Item i) {
+		
+		try {
+			Produto p = this.obtainById(i.getProduto().getId());
+			p.setQuantidadeEstoque(p.getQuantidadeEstoque()-i.getQuantidade());
+			dao.update(p);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

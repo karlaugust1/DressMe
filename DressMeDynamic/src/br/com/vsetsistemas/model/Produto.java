@@ -11,13 +11,13 @@ public class Produto {
 	private String tamanho;
 	private String cor;
 	private double preco;
+	private int quantidadeEstoque;
 	private Categoria categoria;
 	private Fornecedor fornecedor;
 	
-	
 
 	public Produto(int id, long ean, String descricao, boolean status, String nome, String genero, String tamanho,
-			String cor, double preco, Categoria categoria, Fornecedor fornecedor) {
+			String cor, double preco, int quantidadeEstoque, Categoria categoria, Fornecedor fornecedor) {
 		this.id = id;
 		this.ean = ean;
 		this.descricao = descricao;
@@ -27,6 +27,7 @@ public class Produto {
 		this.tamanho = tamanho;
 		this.cor = cor;
 		this.preco = preco;
+		this.quantidadeEstoque = quantidadeEstoque;
 		this.categoria = categoria;
 		this.fornecedor = fornecedor;
 	}
@@ -122,6 +123,13 @@ public class Produto {
 	public void setEan(long ean) {
 		this.ean = ean;
 	}
-	
+
+	public int getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
+
+	public void setQuantidadeEstoque(int quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
 	
 }
