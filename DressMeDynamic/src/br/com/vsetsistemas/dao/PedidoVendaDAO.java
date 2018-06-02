@@ -14,7 +14,9 @@ import br.com.vsetsistemas.model.Produto;
 
 public class PedidoVendaDAO extends DAO {
 
-	/* DONE */private String SQL_INSERT = "INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, ?, (date(sysdate()), (date(sysdate())+interval '30' day) , ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	/* DONE */private String SQL_INSERT = "INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, false, (date(sysdate()), (date(sysdate())+interval '30' day) , ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	
+	private String SQL_INSERT_BUDGET = "INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, true, (date(sysdate()), (date(sysdate())+interval '30' day) , ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 	/* DONE */private String SQL_INSERT_PRODUCT = "INSERT INTO produto_pedidovenda (idpedido, idproduto, quantidade, desconto, subtotal, vunitario, iditem) values (?, ?, ?, ?, ?, ?, ?);";
 
@@ -58,22 +60,22 @@ public class PedidoVendaDAO extends DAO {
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_INSERT);
 
 			ps.setLong(1, p.getNumero());
-			ps.setBoolean(2, p.isOrcamento());
-			ps.setDate(3, p.getDataFechamento());
-			ps.setLong(4, p.getCliente().getId());
-			ps.setLong(5, p.getCondPagamento().getId());
-			ps.setLong(6, p.getVendedor().getId());
-			ps.setString(7, p.getSituacao());
-			ps.setDouble(8, p.getValorTotal());
-			ps.setDouble(9, p.getValorSubtotal());
-			ps.setDouble(10, p.getDesconto());
-			ps.setInt(11, p.getNumeroPontos());
-			ps.setBoolean(12, p.isStatus());
+			//ps.setBoolean(2, p.isOrcamento());
+			ps.setDate(2, p.getDataFechamento());
+			ps.setLong(3, p.getCliente().getId());
+			ps.setLong(4, p.getCondPagamento().getId());
+			ps.setLong(5, p.getVendedor().getId());
+			ps.setString(6, p.getSituacao());
+			ps.setDouble(7, p.getValorTotal());
+			ps.setDouble(8, p.getValorSubtotal());
+			ps.setDouble(9, p.getDesconto());
+			ps.setInt(10, p.getNumeroPontos());
+			ps.setBoolean(11, p.isStatus());
 			ps.executeUpdate();
 
 			// INSERT INTO produto_pedidovenda (idpedido, idproduto, quantidade, desconto,
 			// subtotal, vunitario, iditem) values (?, ?, ?, ?, ?, ?, ?);
-			for (int i = 0; i < p.getListaProduto().size(); i++) {
+			/*for (int i = 0; i < p.getListaProduto().size(); i++) {
 
 				long iditem = i + 1;
 				PreparedStatement ps2 = db.getConnection().prepareStatement(SQL_INSERT_PRODUCT);
@@ -87,6 +89,7 @@ public class PedidoVendaDAO extends DAO {
 
 				ps2.executeUpdate();
 			}
+			*/
 
 			desconectar();
 		}
@@ -97,6 +100,54 @@ public class PedidoVendaDAO extends DAO {
 
 	}
 
+	public void insertBudget(PedidoVenda p) {
+
+		try {
+			conectar();
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_INSERT_BUDGET);
+
+			ps.setLong(1, p.getNumero());
+			//ps.setBoolean(2, p.isOrcamento());
+			ps.setDate(2, p.getDataFechamento());
+			ps.setLong(3, p.getCliente().getId());
+			ps.setLong(4, p.getCondPagamento().getId());
+			ps.setLong(5, p.getVendedor().getId());
+			ps.setString(6, p.getSituacao());
+			ps.setDouble(7, p.getValorTotal());
+			ps.setDouble(8, p.getValorSubtotal());
+			ps.setDouble(9, p.getDesconto());
+			ps.setInt(10, p.getNumeroPontos());
+			ps.setBoolean(11, p.isStatus());
+			ps.executeUpdate();
+
+			// INSERT INTO produto_pedidovenda (idpedido, idproduto, quantidade, desconto,
+			// subtotal, vunitario, iditem) values (?, ?, ?, ?, ?, ?, ?);
+			/*for (int i = 0; i < p.getListaProduto().size(); i++) {
+
+				long iditem = i + 1;
+				PreparedStatement ps2 = db.getConnection().prepareStatement(SQL_INSERT_PRODUCT);
+				ps2.setLong(1, p.getListaProduto().get(i).getPedido().getNumero());
+				ps2.setInt(2, p.getListaProduto().get(i).getProduto().getId());
+				ps2.setInt(3, p.getListaProduto().get(i).getQuantidade());
+				ps2.setDouble(4, p.getListaProduto().get(i).getDesconto());
+				ps2.setDouble(5, p.getListaProduto().get(i).getSubtotal());
+				ps2.setDouble(6, p.getListaProduto().get(i).getValorUnitario());
+				ps2.setLong(7, iditem);
+
+				ps2.executeUpdate();
+			}
+			*/
+
+			desconectar();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	public Double[] insertProduct(Item i) {
 
 		try {

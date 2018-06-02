@@ -15,12 +15,12 @@ import br.com.vsetsistemas.model.Produto;
 public class PedidoVendaSession {
 
 	private PedidoVendaDAO dao = new PedidoVendaDAO();
-	
+
 	public boolean insertPedidoVenda(PedidoVenda pv) {
-		
-		//pv.setNumero(obtainLastRegister());
+
+		// pv.setNumero(obtainLastRegister());
 		pv.setNumeroPontos(convertIntoPoints(pv.getValorTotal()));
-		
+
 		try {
 			dao.insert(pv);
 			return true;
@@ -29,9 +29,23 @@ public class PedidoVendaSession {
 		}
 		return false;
 	}
-	
+
+	public boolean insertOrcamento(PedidoVenda pv) {
+
+		// pv.setNumero(obtainLastRegister());
+		pv.setNumeroPontos(convertIntoPoints(pv.getValorTotal()));
+
+		try {
+			dao.insert(pv);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public boolean updatePedidoVenda(PedidoVenda pv) {
-		
+
 		try {
 			dao.update(pv);
 			return true;
@@ -40,9 +54,9 @@ public class PedidoVendaSession {
 		}
 		return false;
 	}
-	
+
 	public boolean deletePedidoVenda(PedidoVenda pv) {
-		
+
 		try {
 			dao.delete(pv);
 			return true;
@@ -51,8 +65,8 @@ public class PedidoVendaSession {
 		}
 		return false;
 	}
-	
-	public List<PedidoVenda> listAll(){
+
+	public List<PedidoVenda> listAll() {
 		List<PedidoVenda> l = new ArrayList<>();
 		try {
 			l = dao.select();
@@ -61,7 +75,7 @@ public class PedidoVendaSession {
 		}
 		return l;
 	}
-	
+
 	public PedidoVenda obtain(PedidoVenda pv) {
 		PedidoVenda retPv = null;
 		try {
@@ -71,7 +85,7 @@ public class PedidoVendaSession {
 		}
 		return retPv;
 	}
-	
+
 	public PedidoVenda obtainById(long numero) {
 		PedidoVenda retPv = null;
 		try {
@@ -81,35 +95,35 @@ public class PedidoVendaSession {
 		}
 		return retPv;
 	}
-	
+
 	public Double[] insertProduct(Item i) {
-		
+
 		try {
 			return dao.insertProduct(i);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
+
 	public void deleteProduct(Produto p) {
 		try {
-			//dao.delteProduct();
+			// dao.delteProduct();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void updateProduct(Produto p) {
 		try {
-			//dao.updateProduct;
+			// dao.updateProduct;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public List<Item> listAllProduct(PedidoVenda pv){
+
+	public List<Item> listAllProduct(PedidoVenda pv) {
 		List<Item> l = new ArrayList<>();
 		try {
 			l = dao.selectProduct(pv.getNumero());
@@ -118,35 +132,35 @@ public class PedidoVendaSession {
 		}
 		return l;
 	}
-	
+
 	public Produto obtainProduct() {
 		Produto p = null;
 		try {
-			//p = dao.obtainProduct();
+			// p = dao.obtainProduct();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return p;
 	}
-	
+
 	public int convertIntoPoints(double valor) {
-		
+
 		return (int) Math.round(valor);
-		
+
 	}
-	
+
 	public boolean invoicePedidoVenda(PedidoVenda pv) {
-		
-		if(pv != null) {
+
+		if (pv != null) {
 			dao.invoice(pv);
 			return true;
-		}else {
+		} else {
 			return false;
-		}		
+		}
 	}
-	
-	public PedidoVenda loadInitialParameters(){
-		
+
+	public PedidoVenda loadInitialParameters() {
+
 		PedidoVenda pv = new PedidoVenda();
 		pv.setNumero(dao.obtainLastRegister());
 		java.util.Date data = new java.util.Date();
@@ -154,15 +168,15 @@ public class PedidoVendaSession {
 		pv.setDataAbertura(dataSql);
 		return pv;
 	}
-	
+
 	public long obtainLastRegister() {
 		return dao.obtainLastRegister();
-		
+
 	}
 
-	public List<PedidoVenda> searchPedidoVenda(PedidoVenda pv){
+	public List<PedidoVenda> searchPedidoVenda(PedidoVenda pv) {
 		List<PedidoVenda> l = dao.search(pv);
 		return l;
 	}
-	
+
 }
