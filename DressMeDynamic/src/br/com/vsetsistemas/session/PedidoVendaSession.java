@@ -75,6 +75,16 @@ public class PedidoVendaSession {
 		}
 		return l;
 	}
+	
+	public List<PedidoVenda> listAllBudges() {
+		List<PedidoVenda> l = new ArrayList<>();
+		try {
+			l = dao.selectBudges();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return l;
+	}
 
 	public PedidoVenda obtain(PedidoVenda pv) {
 		PedidoVenda retPv = null;
@@ -177,6 +187,18 @@ public class PedidoVendaSession {
 	public List<PedidoVenda> searchPedidoVenda(PedidoVenda pv) {
 		List<PedidoVenda> l = dao.search(pv);
 		return l;
+	}
+	
+	public boolean toPedidoVenda(PedidoVenda pv) {
+		
+		try {
+			pv.setOrcamento(false);
+			dao.update(pv);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

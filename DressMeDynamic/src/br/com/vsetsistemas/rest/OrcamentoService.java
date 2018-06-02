@@ -29,6 +29,7 @@ public class OrcamentoService {
 		
 		PedidoVenda pv = null;
 		pv = session.loadInitialParameters();
+		pv.setOrcamento(true);
 		return Response.status(200).entity(pv).build();
 	}
 
@@ -46,7 +47,7 @@ public class OrcamentoService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listAll() {
 
-		List<PedidoVenda> lista = session.listAll();
+		List<PedidoVenda> lista = session.listAllBudges();
 		
 		if(lista == null || lista.size() == 0) {
 			return Response.status(400).entity("Lista vazia").build();
@@ -119,6 +120,18 @@ public class OrcamentoService {
 		}
 	}
 	
-	//transformar pedido venda em orçamento
-	
+
+	@POST
+	@Path("/pedidovenda")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response toPedidoVenda(PedidoVenda pv) {
+		
+		String result = "";
+		if(this.session.toPedidoVenda(pv)) {
+			result = "Pedido de venda faturado com sucesso!";			
+		}else {
+			result = "Pedido de venda não foi faturado com sucesso!";
+		}
+		return Response.status(200).entity(result).build();
+	}
 }

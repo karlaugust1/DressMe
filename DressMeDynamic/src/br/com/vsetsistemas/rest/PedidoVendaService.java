@@ -29,6 +29,7 @@ public class PedidoVendaService {
 		
 		PedidoVenda pv = null;
 		pv = session.loadInitialParameters();
+		pv.setOrcamento(false);
 		return Response.status(200).entity(pv).build();
 	}
 
@@ -117,6 +118,16 @@ public class PedidoVendaService {
 			result = "Pedido de venda não foi excluido com sucesso";
 			return Response.status(400).entity(result).build();
 		}
+	}
+	
+	@POST
+	@Path("/invoice")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response invoicePedidoVenda(PedidoVenda pv) {
+		
+		this.session.invoicePedidoVenda(pv);
+		String result = "Pedido de venda faturado com sucesso!";
+		return Response.status(200).entity(result).build();
 	}
 	
 	

@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import br.com.vsetsistemas.model.Cliente;
 import br.com.vsetsistemas.model.CondicaoPagamento;
@@ -32,7 +33,9 @@ public class PedidoVendaDAO extends DAO {
 
 	/* DONE */private String SQL_DELETE_PRODUCT = "DELETE FROM produto_pedidovenda WHERE (idpedido=? AND idproduto=? AND iditem=?);";
 
-	/* DONE */private String SQL_SELECT = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where pv.status = true;";
+	/* DONE */private String SQL_SELECT = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where pv.status = true and pv.orcamento=false;";
+	
+	/* DONE */private String SQL_SELECT_BUDGES = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where pv.status = true and pv.orcamento=true;";
 
 	/* DONE */private String SQL_SELECT_PRODUCT = "select * from produto_pedidovenda WHERE idpedido = ?;";
 
@@ -45,13 +48,68 @@ public class PedidoVendaDAO extends DAO {
 	private String SQL_SEARCH = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where (pv.numero = ? or pv.orcamento = ? or pv.dataAbertura = ? or pv.dataFechamento = ? or pv.cliente = ? or pv.condPag = ? or pv.vendedor = ? or pv.situacao = ? or pv.valorTotal = ? or pv.valorSubtotal = ? or pv.desconto = ? or pv.numero_pontos = ? or pv.status = ?);";
 
 	private String SQL_INVOICE = "insert into contas_receber (id_cliente, valor_receber, data_lancamento, id_cond_pagamento) values (?,?,(date(sysdate())),?);";
-
 	private String SQL_INVOICE_PEDIDO = "UPDATE PedidoVenda SET status = false, situacao='Faturado' WHERE numero = ?;";
-
+	private String SQL_INVOICE_PEDIDO_1 = "insert into notafiscal (numero, serie, chave_de_acesso, data_emissao, data_entrada_saida, condpag, pedidovenda, empresa) values (?,?,?,sysdate(),sysdate(),?,?,?);";
+	private String SQL_INSERT_PRODUCT_NF = "insert into produto_notafiscal (numeronota, idproduto, quantidade,desconto,subtotal,vunitario,iditem) values (?,?,?,?,?,?,?);";
+	
 	private String SQL_OBTAIN_LAST_REGISTER = "select count(numero)+1 ultimo from pedidovenda;";
+	private String SQL_OBTAIN_LAST_REGISTER_NF = "select count(numero)+1 ultimo from notafiscal;";
 	
 	private String SQL_OBTAIN_SUM_VALUES = "SELECT SUM(VUNITARIO*QUANTIDADE) as total_geral, SUM(desconto) as total_desconto FROM produto_pedidovenda WHERE idpedido=?;";
+	
 
+	public void invoice(PedidoVenda pv) {
+
+		try {
+			conectar();
+			//insert into contas_receber (id_cliente, valor_receber, data_lancamento, id_cond_pagamento) values (?,?,(date(sysdate())),?)
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_INVOICE);
+			
+			ps.setLong(1, pv.getCliente().getId());
+			ps.setDouble(2, pv.getValorTotal());
+			ps.setInt(3, pv.getCondPagamento().getId());
+			ps.executeUpdate();
+
+			// UPDATE PedidoVenda SET status = false, situacao='Faturado' WHERE numero = ?;
+			PreparedStatement ps1 = db.getConnection().prepareStatement(SQL_INVOICE_PEDIDO);
+			ps1.setLong(1, pv.getNumero());
+			ps1.executeUpdate();
+			
+			//insert into notafiscal (numero, serie, chave_de_acesso, condpag, pedidovenda, empresa) values (?,?,?,?,?,?);
+			PreparedStatement ps2 = db.getConnection().prepareStatement(SQL_INVOICE_PEDIDO_1);
+			ps2.setLong(1,this.obtainLastRegisterNF());
+			ps2.setInt(2, 1);
+			ps2.setLong(3, this.obtainChaveAcesso());
+			ps2.setInt(4, pv.getCondPagamento().getId());
+			ps2.setLong(5, pv.getNumero());
+			ps2.setInt(6, 1);
+			ps2.executeUpdate();
+			
+			for (int i = 0; i < pv.getListaProduto().size(); i++) {
+
+				long iditem = i + 1;
+				//insert into produto_notafiscal (numeronota, idproduto, quantidade,desconto,subtotal,vunitario,iditem) values (?,?,?,?,?,?,?);
+				PreparedStatement ps3 = db.getConnection().prepareStatement(SQL_INSERT_PRODUCT_NF);
+				ps3.setLong(1, this.obtainLastRegisterNF()-1);
+				ps3.setInt(2, pv.getListaProduto().get(i).getProduto().getId());
+				ps3.setInt(3, pv.getListaProduto().get(i).getQuantidade());
+				ps3.setDouble(4, pv.getListaProduto().get(i).getDesconto());
+				ps3.setDouble(5, pv.getListaProduto().get(i).getSubtotal());
+				ps3.setDouble(6, pv.getListaProduto().get(i).getValorUnitario());
+				ps3.setLong(7, iditem);
+
+				ps3.executeUpdate();
+			}
+			
+
+			desconectar();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	public void insert(PedidoVenda p) {
 
 		try {
@@ -643,31 +701,6 @@ public class PedidoVendaDAO extends DAO {
 		return lista;
 	}
 
-	public void invoice(PedidoVenda pv) {
-
-		try {
-			conectar();
-			PreparedStatement ps = db.getConnection().prepareStatement(SQL_INVOICE);
-
-			// insert into contas_receber (id_cliente, valor_receber, data_lancamento,
-			// id_cond_pagamento) values (?,?,(date(sysdate())),?);
-			ps.setLong(1, pv.getCliente().getId());
-			ps.setDouble(2, pv.getValorTotal());
-			ps.setInt(3, pv.getCondPagamento().getId());
-			ps.executeUpdate();
-
-			// UPDATE PedidoVenda SET status = false, situacao='Faturado' WHERE numero = ?;
-			PreparedStatement ps1 = db.getConnection().prepareStatement(SQL_INVOICE_PEDIDO);
-			ps1.setLong(1, pv.getNumero());
-			ps1.executeUpdate();
-
-			desconectar();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
 
 	public long obtainLastRegister() {
 
@@ -675,6 +708,22 @@ public class PedidoVendaDAO extends DAO {
 		try {
 			conectar();
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_LAST_REGISTER);
+			ResultSet rs = ps.executeQuery();
+			i = rs.getInt("ultimo");
+			desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return i;
+	}
+	
+	public long obtainLastRegisterNF() {
+
+		long i = 0;
+		try {
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_LAST_REGISTER_NF);
 			ResultSet rs = ps.executeQuery();
 			i = rs.getInt("ultimo");
 			desconectar();
@@ -705,6 +754,61 @@ public class PedidoVendaDAO extends DAO {
 		}
 		
 		return sumValues;
+	}
+	
+	public long obtainChaveAcesso() {
+		
+		Random r = new Random();
+		return r.nextLong();
+		
+	}
+	
+	public List<PedidoVenda> selectBudges() {
+
+		ClienteDAO cdao = new ClienteDAO();
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		CondicaoPagamentoDAO cpdao = new CondicaoPagamentoDAO();
+
+		List<PedidoVenda> l = new ArrayList<PedidoVenda>();
+
+		try {
+
+			conectar();
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_SELECT_BUDGES);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				Cliente c = new Cliente();
+				c.setId(rs.getLong("cliente"));
+				c = cdao.obtain(c);
+
+				Funcionario f = new Funcionario();
+				f.setId(rs.getLong("vendedor"));
+				f = fdao.obtain(f);
+
+				CondicaoPagamento cp = new CondicaoPagamento();
+				cp.setId(rs.getInt("condPag"));
+				cp = cpdao.obtain(cp);
+
+				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"), rs.getBoolean("orcamento"),
+						rs.getDate("dataabertura"), rs.getDate("datafechamento"), c, cp, f,
+						selectProduct(rs.getLong("numero")), rs.getString("situacao"), rs.getDouble("valortotal"),
+						rs.getDouble("valorsubtotal"), rs.getDouble("desconto"), rs.getBoolean("status"),
+						rs.getInt("numero_pontos"));
+				l.add(pv);
+			}
+
+			desconectar();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return l;
+
 	}
 
 }
