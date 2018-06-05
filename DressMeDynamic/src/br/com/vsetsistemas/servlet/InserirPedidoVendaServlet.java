@@ -33,8 +33,8 @@ public class InserirPedidoVendaServlet extends HttpServlet {
 		PedidoVendaSession pvs = new PedidoVendaSession();
 		// Obter parametros do formulário
 		String numero = request.getParameter("numero");
-		String dataAbertura = request.getParameter("dataAbertura");
-		String dataFechamento = request.getParameter("dataFechamento");
+		//String dataAbertura = request.getParameter("dataAbertura");
+		//String dataFechamento = request.getParameter("dataFechamento");
 		String cliente = request.getParameter("cliente");
 		String condPag = request.getParameter("condPag");
 		String vendedor = request.getParameter("vendedor");
