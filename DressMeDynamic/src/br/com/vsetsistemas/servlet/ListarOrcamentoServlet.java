@@ -34,7 +34,7 @@ public class ListarOrcamentoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PedidoVendaSession service = new PedidoVendaSession();
-		List<PedidoVenda> lista = service.listAll();
+		List<PedidoVenda> lista = service.listAllBudges();
 		
 		//Colocar a lista na memoria
 		request.setAttribute("listaOrcamentos", lista);

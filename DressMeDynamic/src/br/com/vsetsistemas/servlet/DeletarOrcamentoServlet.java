@@ -70,7 +70,7 @@ public class DeletarOrcamentoServlet extends HttpServlet {
 
 		request.setAttribute("listaOrcamentos", lista);
 
-		String nextJSP = "/orcamento/listarOrcamento.jsp";
+		String nextJSP = "/orcamento/listarOrcamentos.jsp";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request, response);
 

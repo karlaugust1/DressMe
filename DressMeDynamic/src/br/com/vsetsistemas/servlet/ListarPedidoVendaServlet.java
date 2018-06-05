@@ -33,13 +33,14 @@ public class ListarPedidoVendaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		PedidoVendaSession service = new PedidoVendaSession();
 		List<PedidoVenda> lista = service.listAll();
 		
 		//Colocar a lista na memoria
-		request.setAttribute("listaVendas", lista);
+		request.setAttribute("listaPedidosVendas", lista);
 		
-		String nextJSP = "/pedidovenda/listarVendas.jsp";
+		String nextJSP = "pedidovenda/listarPedidosVendas.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
         dispatcher.forward(request, response);
 	}

@@ -70,9 +70,9 @@ public class InserirPedidoVendaServlet extends HttpServlet {
 		if (lista == null)
 			lista = new ArrayList<PedidoVenda>();
 
-		request.setAttribute("listaPedidos", lista);
+		request.setAttribute("w", lista);
 
-		String nextJSP = "/pedidovenda/listarPedidos.jsp";
+		String nextJSP = "/pedidovenda/listarPedidosVendas.jsp";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request, response);
 
