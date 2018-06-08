@@ -22,8 +22,8 @@ public class FuncionarioApp {
 		
 		//DELETAR APARTIR DAQUI, POIS É SÓ UM TESTE
 		//INSERIR
-		Funcionario newF = new Funcionario(4,"Edu", 946, "Casa", 85816780, "Cascavel", "edu@facear.edu", "edu","edu123", c, true, false);
-		fs.insertFuncionario(newF);
+		//Funcionario newF = new Funcionario(4,"Edu", 946, "Casa", 85816780, "Cascavel", "edu@facear.edu", "edu","edu123", c, true, false);
+		//fs.insertFuncionario(newF);
 		
 		//ALTERAR
 		//newF.setLogin("EDUUU");

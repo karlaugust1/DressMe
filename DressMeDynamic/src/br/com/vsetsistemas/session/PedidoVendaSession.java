@@ -199,6 +199,11 @@ public class PedidoVendaSession {
 		return l;
 	}
 	
+	public List<PedidoVenda> searchOrcamento(PedidoVenda pv) {
+		List<PedidoVenda> l = dao.search(pv);
+		return l;
+	}
+	
 	public boolean toPedidoVenda(PedidoVenda pv) {
 		
 		try {

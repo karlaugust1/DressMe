@@ -17,14 +17,14 @@ import br.com.vsetsistemas.session.PedidoVendaSession;
 
 
 @SuppressWarnings("unused")
-public class PediddoVendaApp {
+public class OrcamentoApp {
 
 	public static void main(String[] args) {
 		
 		//INSERT INTO PedidoVenda (numero, orcamento, dataAbertura, dataFechamento, cliente, condPag, vendedor, situacao
 		//, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, ?, sysdate(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 		
-		//INSERIR PEDIDO DE VENDA
+		//INSERIR ORÇAMENTO
 		
 		/*
 		ClienteDAO cdao = new ClienteDAO();
@@ -38,7 +38,7 @@ public class PediddoVendaApp {
 		
 		PedidoVendaSession pvs = new PedidoVendaSession();
 		
-		PedidoVenda pv = new PedidoVenda(1, false, null, null, c, cp, f, null,"Realizado", 263.98, 260.00, 3.98, true, pvs.convertIntoPoints(260.00));
+		PedidoVenda pv = new PedidoVenda(2, false, null, null, c, cp, f, null,"Realizado", 263.98, 260.00, 3.98, true, pvs.convertIntoPoints(260.00));
 		
 		ProdutoDAO pdao = new ProdutoDAO();
 				
@@ -51,13 +51,13 @@ public class PediddoVendaApp {
 		pv.setListaProduto(listaProduto);
 		
 		PedidoVendaDAO pvdao = new PedidoVendaDAO();
-		pvdao.insert(pv);
+		pvdao.insertBudget(pv);
 		
 		for(int j =0; j<listaProduto.size(); j++) {
 			pvdao.insertProduct(listaProduto.get(j));
 		}
 		
-		//CONSULTAR PEDIDO DE VENDA
+		//CONSULTAR ORÇAMENTO
 		PedidoVenda pv1 = null;
 		PedidoVendaDAO pdao1 = new PedidoVendaDAO();
 		pv1 = pdao1.obtainById(1);
@@ -80,10 +80,10 @@ public class PediddoVendaApp {
 		}
 		*/
 		/*
-		//EDITAR PEDIDO DE VENDA
+		//EDITAR ORÇAMENTO
 		PedidoVenda pv = null;
 		PedidoVendaDAO pdao = new PedidoVendaDAO();
-		pv = pdao.obtainById(1);
+		pv = pdao.obtainById(2);
 		
 		System.out.println("Nome vendedor antes da alteração: " + pv.getVendedor().getNome());
 		
@@ -97,35 +97,35 @@ public class PediddoVendaApp {
 		*/
 		
 		/*
-		//CANCELAR PEDIDO DE VENDA
+		//CANCELAR ORÇAMENTO
 		PedidoVenda pv = null;
 		PedidoVendaDAO pdao = new PedidoVendaDAO();
-		pv = pdao.obtainById(1);
+		pv = pdao.obtainById(2);
 		
 		pdao.cancel(pv);
-		*/
 		
-		//FATURAR PEDIDO DE VENDA
+		*/
+		//TRANSFORMAR ORÇAMENTO
 		/*
 		PedidoVenda pv = null;
 		PedidoVendaDAO pdao = new PedidoVendaDAO();
-		pv = pdao.obtainById(1);
+		pv = pdao.obtainById(2);
 		
 		PedidoVendaSession session = new PedidoVendaSession();
-		session.invoicePedidoVenda(pv);
+		session.toPedidoVenda(pv);
 		 */
 		
 		//PESQUISAR PEDIDO DE VENDA
-		
+		/*
 		PedidoVenda pv = new PedidoVenda();
-		pv.setNumero(1);
+		pv.setNumero(2);
 		
 		PedidoVendaSession s = new PedidoVendaSession();
-		List<PedidoVenda> l = s.searchPedidoVenda(pv);
+		List<PedidoVenda> l = s.searchOrcamento(pv);
 		for(PedidoVenda p : l){
 			System.out.println(p.getNumero());
 		}
-		
+		*/
 		
 		
 	}

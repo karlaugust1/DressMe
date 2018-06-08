@@ -16,6 +16,10 @@ public class Empresa extends Pessoa{
 		this.inscricaoEstadual = inscricaoEstadual;
 	}
 
+	public Empresa() {
+		
+	}
+
 	public long getCnpj() {
 		return cnpj;
 	}
