@@ -148,7 +148,7 @@ public class ProdutoDAO extends DAO {
 			while (rs.next()) {
 				Produto p = new Produto(rs.getInt("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
-						rs.getString("cor"), rs.getDouble("preco"), new Categoria(), new Fornecedor());
+						rs.getString("cor"), rs.getDouble("preco"), rs.getInt("qtd_estoque"), new Categoria(), new Fornecedor());
 				l.add(p);
 			}
 
@@ -177,7 +177,7 @@ public class ProdutoDAO extends DAO {
 			while (rs.next()) {
 				rp = new Produto(rs.getInt("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
-						rs.getString("cor"), rs.getDouble("vunitario"), new Categoria(), new Fornecedor());
+						rs.getString("cor"), rs.getDouble("vunitario"), rs.getInt("qtd_estoque"), new Categoria(), new Fornecedor());
 				break;
 			}
 
@@ -217,7 +217,7 @@ public class ProdutoDAO extends DAO {
 			while (rs.next()) {
 				Produto newP = new Produto(rs.getInt("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
-						rs.getString("cor"), rs.getDouble("vunitario"), (c = cdao.obtainById(rs.getLong("categoria"))), (fdao.obtainById(rs.getLong("fornecedor"))));
+						rs.getString("cor"), rs.getDouble("vunitario"), rs.getInt("qtd_estoque"),(c = cdao.obtainById(rs.getLong("categoria"))), (fdao.obtainById(rs.getLong("fornecedor"))));
 				if (newP != null) {
 					p = newP;
 					break;

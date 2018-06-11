@@ -25,8 +25,8 @@ public class PediddoVendaApp {
 		//, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, ?, sysdate(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 		
 		//INSERIR PEDIDO DE VENDA
-		/*
 		
+		/*
 		ClienteDAO cdao = new ClienteDAO();
 		Cliente c = cdao.obtainById(3);
 		
@@ -53,8 +53,10 @@ public class PediddoVendaApp {
 		PedidoVendaDAO pvdao = new PedidoVendaDAO();
 		pvdao.insert(pv);
 		
-		*/
-		/*
+		for(int j =0; j<listaProduto.size(); j++) {
+			pvdao.insertProduct(listaProduto.get(j));
+		}
+		
 		//CONSULTAR PEDIDO DE VENDA
 		PedidoVenda pv1 = null;
 		PedidoVendaDAO pdao1 = new PedidoVendaDAO();
@@ -111,10 +113,10 @@ public class PediddoVendaApp {
 		
 		PedidoVendaSession session = new PedidoVendaSession();
 		session.invoicePedidoVenda(pv);
-		*/
+		 */
 		
 		//PESQUISAR PEDIDO DE VENDA
-		/*
+		
 		PedidoVenda pv = new PedidoVenda();
 		pv.setNumero(1);
 		
@@ -123,7 +125,7 @@ public class PediddoVendaApp {
 		for(PedidoVenda p : l){
 			System.out.println(p.getNumero());
 		}
-		*/
+		
 		
 		
 	}

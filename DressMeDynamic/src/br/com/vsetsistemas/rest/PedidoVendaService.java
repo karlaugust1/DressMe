@@ -29,6 +29,7 @@ public class PedidoVendaService {
 		
 		PedidoVenda pv = null;
 		pv = session.loadInitialParameters();
+		pv.setOrcamento(false);
 		return Response.status(200).entity(pv).build();
 	}
 
@@ -73,10 +74,13 @@ public class PedidoVendaService {
 	@Path("/insert/iten")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response inserirProduto(Item i) {
-						
+					
+			String result = "Não foi possível inserir o item";
 			Double[] sum = session.insertProduct(i);
-			
-			return Response.status(200).entity(sum).build();
+			if(sum[0] == 0.0) {
+				return Response.status(200).entity(result).build();				
+			}else
+				return Response.status(200).entity(sum).build();
 	}
 	
 	@GET
@@ -117,6 +121,16 @@ public class PedidoVendaService {
 			result = "Pedido de venda não foi excluido com sucesso";
 			return Response.status(400).entity(result).build();
 		}
+	}
+	
+	@POST
+	@Path("/invoice")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response invoicePedidoVenda(PedidoVenda pv) {
+		
+		this.session.invoicePedidoVenda(pv);
+		String result = "Pedido de venda faturado com sucesso!";
+		return Response.status(200).entity(result).build();
 	}
 	
 	

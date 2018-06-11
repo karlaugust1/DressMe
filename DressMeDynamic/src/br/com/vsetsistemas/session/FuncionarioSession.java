@@ -65,6 +65,10 @@ public class FuncionarioSession {
 
 		return lista;
 	}
+	
+	public Funcionario getFuncionarioById(Long l) {
+		return new Funcionario();
+	}
 
 	public boolean verifyFuncionario(Funcionario f) {
 
@@ -118,4 +122,5 @@ public class FuncionarioSession {
 			fdao.update(f);
 		}
 	}
+	
 }
