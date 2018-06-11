@@ -130,6 +130,7 @@ h2 {
 
 h3 {
     font-size: 24px;
+	text-align: center;
 }
 
 h4 {
@@ -448,6 +449,7 @@ section {
     -moz-transition: all 0.3s ease;
     transition: all 0.3s ease;
     cursor: pointer;
+	text-align: center;
 }
 
 .au-btn:hover {
