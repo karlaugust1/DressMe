@@ -271,9 +271,10 @@
 										<tr class="tr-shadow">
 											<td class="desc">${pedidoVenda.numero}</td>
 											<td>${pedidoVenda.dataAbertura}</td>
-											<td class="desc">${pedidoVenda.cliente.idCliente}</td>
+											<td class="desc">${pedidoVenda.cliente.id}</td>
+											<td>${pedidoVenda.cliente.nome}</td>
 											<td><span class="status--process">${pedidoVenda.situacao}</span></td>
-											<td><span class="block-email">${pedidoVenda.total}</span></td>
+											<td><span class="block-email">${pedidoVenda.valorTotal}</span></td>
 											<td>
 												<div class="table-data-feature">
 													<button class="item" data-toggle="tooltip"
