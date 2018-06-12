@@ -230,7 +230,7 @@
 
 			<!-- LISTAGEM DE PEDIDOS -->
 			<h3 class="title-5 m-b-35">Pedidos de Venda</h3>
-			<form action="/DressMeDynamic/ListPedidoVendaServlet" method="post">
+			<form action="/ListarPedidoVendaServlet" method="post">
 				<c:choose>
 					<c:when test="${not empty listarPedidosVendas}">
 						<div class="table-data__tool">

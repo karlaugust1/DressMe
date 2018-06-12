@@ -22,10 +22,10 @@ public class ClienteDAO extends DAO {
 			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
 			+ " WHERE c.status = true;";
 
-	private String SQL_OBTAIN = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.Cpf"
-			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
-			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
-			+ " WHERE c.status = true AND c.id = ?;";
+	private String SQL_OBTAIN = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.Cpfcnpj," + 
+			"			p.numero, p.complemento, p.email, p.nome, p.cidade, l.ufe_sg, l.log_nome, p.cep, p.status" + 
+			"			FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id) INNER JOIN log_logradouro l ON (p.cep = l.cep)" + 
+			"			WHERE p.status = true AND c.id = ?;";
 
 	private String SQL_OBTAIN_BY_CPF = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.cpfcnpj,"
 			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, p.status," + "l.ufe_sg, l.log_nome "
@@ -38,7 +38,7 @@ public class ClienteDAO extends DAO {
 			+ " WHERE p.status = true AND c.id = ?;";
 
 	public void insert(Cliente c) {
-
+//41 9
 		try {
 			conectar();
 
@@ -178,7 +178,7 @@ public class ClienteDAO extends DAO {
 			while (rs.next()) {
 				Cliente c1 = new Cliente(rs.getLong("id"), rs.getString("nome"), rs.getInt("numero"),
 						rs.getString("complemento"), rs.getLong("cep"), rs.getString("cidade"), rs.getString("email"),
-						rs.getLong("cpf"), rs.getDate("data_nascimento"), rs.getLong("rg"),
+						rs.getLong("cpfcnpj"), rs.getDate("data_nascimento"), rs.getLong("rg"),
 						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
 						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
 						rs.getBoolean("status"));
