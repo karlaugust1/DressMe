@@ -9,24 +9,34 @@ import br.com.vsetsistemas.model.Cliente;
 public class ClienteSession {
 
 	private ClienteDAO dao = new ClienteDAO();
-		
-	public boolean updateCliente(Cliente c) {
+
+	public int countClientes() {
 		
 		try {
-			
+			return dao.countClientes();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public boolean updateCliente(Cliente c) {
+
+		try {
+
 			dao.update(c);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
-		
+
 	}
-	
+
 	public boolean deleteCliente(Cliente c) {
-		
+
 		try {
-			
+
 			dao.delete(c);
 			return true;
 		} catch (Exception e) {
@@ -34,12 +44,11 @@ public class ClienteSession {
 		}
 		return false;
 	}
-	
-	
+
 	public Cliente obtainByCpf(long cpf) {
-	
+
 		Cliente c1 = null;
-		
+
 		try {
 			c1 = dao.obtainByCpf(cpf);
 		} catch (Exception e) {
@@ -47,48 +56,48 @@ public class ClienteSession {
 		}
 		return c1;
 	}
-	
-	public List<Cliente> listAll(){
-		
+
+	public List<Cliente> listAll() {
+
 		List<Cliente> lista = new ArrayList<>();
-		
+
 		try {
-			
+
 			lista = dao.select();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return lista;
 	}
-	
+
 	public boolean verifyCliente(Cliente c) {
-		
-		if(c.getCpf() == 0) {
+
+		if (c.getCpf() == 0) {
 			return false;
-		}else if(c.getDataNascimento() == null) {
+		} else if (c.getDataNascimento() == null) {
 			return false;
-		}else if(c.getRg() == 0) {
+		} else if (c.getRg() == 0) {
 			return false;
-		}else if(c.getInscricaoEstadual() == 0) {
+		} else if (c.getInscricaoEstadual() == 0) {
 			return false;
-		}else if(c.getTelefoneCelular() == null) {
+		} else if (c.getTelefoneCelular() == null) {
 			return false;
-		}else if(c.getTelefoneResidencial() == null) {
+		} else if (c.getTelefoneResidencial() == null) {
 			return false;
-		}else if(c.getTelefoneComercial() == null) {
+		} else if (c.getTelefoneComercial() == null) {
 			return false;
-		}else if(c.getNumero() == 0) {
+		} else if (c.getNumero() == 0) {
 			return false;
-		}else if(c.getComplemento() == null) {
+		} else if (c.getComplemento() == null) {
 			return false;
-		}else if(c.getCep() == 0) {
+		} else if (c.getCep() == 0) {
 			return false;
-		}else if(c.getEmail().isEmpty()){
+		} else if (c.getEmail().isEmpty()) {
 			return false;
-		}else 
+		} else
 			return true;
-		
+
 	}
 }
