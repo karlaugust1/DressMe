@@ -61,6 +61,9 @@ public class PedidoVendaDAO extends DAO {
 	private String SQL_OBTAIN_LAST_REGISTER_NF = "select * from notafiscal;";
 
 	private String SQL_OBTAIN_SUM_VALUES = "SELECT SUM(VUNITARIO*QUANTIDADE) as total_geral, SUM(desconto) as total_desconto FROM produto_pedidovenda WHERE idpedido=?;";
+	private String SQL_OBTAIN_PEDIDOS_MONTH = "select distinct count(numero) quantidade from pedidovenda where status = 1 and dataAbertura >= (select date_sub(curdate(), interval day(curdate())-1 day));";
+	private String SQL_COUNT_PEDIDOS = "select distinct count(numero) quantidade from pedidovenda where status = 1;";
+	private String SQL_SUM_ALL_VALUES = "select sum(valorTotal) soma from pedidovenda where status = 1 and situacao = 'Faturado';";
 
 	public void invoice(PedidoVenda pv) {
 
@@ -176,7 +179,7 @@ public class PedidoVendaDAO extends DAO {
 
 			ps.setLong(1, p.getNumero());
 			// ps.setBoolean(2, p.isOrcamento());
-			//ps.setDate(2, p.getDataFechamento());
+			// ps.setDate(2, p.getDataFechamento());
 			ps.setLong(2, p.getCliente().getId());
 			ps.setLong(3, p.getCondPagamento().getId());
 			ps.setLong(4, p.getVendedor().getId());
@@ -649,7 +652,7 @@ public class PedidoVendaDAO extends DAO {
 			 * pv.desconto = ? or pv.numero_pontos = ? or pv.status);
 			 */
 			ps.setLong(1, pv.getNumero());
-		//	ps.setBoolean(2, pv.isOrcamento());
+			// ps.setBoolean(2, pv.isOrcamento());
 			ps.setDate(2, pv.getDataAbertura());
 			ps.setDate(3, pv.getDataFechamento());
 			if (pv.getCliente() != null)
@@ -730,7 +733,7 @@ public class PedidoVendaDAO extends DAO {
 			 * pv.desconto = ? or pv.numero_pontos = ? or pv.status);
 			 */
 			ps.setLong(1, pv.getNumero());
-			//ps.setBoolean(2, pv.isOrcamento());
+			// ps.setBoolean(2, pv.isOrcamento());
 			ps.setDate(2, pv.getDataAbertura());
 			ps.setDate(3, pv.getDataFechamento());
 			if (pv.getCliente() != null)
@@ -909,6 +912,53 @@ public class PedidoVendaDAO extends DAO {
 
 		return l;
 
+	}
+
+	public int obtainCountPedidosMonth() {
+		int retorno = 0;
+		try {
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_PEDIDOS_MONTH);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				retorno = rs.getInt("quantidade");
+			desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return retorno;
+	}
+
+	public double obtainSumAllValues() {
+		double retorno = 0.0;
+		try {
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_SUM_ALL_VALUES);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				retorno = rs.getDouble("soma");
+			desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retorno;
+	}
+
+	public int obtainCountPedidos() {
+		int retorno = 0;
+		try {
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_COUNT_PEDIDOS);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				retorno = rs.getInt("quantidade");
+			desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return retorno;
 	}
 
 }

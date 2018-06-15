@@ -1,7 +1,6 @@
 package br.com.vsetsistemas.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,18 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.vsetsistemas.model.PedidoVenda;
 import br.com.vsetsistemas.session.PedidoVendaSession;
 
-
 /**
- * Servlet implementation class ListarVendasServlet
+ * Servlet implementation class prePedidoVendaServlet
  */
-@WebServlet("/ListarPedidoVendaServlet")
-public class ListarPedidoVendaServlet extends HttpServlet {
+@WebServlet("/PrePedidoVendaServlet")
+public class PrePedidoVendaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListarPedidoVendaServlet() {
+    public PrePedidoVendaServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,16 +31,17 @@ public class ListarPedidoVendaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		PedidoVendaSession session = new PedidoVendaSession();
+		PedidoVenda pv = session.loadInitialParameters();
+		pv.setOrcamento(false);
 		
-		PedidoVendaSession service = new PedidoVendaSession();
-		List<PedidoVenda> lista = service.listAll();
-		System.out.println("entrou get");
-		//Colocar a lista na memoria
-		request.setAttribute("listarPedidosVendas", lista);
+		request.setAttribute("prePedidoVenda", pv);
 		
-		String nextJSP = "/listarPedidosVendas.jsp";
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-        dispatcher.forward(request, response);
+		String nextJSP = "/inserirPedidoVenda";
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+		dispatcher.forward(request, response);
 	}
 
 	/**
@@ -50,16 +49,7 @@ public class ListarPedidoVendaServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-		PedidoVendaSession service = new PedidoVendaSession();
-		List<PedidoVenda> lista = service.listAll();
-		System.out.println("entrou post");
-		//Colocar a lista na memoria
-		request.setAttribute("../listarPedidosVendas", lista);
-		
-		String nextJSP = "/listarPedidosVendas.jsp";
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-        dispatcher.forward(request, response);
+		doGet(request, response);
 	}
 
 }

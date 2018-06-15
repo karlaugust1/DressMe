@@ -1,10 +1,6 @@
 package br.com.vsetsistemas.session;
 
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import br.com.vsetsistemas.dao.PedidoVendaDAO;
@@ -15,6 +11,35 @@ import br.com.vsetsistemas.model.Produto;
 public class PedidoVendaSession {
 
 	private PedidoVendaDAO dao = new PedidoVendaDAO();
+
+	public int countPedidoVendasMes() {
+
+		try {
+			return dao.obtainCountPedidosMonth();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public double sumAllValues() {
+
+		try {
+			return dao.obtainSumAllValues();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0.0;
+	}
+
+	public int countPedidoVendas() {
+		try {
+			return dao.obtainCountPedidos();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
 	public boolean insertPedidoVenda(PedidoVenda pv) {
 
@@ -75,7 +100,7 @@ public class PedidoVendaSession {
 		}
 		return l;
 	}
-	
+
 	public List<PedidoVenda> listAllBudges() {
 		List<PedidoVenda> l = new ArrayList<>();
 		try {
@@ -111,14 +136,14 @@ public class PedidoVendaSession {
 		try {
 			ProdutoSession ps = new ProdutoSession();
 			Produto p = ps.obtainById(i.getProduto().getId());
-			
-			if(p.getQuantidadeEstoque() > i.getQuantidade()) {
-				//se a posição 0 do array for 0 então algo errado aconteceu
-				Double[] d = {0.0};
+
+			if (p.getQuantidadeEstoque() > i.getQuantidade()) {
+				// se a posição 0 do array for 0 então algo errado aconteceu
+				Double[] d = { 0.0 };
 				d[0] = 0.0;
 				return d;
 			}
-			
+
 			return dao.insertProduct(i);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -183,9 +208,10 @@ public class PedidoVendaSession {
 
 		PedidoVenda pv = new PedidoVenda();
 		pv.setNumero(dao.obtainLastRegister());
-		java.util.Date data = new java.util.Date();
-		java.sql.Date dataSql = new java.sql.Date(data.getTime());
+		java.util.Date date = new java.util.Date(System.currentTimeMillis());
+		java.sql.Date dataSql = new java.sql.Date(date.getTime());
 		pv.setDataAbertura(dataSql);
+
 		return pv;
 	}
 
@@ -198,14 +224,14 @@ public class PedidoVendaSession {
 		List<PedidoVenda> l = dao.search(pv);
 		return l;
 	}
-	
+
 	public List<PedidoVenda> searchOrcamento(PedidoVenda pv) {
 		List<PedidoVenda> l = dao.search(pv);
 		return l;
 	}
-	
+
 	public boolean toPedidoVenda(PedidoVenda pv) {
-		
+
 		try {
 			pv.setOrcamento(false);
 			dao.update(pv);

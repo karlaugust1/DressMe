@@ -49,6 +49,7 @@
 </head>
 
 <body class="animsition">
+
 	<div class="page-wrapper">
 		<!-- MENU SIDEBAR-->
 		<aside class="menu-sidebar2">
@@ -59,14 +60,14 @@
 			<div class="menu-sidebar2__content js-scrollbar1">
 				<div class="account2">
 					<div class="image img-cir img-120">
-						<img src="images/icon/avatar-big-01.jpg" alt="Bad Taco" />
+						<img src="images/icon/avatar-big-01.jpg" alt="John Doe" />
 					</div>
-					<h4 class="name">Bad Taco</h4>
-					<a href="login.html">Sair</a>
+					<h4 class="name">john doe</h4>
+					<a href="login.html">Sign out</a>
 				</div>
 				<nav class="navbar-sidebar2">
 					<ul class="list-unstyled navbar__list">
-						<li><a href="index2.html"> <i
+						<li><a href="../index2.html"> <i
 								class="fas fa-tachometer-alt"></i>Painel Principal
 						</a></li>
 						<li class="active has-sub"><a class="js-arrow" href="#">
@@ -78,8 +79,8 @@
 								<li><a href="index2.html"> <i
 										class="fas fa-pencil-square-o"></i>Orçamento
 								</a></li>
-								<li><a href="#"> <i class="fas fa-shopping-cart"></i>Pedido
-										de Venda
+								<li><a href="ListarPedidoVendaServlet"> <i
+										class="fas fa-shopping-cart"></i>Pedido de Venda
 								</a></li>
 								<li><a href="index2.html"> <i class="fas fa-print"></i>Nota
 										Fiscal
@@ -93,7 +94,6 @@
 						</a></li>
 						<li><a href="../index2.html"> <i class="fas fa-group"></i>Fidelização
 						</a></li>
-
 					</ul>
 				</nav>
 			</div>
@@ -176,14 +176,14 @@
 				<div class="menu-sidebar2__content js-scrollbar2">
 					<div class="account2">
 						<div class="image img-cir img-120">
-							<img src="images/icon/avatar-big-01.jpg" alt="Bad Taco" />
+							<img src="images/icon/avatar-big-01.jpg" alt="John Doe" />
 						</div>
-						<h4 class="name">Bad Taco</h4>
-						<a href="#">Sair</a>
+						<h4 class="name">john doe</h4>
+						<a href="#">Sign out</a>
 					</div>
 					<nav class="navbar-sidebar2">
 						<ul class="list-unstyled navbar__list">
-							<li><a href="index2.html"> <i
+							<li><a href="../index2.html"> <i
 									class="fas fa-tachometer-alt"></i>Painel Principal
 							</a></li>
 							<li class="active has-sub"><a class="js-arrow" href="#">
@@ -228,115 +228,157 @@
 			</section>
 			<!-- END BREADCRUMB-->
 
-			<!-- LISTAGEM DE PEDIDOS -->
-			<h3 class="title-5 m-b-35">Pedidos de Venda</h3>
-			<form action="/ListarPedidoVendaServlet" method="post">
-				<c:choose>
-					<c:when test="${not empty listarPedidosVendas}">
-						<div class="table-data__tool">
-							<div class="table-data__tool-left">
-								<div class="rs-select2--light rs-select2--sm">
-									<select class="js-select2" name="time">
-										<option selected="selected">Hoje</option>
-										<option value="">3 Dias</option>
-										<option value="">1 Semana</option>
-									</select>
-									<div class="dropDownSele	ct2"></div>
+			<!-- STATISTIC-->
+			<section class="statistic">
+				<div class="section__content section__content--p30">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-6 col-lg-3">
+								<div class="statistic__item">
+									<h2 class="number" >${sessionScope.clientes}</h2>
+									<span class="desc">Clientes Registrados</span>
+									<div class="icon">
+										<i class="zmdi zmdi-account-o"></i>
+									</div>
 								</div>
-								<button class="au-btn-filter">
-									<i class="zmdi zmdi-filter-list"></i>Filtrar
-								</button>
 							</div>
-							<div class="table-data__tool-right">
-								<button class="au-btn au-btn-icon au-btn--green au-btn--small">
-									<i class="zmdi zmdi-plus"></i>Novo Pedido
-								</button>
+							<div class="col-md-6 col-lg-3">
+								<div class="statistic__item">
+									<h2 class="number">${sessionScope.pedidos}</h2>
+									<span class="desc">Vendas</span>
+									<div class="icon">
+										<i class="zmdi zmdi-shopping-cart"></i>
+									</div>
+								</div>
 							</div>
-						</div>
-						<div class="table-responsive table-responsive-data2">
-							<table class="table table-data2">
-								<thead>
-									<tr>
-										<th>número</th>
-										<th>data</th>
-										<th>cod. cliente</th>
-										<th>cliente</th>
-										<th>situação</th>
-										<th>total</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="pedidoVenda" items="${listarPedidosVendas}">
-										<tr class="tr-shadow">
-											<td class="desc">${pedidoVenda.numero}</td>
-											<td>${pedidoVenda.dataAbertura}</td>
-											<td class="desc">${pedidoVenda.cliente.id}</td>
-											<td>${pedidoVenda.cliente.nome}</td>
-											<td><span class="status--process">${pedidoVenda.situacao}</span></td>
-											<td><span class="block-email">${pedidoVenda.valorTotal}</span></td>
-											<td>
-												<div class="table-data-feature">
-													<button class="item" data-toggle="tooltip"
-														data-placement="top" title="Faturar">
-														<i class="zmdi zmdi-assignment-check"></i>
-													</button>
-													<button class="item" data-toggle="tooltip"
-														data-placement="top" title="Editar">
-														<i class="zmdi zmdi-edit"></i>
-													</button>
-													<button class="item" data-toggle="tooltip"
-														data-placement="top" title="Deletar">
-														<i class="zmdi zmdi-delete"></i>
-													</button>
-													<button class="item" data-toggle="tooltip"
-														data-placement="top" title="Visualizar">
-														<i class="zmdi zmdi-eye"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr class="spacer"></tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<br>
-						<div class="table-data__tool">
-							<div class="table-data__tool-left">
+							<div class="col-md-6 col-lg-3">
+								<div class="statistic__item">
+									<h2 class="number">${sessionScope.pedidosMes}</h2>
+									<span class="desc">Esse Mês</span>
+									<div class="icon">
+										<i class="zmdi zmdi-calendar-note"></i>
+									</div>
+								</div>
 							</div>
-							<div class="table-data__tool-right">
-								<button class="au-btn au-btn-icon au-btn--green au-btn--small">
-									<i class="zmdi zmdi-plus"></i>Novo Pedido
-								</button>
-							</div>
-						</div>
-						<div class="alert alert-info">Nenhum Pedido de Venda
-							encontrado!</div>
-					</c:otherwise>
-				</c:choose>
-			</form>
-			<!-- FIM DA LISTAGEM DE PEDIDOS -->
-
-
-			<!-- Footer -->
-			<section>
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="copyright">
-								<p>Copyright © 2018 VSET Sistemas. Nenhum direito reservado.
-								</p>
+							<div class="col-md-6 col-lg-3">
+								<div class="statistic__item">
+									<h2 class="number">R$ ${sessionScope.total}</h2>
+									<span class="desc">Faturamento Total</span>
+									<div class="icon">
+										<i class="zmdi zmdi-money"></i>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
+			<!-- END STATISTIC-->
 
-			<!-- END PAGE CONTAINER -->
+			<section>
+				<div class="section__content section__content--p20">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-lg-9">
+								<!-- RECENT REPORT 2-->
+								<div class="au-card recent-report">
+									<div class="au-card-inner">
+										<h3 class="title-2">Vendas do Mês</h3>
+										<div class="chart-info">
+											<div class="chart-info__left">
+												<div class="chart-note">
+													<span class="dot dot--blue"></span> <span>Clientes</span>
+												</div>
+												<div class="chart-note mr-0">
+													<span class="dot dot--green"></span> <span>Vendas</span>
+												</div>
+											</div>
+											<div class="chart-info__right">
+												<div class="chart-statis">
+													<span class="index incre"> <i
+														class="zmdi zmdi-long-arrow-up"></i>1%
+													</span> <span class="label">Clientes</span>
+												</div>
+												<div class="chart-statis mr-0">
+													<span class="index decre"> <i
+														class="zmdi zmdi-long-arrow-down"></i>10%
+													</span> <span class="label">Vendas</span>
+												</div>
+											</div>
+										</div>
+										<div class="recent-report__chart">
+											<canvas id="recent-rep-chart"></canvas>
+										</div>
+									</div>
+								</div>
+								<!-- END RECENT REPORT 2             -->
+							</div>
+							<div class="col-lg-3">
+								<div
+									class="au-card au-card--bg-blue au-card-top-countries m-b-30">
+									<div class="au-card-inner">
+										<div class="table-responsive">
+											<table class="table table-top-countries">
+												<tbody>
+													<tr>
+														<td>Venda 1</td>
+														<td class="text-right">$128,265.62</td>
+													</tr>
+													<tr>
+														<td>Venda 2</td>
+														<td class="text-right">$68,784.13</td>
+													</tr>
+													<tr>
+														<td>Venda 3</td>
+														<td class="text-right">$46,399.22</td>
+													</tr>
+													<tr>
+														<td>Venda 4</td>
+														<td class="text-right">$35,364.90</td>
+													</tr>
+													<tr>
+														<td>Venda 5</td>
+														<td class="text-right">$20,366.96</td>
+													</tr>
+													<tr>
+														<td>Venda 6</td>
+														<td class="text-right">$20,366.96</td>
+													</tr>
+													<tr>
+														<td>Venda 7</td>
+														<td class="text-right">$20,366.96</td>
+													</tr>
+													<tr>
+														<td>Venda 8</td>
+														<td class="text-right">$20,366.96</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 		</div>
+	</div>
+	</section>
+
+	<!-- Footer -->
+	<section>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="copyright">
+						<p>Copyright © 2018 VSET Sistemas. Nenhum direito reservado.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- END PAGE CONTAINER-->
+	</div>
 
 	</div>
 
