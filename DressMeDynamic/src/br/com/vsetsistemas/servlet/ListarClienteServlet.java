@@ -1,7 +1,6 @@
 package br.com.vsetsistemas.servlet;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -16,17 +15,18 @@ import br.com.vsetsistemas.model.PedidoVenda;
 import br.com.vsetsistemas.session.ClienteSession;
 import br.com.vsetsistemas.session.PedidoVendaSession;
 
+
 /**
- * Servlet implementation class prePedidoVendaServlet
+ * Servlet implementation class ListarVendasServlet
  */
-@WebServlet("/PrePedidoVendaServlet")
-public class PrePedidoVendaServlet extends HttpServlet {
+@WebServlet("/ListarClienteServlet")
+public class ListarClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PrePedidoVendaServlet() {
+    public ListarClienteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,22 +35,15 @@ public class PrePedidoVendaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		PedidoVendaSession session = new PedidoVendaSession();
-		PedidoVenda pv = session.loadInitialParameters();
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		ClienteSession cs = new ClienteSession();
-		List<Cliente> listaClientes = cs.listAll();
+		List<Cliente> lista = cs.listAll();
+		//Colocar a lista na memoria
+		request.setAttribute("listaClientes", lista);
 		
-		request.getSession().setAttribute("numeroPedido", pv.getNumero());
-		request.getSession().setAttribute("dataPedido", format.format(pv.getDataAbertura()));
-		request.getSession().setAttribute("listaClientes", listaClientes);
-		
-		String nextJSP = "/inserirPedidoVenda.jsp";
-		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);
-		dispatcher.forward(request, response);
+		String nextJSP = "/listarPedidosVendas.jsp";
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+        dispatcher.forward(request, response);
 	}
 
 	/**
@@ -58,7 +51,8 @@ public class PrePedidoVendaServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
+	
 	}
 
 }

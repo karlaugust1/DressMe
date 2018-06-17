@@ -63,11 +63,11 @@
 						<img src="images/icon/avatar-big-01.jpg" alt="John Doe" />
 					</div>
 					<h4 class="name">john doe</h4>
-					<a href="login.html">Sign out</a>
+					<a href="login.html">Sair</a>
 				</div>
 				<nav class="navbar-sidebar2">
 					<ul class="list-unstyled navbar__list">
-						<li><a href="../index2.html"> <i
+						<li><a href="index2.jsp"> <i
 								class="fas fa-tachometer-alt"></i>Painel Principal
 						</a></li>
 						<li class="active has-sub"><a class="js-arrow" href="#">
@@ -88,11 +88,11 @@
 								<li><a href="index2.html"> <i class="fas fa-file"></i>Relatórios
 								</a></li>
 							</ul></li>
-						<li><a href="../index2.html"> <i class="fas fa-download"></i>Compras
+						<li><a href="#"> <i class="fas fa-download"></i>Compras
 						</a></li>
-						<li><a href="../index2.html"> <i class="fas fa-inbox"></i>Estoque
+						<li><a href="#"> <i class="fas fa-inbox"></i>Estoque
 						</a></li>
-						<li><a href="../index2.html"> <i class="fas fa-group"></i>Fidelização
+						<li><a href="#"> <i class="fas fa-group"></i>Fidelização
 						</a></li>
 					</ul>
 				</nav>

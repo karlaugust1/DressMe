@@ -17,10 +17,10 @@ public class ClienteDAO extends DAO {
 
 	private String SQL_DELETE = "UPDATE pessoa SET status = ? WHERE id = ?;";
 
-	private String SQL_SELECT = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.Cpf,"
-			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome "
+	private String SQL_SELECT = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.Cpfcnpj,"
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome, p.status "
 			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
-			+ " WHERE c.status = true;";
+			+ " WHERE p.status = true;";
 
 	private String SQL_OBTAIN = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.Cpfcnpj,"
 			+ "			p.numero, p.complemento, p.email, p.nome, p.cidade, l.ufe_sg, l.log_nome, p.cep, p.status"
