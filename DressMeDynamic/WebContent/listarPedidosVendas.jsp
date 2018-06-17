@@ -230,7 +230,8 @@
 
 			<!-- LISTAGEM DE PEDIDOS -->
 
-			<br><h3 class="title-5 m-b-35">Pedidos de Venda</h3>
+			<br>
+			<h3 class="title-5 m-b-35">Pedidos de Venda</h3>
 			<!-- 
 			<div class="table-data__tool">
 							<div class="table-data__tool-left">
@@ -244,18 +245,18 @@
 			-->
 			<div class="table-data__tool">
 				<div class="table-data__tool-left">
-					<div class="rs-select2--light rs-select2--sm">
-						<select class="js-select2" name="time">
-							<option selected="selected">Hoje</option>
-							<option value="">3 Dias</option>
-							<option value="">1 Semana</option>
-						</select>
-						<div class="dropDownSelect2"></div>
+					<div class="input-group">
+						<div class="input-group-btn">
+							<button class="au-btn-filter">
+								<i class="zmdi zmdi-filter-list"></i>Filtrar
+							</button>
+						</div>
+						<input type="text" id="filtroped" name="input1-group2"
+							placeholder="Parâmetros..." class="form-control">
 					</div>
-					<button class="au-btn-filter">
-						<i class="zmdi zmdi-filter-list"></i>Filtrar
-					</button>
+
 				</div>
+
 				<div class="table-data__tool-right">
 					<a href="PrePedidoVendaServlet"
 						class="au-btn au-btn-icon au-btn--green au-btn--small"
@@ -279,7 +280,7 @@
 										<th></th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="listaPedidos">
 									<c:forEach var="pedidoVenda" items="${listarPedidosVendas}">
 										<tr class="tr-shadow">
 											<td class="desc">${pedidoVenda.numero}</td>
@@ -312,6 +313,16 @@
 										<tr class="spacer"></tr>
 									</c:forEach>
 								</tbody>
+								<script>
+									$(document).ready(function() {
+										$("#filtroped").on("keyup", function() {
+											var value = $(this).val().toLowerCase();
+											$("#listaPedidos tr").filter(function() {
+												$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+											});
+										});
+									});
+								</script>
 							</table>
 						</div>
 					</c:when>

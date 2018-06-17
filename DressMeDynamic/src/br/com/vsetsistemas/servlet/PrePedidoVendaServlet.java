@@ -44,7 +44,7 @@ public class PrePedidoVendaServlet extends HttpServlet {
 		ClienteSession cs = new ClienteSession();
 		List<Cliente> listaClientes = cs.listAll();
 		
-		request.getSession().setAttribute("numeroPedido", pv.getNumero());
+		request.getSession().setAttribute("numeroPedido", pv.getNumero()+1);
 		request.getSession().setAttribute("dataPedido", format.format(pv.getDataAbertura()));
 		request.getSession().setAttribute("listaClientes", listaClientes);
 		

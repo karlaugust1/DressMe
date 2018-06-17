@@ -49,7 +49,7 @@
 <script>
 	var controleProduto = 0; // Para Listagem
 	var date = today.getDate() + '/' + (today.getMonth() + 1) + '/'
-			+ today.getFullYear(); //Data
+	+ today.getFullYear(); //Data
 </script>
 
 </head>
@@ -90,7 +90,7 @@
 								<li><a href="index2.jsp"> <i class="fas fa-print"></i>Nota
 										Fiscal
 								</a></li>
-								<li><a href="index2.jsp"> <i class="fas fa-file"></i>Relat&oacute;ios
+								<li><a href="index2.jsp"> <i class="fas fa-file"></i>Relat&oacute;rios
 								</a></li>
 							</ul></li>
 						<li><a href="index2.jsp"> <i class="fas fa-download"></i>Compras
@@ -272,7 +272,7 @@
 										</button>
 									</div>
 									<input type="text" id="clientecod" name="input1-group2"
-										placeholder="Cliente" class="form-control">
+										placeholder="Cliente" class="form-control" disabled="">
 								</div>
 							</div>
 						</div>
@@ -365,7 +365,7 @@
 								<div class="input-group">
 									<div class="input-group-btn">
 										<button class="btn btn-primary" data-toggle="modal"
-											data-target="#ModalCondPag">
+											data-target="#ModalCP">
 											<i class="fa fa-search"></i> Buscar
 										</button>
 									</div>
@@ -396,85 +396,123 @@
 
 
 			<!-- LISTAGEM DE Produtos -->
-			<h3 class="title-5 m-b-35">Produtos</h3>
-			<form action="/ListarProdutosPedidoVendaServlet" method="post">
-				<c:choose>
-					<c:when test="${not empty listarProdutosPedidoVenda}">
-						<div class="table-data__tool">
-							<div class="table-data__tool-left"></div>
-							<div class="table-data__tool-right">
-								<button class="au-btn au-btn-icon au-btn--green au-btn--small">
-									<i class="zmdi zmdi-plus"></i>Adicionar Produto
-								</button>
-							</div>
-						</div>
-						<div class="table-responsive table-responsive-data2">
-							<table class="table table-data2">
-								<thead>
-									<tr>
-										<th>ID</th>
-										<th>produto</th>
-										<th>cor</th>
-										<th>tamanho</th>
-										<th>quantidade</th>
-										<th>valor unitário</th>
-										<th>valor total</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="pedidoVenda"
-										items="${listarProdutosPedidoVenda}">
-										<tr class="tr-shadow">
-											<td class="desc">${pedidovenda.listaProduto[controleProduto].produto.numero}</td>
-											<td>${pedidovenda.listaProduto[controleProduto].produto.descricao}</td>
-											<td class="desc">${pedidovenda.listaProduto[controleProduto].produto.cor}</td>
-											<td>${pedidovenda.listaProduto[controleProduto].produto.tamanho}</td>
-											<td><span class="status--process">${pedidovenda.listaProduto[controleProduto].quantidade}</span></td>
-											<td><span class="block-email">${pedidovenda.listaProduto[controleProduto].valorunitario}</span></td>
-											<td><span class="block-email">${pedidovenda.listaProduto[controleProduto].subtotal}</span></td>
-											<td>
-												<div class="table-data-feature">
-													<button class="item" data-toggle="tooltip"
-														data-placement="top" title="Editar">
-														<i class="zmdi zmdi-edit"></i>
-													</button>
-													<button class="item" data-toggle="tooltip"
-														data-placement="top" title="Deletar">
-														<i class="zmdi zmdi-delete"></i>
-													</button>
-													<button class="item" data-toggle="tooltip"
-														data-placement="top" title="Visualizar">
-														<i class="zmdi zmdi-eye"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr class="spacer"></tr>
-										<script>
-											controleProduto++;
-										</script>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<br>
-						<div class="table-data__tool">
-							<div class="table-data__tool-left"></div>
-							<div class="table-data__tool-right">
-								<button class="au-btn au-btn-icon au-btn--green au-btn--small"
-									data-toggle="modal" data-target="#ModalProdutos">
-									<i class="zmdi zmdi-plus"></i>Adicionar Produto
-								</button>
-							</div>
-						</div>
-						<div class="alert alert-info">Nenhum Produto Inserido!</div>
-					</c:otherwise>
-				</c:choose>
-			</form>
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-header" style="text-align: center">
+						<strong>Produtos</strong> <small>- Pedido de Venda</small>
+					</div>
+					<div style="text-align: right; display-inline: block;">
+						<button class="au-btn au-btn-icon au-btn--green au-btn--small"
+							data-toggle="modal" data-target="#ModalProdutos">
+							<i class="zmdi zmdi-plus"></i>Adicionar Produto
+						</button>
+					</div>
+					<form action="/ListarProdutosPedidoVendaServlet" method="post">
+						<c:choose>
+							<c:when test="${not empty listarProdutosPedidoVenda}">
+								<div class="table-responsive table-responsive-data2">
+									<table class="table table-data2">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>produto</th>
+												<th>cor</th>
+												<th>tamanho</th>
+												<th>quantidade</th>
+												<th>valor unitário</th>
+												<th>valor total</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="pedidoVenda"
+												items="${listarProdutosPedidoVenda}">
+												<tr class="tr-shadow">
+													<td class="desc">${pedidovenda.listaProduto[controleProduto].produto.numero}</td>
+													<td>${pedidovenda.listaProduto[controleProduto].produto.descricao}</td>
+													<td class="desc">${pedidovenda.listaProduto[controleProduto].produto.cor}</td>
+													<td>${pedidovenda.listaProduto[controleProduto].produto.tamanho}</td>
+													<td><span class="status--process">${pedidovenda.listaProduto[controleProduto].quantidade}</span></td>
+													<td><span class="block-email">${pedidovenda.listaProduto[controleProduto].valorunitario}</span></td>
+													<td><span class="block-email">${pedidovenda.listaProduto[controleProduto].subtotal}</span></td>
+													<td>
+														<div class="table-data-feature">
+															<button class="item" data-toggle="tooltip"
+																data-placement="top" title="Editar">
+																<i class="zmdi zmdi-edit"></i>
+															</button>
+															<button class="item" data-toggle="tooltip"
+																data-placement="top" title="Deletar">
+																<i class="zmdi zmdi-delete"></i>
+															</button>
+															<button class="item" data-toggle="tooltip"
+																data-placement="top" title="Visualizar">
+																<i class="zmdi zmdi-eye"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr class="spacer"></tr>
+												<script>
+													controleProduto++;
+												</script>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<br>
+								<div class="alert alert-info">Nenhum Produto Inserido!</div>
+							</c:otherwise>
+						</c:choose>
+					</form>
 
+					<!-- Finalização -->
+
+					<div class="row">
+						<div class="col-2">
+							<div class="form-group">
+								<label for="rua" class="control-label mb-1">Subtotal </label> <input
+									id="rua" name="rua" type="text" class="form-control subtotal"
+									value="" placeholder="${pedidovenda.subtotal}" disabled=""
+									autocomplete="rua">
+							</div>
+						</div>
+						<div class="col-2">
+							<label for="nst" class="control-label mb-1">Desconto</label>
+							<div class="input-group">
+								<input id="nst" name="nst" type="text" class="form-control nst"
+									value="" placeholder="${pedidovenda.desconto}"
+									autocomplete="off">
+
+							</div>
+						</div>
+
+						<div class="col-2">
+							<label for="brr" class="control-label mb-1">Total</label>
+							<div class="input-group">
+								<input id="brr" name="brr" type="text" class="form-control brr"
+									value="" placeholder="${pedidovenda.total}" autocomplete="off"
+									disabled="">
+
+							</div>
+							<div class="col-2"></div>
+						</div>
+
+
+
+					</div>
+
+					<div style="text-align: right; display-inline: block;">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Cancelar</button>
+						<button type="button" class="btn btn-primary">Confirmar</button>
+					</div>
+
+				</div>
+
+			</div>
 		</div>
 		<!-- FIM DO FORMULﾁRIO DE PEDIDOS -->
 
@@ -549,8 +587,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Cancelar</button>
-						<button type="button" class="btn btn-primary">Confirmar</button>
+							data-dismiss="modal">Fechar</button>
 					</div>
 				</div>
 			</div>
@@ -586,7 +623,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- end modal CondPag -->
+		<!-- end modal quantiaProdutos -->
 
 		<!-- modal clientes -->
 		<div class="modal fade" id="ModalClientes" tabindex="-1" role="dialog"
@@ -619,36 +656,6 @@
 										</thead>
 										<tbody id="tabelaClientes">
 											<c:forEach var="cliente" items="${listaClientes}">
-												<script>
-													$(document)
-															.ready(
-																	function() {
-																		$(
-																				"#buscaClientes")
-																				.on(
-																						"keyup",
-																						function() {
-																							var value = $(
-																									this)
-																									.val()
-																									.toLowerCase();
-																							$(
-																									"#tabelaClientes tr")
-																									.filter(
-																											function() {
-																												$(
-																														this)
-																														.toggle(
-																																$(
-																																		this)
-																																		.text()
-																																		.toLowerCase()
-																																		.indexOf(
-																																				value) > -1)
-																											});
-																						});
-																	});
-												</script>
 												<tr>
 													<td>${cliente.id}</td>
 													<td>${cliente.nome}</td>
@@ -667,16 +674,29 @@
 														</form>
 													</td>
 												</tr>
+											</c:forEach>
 										</tbody>
-										</c:forEach>
+										<script>
+											$(document).ready(function() {
+												$("#buscaClientes").on("keyup", function() {
+													var value = $(this).val().toLowerCase();
+													$("#tabelaClientes tr").filter(function() {
+														$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+													});
+												});
+											});
+										</script>
 									</table>
 								</c:when>
+								<c:otherwise>
+									<div class="alert alert-info">Nenhum Cliente Cadastrado!</div>
+								</c:otherwise>
 							</c:choose>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Cancelar</button>
+							data-dismiss="modal">Fechar</button>
 					</div>
 				</div>
 			</div>
@@ -687,7 +707,8 @@
 		<div class="modal fade" id="ModalVendedor" tabindex="-1" role="dialog"
 			aria-labelledby="staticModalLabel" aria-hidden="true"
 			data-backdrop="static">
-			<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-dialog modal-sm" role="document"
+				style="max-width: 100%; width: auto; display: table;">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="staticModalLabel">Vendedores</h5>
@@ -697,39 +718,137 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>This is a static modal, backdrop click will not close it.</p>
+						<div class="table-responsive m-b-40">
+							<c:choose>
+								<c:when test="${not empty listaClientes}">
+									<table class="table table-borderless table-data3">
+										<input class="form-control" id="buscaVendedores" type="text"
+											placeholder="Buscar vendedor...">
+										<thead>
+											<tr>
+												<th>Cod. Vendedor</th>
+												<th>Nome</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody id="tabelaVendedores">
+											<c:forEach var="vendedor" items="${listaVendedores}">
+												<tr>
+													<td>${cliente.id}</td>
+													<td>${cliente.nome}</td>
+													<td>
+														<form
+															action="InserirVendedorServlet?idVendedor=${vendedor.id}"
+															method="post">
+															<div class="table-data-feature">
+																<button class="item" data-toggle="tooltip"
+																	data-placement="top" title="Adicionar" id="idVendedor"
+																	value="${vendedor.id}">
+																	<i class="zmdi zmdi-check"></i>
+																</button>
+															</div>
+														</form>
+													</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+										<script>
+											$(document).ready(function() {
+												$("#buscaVendedores").on("keyup", function() {
+													var value = $(this).val().toLowerCase();
+													$("#tabelaVendedores tr").filter(function() {
+														$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+													});
+												});
+											});
+										</script>
+									</table>
+								</c:when>
+								<c:otherwise>
+									<div class="alert alert-info">Nenhum Vendedor Cadastrado!</div>
+								</c:otherwise>
+							</c:choose>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Cancelar</button>
-						<button type="button" class="btn btn-primary">Confirmar</button>
+							data-dismiss="modal">Fechar</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- end modal Vendedor -->
-
+		
 		<!-- modal CondPag -->
-		<div class="modal fade" id="ModalCondPag" tabindex="-1" role="dialog"
+		<div class="modal fade" id="ModalCP" tabindex="-1" role="dialog"
 			aria-labelledby="staticModalLabel" aria-hidden="true"
 			data-backdrop="static">
-			<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-dialog modal-sm" role="document"
+				style="max-width: 100%; width: auto; display: table;">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="staticModalLabel">Condi&#231;&#245;es
-							de Pagamento</h5>
+						<h5 class="modal-title" id="staticModalLabel">Condições de Pagamento</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>This is a static modal, backdrop click will not close it.</p>
+						<div class="table-responsive m-b-40">
+							<c:choose>
+								<c:when test="${not empty listaCondPag}">
+									<table class="table table-borderless table-data3">
+										<input class="form-control" id="buscaCP" type="text"
+											placeholder="Buscar condição...">
+										<thead>
+											<tr>
+												<th>Cod. Condição de Pagamento</th>
+												<th>Descrição</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody id="tabelaCP">
+											<c:forEach var="cp" items="${listaCondPag}">
+												<tr>
+													<td>${cp.id}</td>
+													<td>${cp.descricao}</td>
+													<td>
+														<form
+															action="InserirCondPagServlet?idCP=${cp.id}"
+															method="post">
+															<div class="table-data-feature">
+																<button class="item" data-toggle="tooltip"
+																	data-placement="top" title="Adicionar" id="idCP"
+																	value="${cp.id}">
+																	<i class="zmdi zmdi-check"></i>
+																</button>
+															</div>
+														</form>
+													</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+										<script>
+											$(document).ready(function() {
+												$("#buscaCP").on("keyup", function() {
+													var value = $(this).val().toLowerCase();
+													$("#tabelaCP tr").filter(function() {
+														$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+													});
+												});
+											});
+										</script>
+									</table>
+								</c:when>
+								<c:otherwise>
+									<div class="alert alert-info">Nenhuma Condição de Pagamento Cadastrada!</div>
+								</c:otherwise>
+							</c:choose>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Cancelar</button>
-						<button type="button" class="btn btn-primary">Confirmar</button>
+							data-dismiss="modal">Fechar</button>
 					</div>
 				</div>
 			</div>
