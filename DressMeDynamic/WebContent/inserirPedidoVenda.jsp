@@ -11,6 +11,7 @@
 <meta name="author" content="Hau Nguyen">
 <meta name="keywords" content="au theme template">
 
+
 <!-- Title Page-->
 <title>DressMe</title>
 
@@ -272,7 +273,7 @@
 										</button>
 									</div>
 									<input type="text" id="clientecod" name="input1-group2"
-										placeholder="Cliente" class="form-control" disabled="">
+										placeholder="Cliente" class="form-control" disabled="" value="${cliente.id}">
 								</div>
 							</div>
 						</div>
@@ -281,7 +282,7 @@
 								do Cliente</label>
 							<div class="input-group">
 								<input id="clientenome" name="clientenome" type="text"
-									class="form-control clientenome" value=""
+									class="form-control clientenome" value="${cliente.nome}"
 									placeholder="Nome do Cliente" autocomplete="off" disabled="">
 
 							</div>
@@ -293,7 +294,7 @@
 							<div class="form-group">
 								<label for="cpfcnpj" class="control-label mb-1">CPF/CNPJ
 								</label> <input id="cpfcnpj" name="cpfcnpj" type="text"
-									class="form-control cpfcnpj" value="" placeholder=""
+									class="form-control cpfcnpj" value="${cliente.cpf}" placeholder=""
 									disabled="" autocomplete="cpfcnpj">
 							</div>
 						</div>
@@ -302,7 +303,7 @@
 								Estadual</label>
 							<div class="input-group">
 								<input id="ies" name="ies" type="text" class="form-control ies"
-									value="" placeholder="IES" autocomplete="off" disabled="">
+									value="${cliente.inscricaoEstadual}" placeholder="IES" autocomplete="off" disabled="">
 
 							</div>
 						</div>
@@ -313,14 +314,14 @@
 							<div class="form-group">
 								<label for="rua" class="control-label mb-1">Rua </label> <input
 									id="rua" name="rua" type="text" class="form-control rua"
-									value="" placeholder="Rua" disabled="" autocomplete="rua">
+									value="${cliente.rua}" placeholder="Rua" disabled="" autocomplete="rua">
 							</div>
 						</div>
 						<div class="col-2">
 							<label for="nst" class="control-label mb-1">N&#250;mero</label>
 							<div class="input-group">
 								<input id="nst" name="nst" type="text" class="form-control nst"
-									value="" placeholder="N&uacute;mero" autocomplete="off"
+									value="${cliente.numero}" placeholder="N&uacute;mero" autocomplete="off"
 									disabled="">
 
 							</div>
@@ -342,14 +343,14 @@
 							<div class="form-group">
 								<label for="cdd" class="control-label mb-1">Cidade </label> <input
 									id="cdd" name="cdd" type="text" class="form-control cdd"
-									value="" placeholder="Cidade" disabled="" autocomplete="cdd">
+									value="${cliente.cidade}" placeholder="Cidade" disabled="" autocomplete="cdd">
 							</div>
 						</div>
 						<div class="col-5">
 							<label for="cmp" class="control-label mb-1">Complemento</label>
 							<div class="input-group">
 								<input id="cmp" name="cmp" type="text" class="form-control ies"
-									value="" placeholder="Complemento" autocomplete="off"
+									value="${cliente.complemento}" placeholder="Complemento" autocomplete="off"
 									disabled="">
 
 							</div>
@@ -371,7 +372,7 @@
 									</div>
 									<input type="text" id="condpag" name="condpag"
 										placeholder="Condi&ccedil;&atilde;o de Pagamento"
-										class="form-control" disabled="">
+										class="form-control" disabled="" value="${condPag.descricao}">
 								</div>
 							</div>
 						</div>
@@ -385,7 +386,7 @@
 									</button>
 								</div>
 								<input id="vdd" name="vdd" type="text" class="form-control vdd"
-									value="" placeholder="Vendedor" autocomplete="off" disabled="">
+									value="${vendedor.nome}" placeholder="Vendedor" autocomplete="off" disabled="">
 							</div>
 						</div>
 					</div>
@@ -521,7 +522,7 @@
 		<div class="modal fade" id="ModalProdutos" tabindex="-1" role="dialog"
 			aria-labelledby="staticModalLabel" aria-hidden="true"
 			data-backdrop="static">
-			<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-dialog modal-sm" role="document" style="max-width: 100%; width: auto; display: table;">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="staticModalLabel">Produtos</h5>
@@ -531,9 +532,8 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<form action="/ListarProdutosServlet" method="post">
 							<c:choose>
-								<c:when test="${not empty listarProdutos}">
+								<c:when test="${not empty listaProdutos}">
 									<div class="table-data__tool">
 										<div class="table-data__tool-left">
 											<button class="au-btn-filter">
@@ -541,21 +541,23 @@
 											</button>
 										</div>
 									</div>
+									<input type="text" id="qtdProduto" name="qtdProduto"
+										placeholder="Quantidade" class="form-control">
 									<div class="table-responsive table-responsive-data2">
 										<table class="table table-data2">
 											<thead>
 												<tr>
 													<th>ID</th>
-													<th>Descrição</th>
+													<th>Descri&ccedil;&atilde;o</th>
 													<th>Cor</th>
 													<th>Tamanho</th>
 													<th>Estoque</th>
-													<th>Preço</th>
+													<th>Pre&ccedil;o</th>
 													<th></th>
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="pedidoVenda" items="${listarProdutos}">
+												<c:forEach var="produto" items="${listaProdutos}">
 													<tr class="tr-shadow">
 														<td class="desc">${produto.id}</td>
 														<td>${produto.descricao}</td>
@@ -564,14 +566,16 @@
 														<td><span class="status--process">${produto.quantidadeEstoque}</span></td>
 														<td><span class="block-email">${produto.preco}</span></td>
 														<td>
-															<div class="table-data-feature">
-																<button class="item" data-toggle="tooltip"
-																	data-placement="top" title="Adicionar ao Pedido"
-																	data-toggle="modal" data-target="#modalQuantia">
-																	<i class="zmdi zmdi-assignment-check"></i>
-																</button>
-															</div>
-														</td>
+															<form action="/InserirProdutoServlet?idProduto=${produto.id}" method="post">
+																<div class="table-data-feature">
+																	<button class="item" data-toggle="tooltip"
+																		data-placement="top" title="Adicionar ao Pedido"
+																		data-toggle="modal" data-target="#modalQuantia">
+																		<i class="zmdi zmdi-assignment-check"></i>
+																	</button>
+																</div>
+															</form>
+													</td>
 													</tr>
 													<tr class="spacer"></tr>
 												</c:forEach>
@@ -583,7 +587,6 @@
 									<div class="alert alert-info">Nenhum Produto Cadastrado!</div>
 								</c:otherwise>
 							</c:choose>
-						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
@@ -645,7 +648,7 @@
 								<c:when test="${not empty listaClientes}">
 									<table class="table table-borderless table-data3">
 										<input class="form-control" id="buscaClientes" type="text"
-											placeholder="Buscar cliente...">
+											placeholder="Buscar cliente..."/>
 										<thead>
 											<tr>
 												<th>Cod. Cliente</th>
@@ -720,7 +723,7 @@
 					<div class="modal-body">
 						<div class="table-responsive m-b-40">
 							<c:choose>
-								<c:when test="${not empty listaClientes}">
+								<c:when test="${not empty listaVendedores}">
 									<table class="table table-borderless table-data3">
 										<input class="form-control" id="buscaVendedores" type="text"
 											placeholder="Buscar vendedor...">
@@ -734,8 +737,8 @@
 										<tbody id="tabelaVendedores">
 											<c:forEach var="vendedor" items="${listaVendedores}">
 												<tr>
-													<td>${cliente.id}</td>
-													<td>${cliente.nome}</td>
+													<td>${vendedor.id}</td>
+													<td>${vendedor.nome}</td>
 													<td>
 														<form
 															action="InserirVendedorServlet?idVendedor=${vendedor.id}"
@@ -787,7 +790,7 @@
 				style="max-width: 100%; width: auto; display: table;">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="staticModalLabel">Condições de Pagamento</h5>
+						<h5 class="modal-title" id="staticModalLabel">Condi&#231;&otilde;es de Pagamento</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -799,11 +802,11 @@
 								<c:when test="${not empty listaCondPag}">
 									<table class="table table-borderless table-data3">
 										<input class="form-control" id="buscaCP" type="text"
-											placeholder="Buscar condição...">
+											placeholder="Buscar condi&ccedil;&atilde;o...">
 										<thead>
 											<tr>
-												<th>Cod. Condição de Pagamento</th>
-												<th>Descrição</th>
+												<th>Cod. Condi&#231;&atilde;o de Pagamento</th>
+												<th>Descri&ccedil;&atilde;o</th>
 												<th></th>
 											</tr>
 										</thead>
@@ -814,7 +817,7 @@
 													<td>${cp.descricao}</td>
 													<td>
 														<form
-															action="InserirCondPagServlet?idCP=${cp.id}"
+															action="InserirCondPagamentoServlet?idCP=${cp.id}"
 															method="post">
 															<div class="table-data-feature">
 																<button class="item" data-toggle="tooltip"

@@ -12,9 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.vsetsistemas.model.Cliente;
+import br.com.vsetsistemas.model.CondicaoPagamento;
+import br.com.vsetsistemas.model.Funcionario;
 import br.com.vsetsistemas.model.PedidoVenda;
+import br.com.vsetsistemas.model.Produto;
 import br.com.vsetsistemas.session.ClienteSession;
+import br.com.vsetsistemas.session.CondicaoPagamentoSession;
+import br.com.vsetsistemas.session.FuncionarioSession;
 import br.com.vsetsistemas.session.PedidoVendaSession;
+import br.com.vsetsistemas.session.ProdutoSession;
 
 /**
  * Servlet implementation class prePedidoVendaServlet
@@ -40,13 +46,26 @@ public class PrePedidoVendaServlet extends HttpServlet {
 		
 		PedidoVendaSession session = new PedidoVendaSession();
 		PedidoVenda pv = session.loadInitialParameters();
+		request.getSession().setAttribute("numeroPedido", pv.getNumero()+1);
+		
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		request.getSession().setAttribute("dataPedido", format.format(pv.getDataAbertura()));
+		
 		ClienteSession cs = new ClienteSession();
 		List<Cliente> listaClientes = cs.listAll();
-		
-		request.getSession().setAttribute("numeroPedido", pv.getNumero()+1);
-		request.getSession().setAttribute("dataPedido", format.format(pv.getDataAbertura()));
 		request.getSession().setAttribute("listaClientes", listaClientes);
+
+		FuncionarioSession fs = new FuncionarioSession();
+		List<Funcionario> listaVendedores = fs.listAll(); 
+		request.getSession().setAttribute("listaVendedores", listaVendedores);
+		
+		CondicaoPagamentoSession cps = new CondicaoPagamentoSession();
+		List<CondicaoPagamento> listaCondPag = cps.listAll();
+		request.getSession().setAttribute("listaCondPag", listaCondPag);
+		
+		ProdutoSession ps = new ProdutoSession();
+		List<Produto> listaProdutos = ps.listAll();
+		request.getSession().setAttribute("listaProdutos", listaProdutos);
 		
 		String nextJSP = "/inserirPedidoVenda.jsp";
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);

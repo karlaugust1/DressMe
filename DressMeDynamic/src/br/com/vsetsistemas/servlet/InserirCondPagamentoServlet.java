@@ -9,21 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.vsetsistemas.model.Cliente;
-import br.com.vsetsistemas.session.ClienteSession;
+import br.com.vsetsistemas.model.CondicaoPagamento;
+import br.com.vsetsistemas.session.CondicaoPagamentoSession;
 
 /**
- * Servlet implementation class inserirClienteServlet
+ * Servlet implementation class InserirCondPagamentoServlet
  */
-@WebServlet("/InserirClienteServlet")
-public class InserirClienteServlet extends HttpServlet {
+@WebServlet("/InserirCondPagamentoServlet")
+public class InserirCondPagamentoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static Cliente cliente;
+	public static CondicaoPagamento condPag;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InserirClienteServlet() {
+    public InserirCondPagamentoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,24 +33,22 @@ public class InserirClienteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		//Cliente c = new Cliente();
-		//c.setId((long) request.getAttribute("idCliente"));
-		//System.out.println("Parameter: " + request.getParameter("idCliente"));
-		ClienteSession cs = new ClienteSession();
-		cliente = cs.obtainById(new Long(0).parseLong(request.getParameter("idCliente")));
-		request.getSession().setAttribute("cliente", cliente);
+		// TODO Auto-generated method stub
+		//doGet(request, response);
+		CondicaoPagamentoSession cps = new CondicaoPagamentoSession();
+		condPag = cps.obtainById(new Integer(0).parseInt(request.getParameter("idCP")));
+		request.getSession().setAttribute("condPag", condPag);
 		
 		String nextJSP = "/PrePedidoVendaServlet";
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request, response);
 	}
-	
+
 }

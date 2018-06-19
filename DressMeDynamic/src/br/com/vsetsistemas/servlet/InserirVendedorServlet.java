@@ -9,21 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.vsetsistemas.model.Cliente;
-import br.com.vsetsistemas.session.ClienteSession;
+import br.com.vsetsistemas.model.Funcionario;
+import br.com.vsetsistemas.session.FuncionarioSession;
 
 /**
- * Servlet implementation class inserirClienteServlet
+ * Servlet implementation class InserirVendedorServlet
  */
-@WebServlet("/InserirClienteServlet")
-public class InserirClienteServlet extends HttpServlet {
+@WebServlet("/InserirVendedorServlet")
+public class InserirVendedorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static Cliente cliente;
+	public static Funcionario vendedor;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InserirClienteServlet() {
+    public InserirVendedorServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,24 +33,22 @@ public class InserirClienteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		//Cliente c = new Cliente();
-		//c.setId((long) request.getAttribute("idCliente"));
-		//System.out.println("Parameter: " + request.getParameter("idCliente"));
-		ClienteSession cs = new ClienteSession();
-		cliente = cs.obtainById(new Long(0).parseLong(request.getParameter("idCliente")));
-		request.getSession().setAttribute("cliente", cliente);
+		// TODO Auto-generated method stub
+		//doGet(request, response);
+		FuncionarioSession fs = new FuncionarioSession();
+		vendedor = fs.getFuncionarioById(new Long(0).parseLong(request.getParameter("idVendedor")));
+		request.getSession().setAttribute("vendedor", vendedor);
 		
 		String nextJSP = "/PrePedidoVendaServlet";
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request, response);
 	}
-	
+
 }

@@ -165,7 +165,7 @@ public class ClienteDAO extends DAO {
 						rs.getLong("cpfcnpj"), rs.getDate("data_nascimento"), rs.getLong("rg"),
 						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
 						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
-						rs.getBoolean("status"));
+						rs.getBoolean("status"), rs.getString("log_nome"));
 				l.add(c);
 			}
 
@@ -198,7 +198,7 @@ public class ClienteDAO extends DAO {
 						rs.getLong("cpfcnpj"), rs.getDate("data_nascimento"), rs.getLong("rg"),
 						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
 						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
-						rs.getBoolean("status"));
+						rs.getBoolean("status"), rs.getString("log_nome"));
 
 				if (c1 != null) {
 					rc = c1;
@@ -233,7 +233,7 @@ public class ClienteDAO extends DAO {
 						rs.getLong("cpfcnpj"), rs.getDate("data_nascimento"), rs.getLong("rg"),
 						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
 						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
-						rs.getBoolean("status"));
+						rs.getBoolean("status"), rs.getString("log_nome"));
 
 				if (c1 != null) {
 					c = c1;
@@ -268,7 +268,7 @@ public class ClienteDAO extends DAO {
 						rs.getLong("cpfcnpj"), rs.getDate("data_nascimento"), rs.getLong("rg"),
 						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
 						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
-						rs.getBoolean("status"));
+						rs.getBoolean("status"), rs.getString("log_nome"));
 
 				if (c1 != null) {
 					c = c1;
