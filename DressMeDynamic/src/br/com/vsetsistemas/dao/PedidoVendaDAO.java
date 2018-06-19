@@ -57,7 +57,7 @@ public class PedidoVendaDAO extends DAO {
 	private String SQL_INVOICE_PEDIDO_1 = "insert into notafiscal (numero, serie, chave_de_acesso, data_emissao, data_entrada_saida, condpag, pedidovenda, empresa) values (?,?,?,sysdate(),sysdate(),?,?,?);";
 	private String SQL_INSERT_PRODUCT_NF = "insert into produto_notafiscal (numeronota, idproduto, quantidade,desconto,subtotal,vunitario,iditem) values (?,?,?,?,?,?,?);";
 
-	private String SQL_OBTAIN_LAST_REGISTER = "select count(numero)+1 ultimo from pedidovenda;";
+	private String SQL_OBTAIN_LAST_REGISTER = "select * from pedidovenda where numero = (select max(numero) from pedidovenda);";
 	private String SQL_OBTAIN_LAST_REGISTER_NF = "select * from notafiscal;";
 
 	private String SQL_OBTAIN_SUM_VALUES = "SELECT SUM(VUNITARIO*QUANTIDADE) as total_geral, SUM(desconto) as total_desconto FROM produto_pedidovenda WHERE idpedido=?;";
@@ -800,7 +800,8 @@ public class PedidoVendaDAO extends DAO {
 			conectar();
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_LAST_REGISTER);
 			ResultSet rs = ps.executeQuery();
-			i = rs.getInt("ultimo");
+			while (rs.next())
+				i = rs.getLong("numero") + 1;
 			desconectar();
 		} catch (Exception e) {
 			e.printStackTrace();

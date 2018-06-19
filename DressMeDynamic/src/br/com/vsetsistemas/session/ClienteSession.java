@@ -56,6 +56,18 @@ public class ClienteSession {
 		}
 		return c1;
 	}
+	
+	public Cliente obtainById(long id) {
+
+		Cliente c1 = null;
+
+		try {
+			c1 = dao.obtainById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return c1;
+	}
 
 	public List<Cliente> listAll() {
 

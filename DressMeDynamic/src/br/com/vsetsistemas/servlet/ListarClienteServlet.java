@@ -10,21 +10,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.vsetsistemas.model.Cliente;
 import br.com.vsetsistemas.model.PedidoVenda;
+import br.com.vsetsistemas.session.ClienteSession;
 import br.com.vsetsistemas.session.PedidoVendaSession;
 
 
 /**
  * Servlet implementation class ListarVendasServlet
  */
-@WebServlet("/ListarPedidoVendaServlet")
-public class ListarPedidoVendaServlet extends HttpServlet {
+@WebServlet("/ListarClienteServlet")
+public class ListarClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListarPedidoVendaServlet() {
+    public ListarClienteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,11 +36,10 @@ public class ListarPedidoVendaServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		PedidoVendaSession service = new PedidoVendaSession();
-		List<PedidoVenda> lista = service.listAll();
+		ClienteSession cs = new ClienteSession();
+		List<Cliente> lista = cs.listAll();
 		//Colocar a lista na memoria
-		request.setAttribute("listarPedidosVendas", lista);
-		request.getSession().removeAttribute("cliente");
+		request.setAttribute("listaClientes", lista);
 		
 		String nextJSP = "/listarPedidosVendas.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);

@@ -148,7 +148,7 @@ public class ProdutoDAO extends DAO {
 			while (rs.next()) {
 				Produto p = new Produto(rs.getInt("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
-						rs.getString("cor"), rs.getDouble("preco"), rs.getInt("qtd_estoque"), new Categoria(), new Fornecedor());
+						rs.getString("cor"), rs.getDouble("vunitario"), rs.getInt("qtd_estoque"), new Categoria(), new Fornecedor());
 				l.add(p);
 			}
 

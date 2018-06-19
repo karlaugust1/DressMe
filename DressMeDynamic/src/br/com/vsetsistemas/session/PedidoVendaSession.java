@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.vsetsistemas.dao.PedidoVendaDAO;
+import br.com.vsetsistemas.model.Cliente;
 import br.com.vsetsistemas.model.Item;
 import br.com.vsetsistemas.model.PedidoVenda;
 import br.com.vsetsistemas.model.Produto;
+import br.com.vsetsistemas.servlet.InserirClienteServlet;
 
 public class PedidoVendaSession {
 
