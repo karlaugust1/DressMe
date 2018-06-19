@@ -20,6 +20,9 @@ public class Item {
 		this.valorUnitario = valorUnitario;
 		this.pedido = pedido;
 	}
+	
+	public Item() {}
+	
 	public long getId() {
 		return idItem;
 	}

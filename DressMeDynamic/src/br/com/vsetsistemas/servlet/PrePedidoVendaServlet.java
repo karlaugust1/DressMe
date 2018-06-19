@@ -28,6 +28,7 @@ import br.com.vsetsistemas.session.ProdutoSession;
 @WebServlet("/PrePedidoVendaServlet")
 public class PrePedidoVendaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public static PedidoVenda pedidoVenda;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -45,11 +46,11 @@ public class PrePedidoVendaServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		PedidoVendaSession session = new PedidoVendaSession();
-		PedidoVenda pv = session.loadInitialParameters();
-		request.getSession().setAttribute("numeroPedido", pv.getNumero()+1);
+		pedidoVenda = session.loadInitialParameters();
+		request.getSession().setAttribute("numeroPedido", pedidoVenda.getNumero()+1);
 		
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		request.getSession().setAttribute("dataPedido", format.format(pv.getDataAbertura()));
+		request.getSession().setAttribute("dataPedido", format.format(pedidoVenda.getDataAbertura()));
 		
 		ClienteSession cs = new ClienteSession();
 		List<Cliente> listaClientes = cs.listAll();
@@ -66,6 +67,8 @@ public class PrePedidoVendaServlet extends HttpServlet {
 		ProdutoSession ps = new ProdutoSession();
 		List<Produto> listaProdutos = ps.listAll();
 		request.getSession().setAttribute("listaProdutos", listaProdutos);
+		
+		request.getSession().setAttribute("pedidoVenda", pedidoVenda);
 		
 		String nextJSP = "/inserirPedidoVenda.jsp";
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);

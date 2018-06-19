@@ -43,7 +43,8 @@ public class InserirVendedorServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		FuncionarioSession fs = new FuncionarioSession();
-		vendedor = fs.getFuncionarioById(new Long(0).parseLong(request.getParameter("idVendedor")));
+		vendedor = fs.getFuncionarioById(Long.parseLong(request.getParameter("idVendedor")));
+		System.out.println(request.getParameter("idVendedor"));
 		request.getSession().setAttribute("vendedor", vendedor);
 		
 		String nextJSP = "/PrePedidoVendaServlet";

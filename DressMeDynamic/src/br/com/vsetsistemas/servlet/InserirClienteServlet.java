@@ -46,6 +46,7 @@ public class InserirClienteServlet extends HttpServlet {
 		//System.out.println("Parameter: " + request.getParameter("idCliente"));
 		ClienteSession cs = new ClienteSession();
 		cliente = cs.obtainById(new Long(0).parseLong(request.getParameter("idCliente")));
+		PrePedidoVendaServlet.pedidoVenda.setCliente(cliente);
 		request.getSession().setAttribute("cliente", cliente);
 		
 		String nextJSP = "/PrePedidoVendaServlet";

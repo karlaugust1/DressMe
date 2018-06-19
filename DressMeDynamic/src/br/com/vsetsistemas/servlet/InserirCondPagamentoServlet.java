@@ -43,7 +43,7 @@ public class InserirCondPagamentoServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		CondicaoPagamentoSession cps = new CondicaoPagamentoSession();
-		condPag = cps.obtainById(new Integer(0).parseInt(request.getParameter("idCP")));
+		condPag = cps.obtainById(Integer.parseInt(request.getParameter("idCP")));
 		request.getSession().setAttribute("condPag", condPag);
 		
 		String nextJSP = "/PrePedidoVendaServlet";

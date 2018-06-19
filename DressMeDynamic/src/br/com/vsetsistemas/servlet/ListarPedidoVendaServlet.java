@@ -39,6 +39,11 @@ public class ListarPedidoVendaServlet extends HttpServlet {
 		//Colocar a lista na memoria
 		request.setAttribute("listarPedidosVendas", lista);
 		request.getSession().removeAttribute("cliente");
+		request.getSession().removeAttribute("vendedor");
+		request.getSession().removeAttribute("condPag");
+		request.getSession().removeAttribute("listaProdutosPedidoVenda");
+		InserirProdutoServlet.listaProdutosPedidoVenda.clear();
+
 		
 		String nextJSP = "/listarPedidosVendas.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
