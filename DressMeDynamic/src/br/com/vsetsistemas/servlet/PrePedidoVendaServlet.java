@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import br.com.vsetsistemas.model.Cliente;
 import br.com.vsetsistemas.model.CondicaoPagamento;
@@ -29,27 +30,35 @@ import br.com.vsetsistemas.session.ProdutoSession;
 public class PrePedidoVendaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static PedidoVenda pedidoVenda;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public PrePedidoVendaServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public PrePedidoVendaServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		// response.getWriter().append("Served at: ").append(request.getContextPath());
 
 		System.out.println(request.getParameter("vlrDesconto"));
 
-		PedidoVendaSession session = new PedidoVendaSession();
-		pedidoVenda = session.loadInitialParameters();
-		request.getSession().setAttribute("numeroPedido", pedidoVenda.getNumero() + 1);
+		
+		/*try {
+			if (pedidoVenda.getListaProduto().isEmpty() || pedidoVenda.getListaProduto().size() == 0) {
+				
+			}
+		} catch (Exception e) {
+			pedidoVenda = session.loadInitialParameters();
+		}*/
+		request.getSession().setAttribute("numeroPedido", pedidoVenda.getNumero());
 
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		request.getSession().setAttribute("dataPedido", format.format(pedidoVenda.getDataAbertura()));
@@ -71,9 +80,11 @@ public class PrePedidoVendaServlet extends HttpServlet {
 		request.getSession().setAttribute("listaProdutos", listaProdutos);
 
 		request.getSession().setAttribute("pedidoVenda", pedidoVenda);
-		if (request.getParameter("vlrDesconto") != null)
-			request.getSession().setAttribute("valorTotal", pedidoVenda.getValorSubtotal() - Double.parseDouble(request.getParameter("vlrDesconto")));
-		else
+		if (request.getParameter("vlrDesconto") != null) {
+			pedidoVenda.setDesconto(Double.parseDouble(request.getParameter("vlrDesconto")));
+			request.getSession().setAttribute("valorTotal", pedidoVenda.getValorSubtotal() - pedidoVenda.getDesconto());
+			request.getSession().setAttribute("desconto", pedidoVenda.getDesconto());
+		} else
 			request.getSession().setAttribute("valorTotal", pedidoVenda.getValorTotal());
 
 		String nextJSP = "/inserirPedidoVenda.jsp";

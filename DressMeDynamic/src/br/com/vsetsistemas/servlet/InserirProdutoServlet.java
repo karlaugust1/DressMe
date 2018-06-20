@@ -63,13 +63,13 @@ public class InserirProdutoServlet extends HttpServlet {
 		for(Item item : listaProdutosPedidoVenda) {
 			subTotal += item.getProduto().getPreco() * item.getQuantidade();
 		}
-		
+		PrePedidoVendaServlet.pedidoVenda.setValorSubtotal(subTotal);
+		System.out.println("subtotal servlet: "+PrePedidoVendaServlet.pedidoVenda.getValorSubtotal());
 		PrePedidoVendaServlet.pedidoVenda.setListaProduto(listaProdutosPedidoVenda);
 		
 		DecimalFormat dfmt = new DecimalFormat("0.00");
 		request.getSession().setAttribute("listaProdutosPedidoVenda", listaProdutosPedidoVenda);
 		request.getSession().setAttribute("subTotal", dfmt.format(subTotal));
-		PrePedidoVendaServlet.pedidoVenda.setValorSubtotal(subTotal);
 		
 		
 		String nextJSP = "/PrePedidoVendaServlet";

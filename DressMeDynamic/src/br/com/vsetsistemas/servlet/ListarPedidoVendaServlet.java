@@ -43,7 +43,10 @@ public class ListarPedidoVendaServlet extends HttpServlet {
 		request.getSession().removeAttribute("vendedor");
 		request.getSession().removeAttribute("condPag");
 		request.getSession().removeAttribute("listaProdutosPedidoVenda");
-		PrePedidoVendaServlet.pedidoVenda = new PedidoVenda();
+		request.getSession().removeAttribute("subTotal");
+		//PrePedidoVendaServlet.pedidoVenda = new PedidoVenda();
+		PedidoVendaSession session = new PedidoVendaSession();
+		PrePedidoVendaServlet.pedidoVenda = session.loadInitialParameters();
 
 		String nextJSP = "/listarPedidosVendas.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);

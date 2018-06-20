@@ -480,7 +480,7 @@
 							<div class="form-group">
 								<label for="rua" class="control-label mb-1">Subtotal </label> <input
 									id="rua" name="rua" type="text" class="form-control subtotal"
-									value="${subTotal}" placeholder="${pedidovenda.subtotal}"
+									value="${subTotal}" placeholder="0.00"
 									disabled="" autocomplete="rua">
 							</div>
 						</div>
@@ -489,470 +489,381 @@
 							<div class="input-group">
 								<form action="PrePedidoVendaServlet" method="post">
 									<div class="table-data-feature">
-									<input id="nst" name="vlrDesconto" type="text"
-										class="form-control nst" value=""
-										placeholder="${pedidovenda.desconto}" autocomplete="off">
-										<div style="margin-top:4px; margin-left:4px">
-										<button class="item" data-toggle="tooltip"
-											data-placement="top" title="Confirmar desconto" id="desconto">
-											<i class="zmdi zmdi-check"></i>
-										</button>
+										<input id="nst" name="vlrDesconto" type="text"
+											class="form-control nst" value=""
+											placeholder="${desconto}" autocomplete="off">
+										<div style="margin-top: 4px; margin-left: 4px">
+											<button class="item" data-toggle="tooltip"
+												data-placement="top" title="Confirmar desconto"
+												id="desconto">
+												<i class="zmdi zmdi-check"></i>
+											</button>
 										</div>
 									</div>
 								</form>
 							</div>
 						</div>
 
-					<div class="col-2">
-						<label for="brr" class="control-label mb-1">Total</label>
-						<div class="input-group">
-							<input id="brr" name="brr" type="text" class="form-control brr"
-								value="${valorTotal}"
-								placeholder="${valorTotal}" autocomplete="off"
-								disabled="">
+						<div class="col-2">
+							<label for="brr" class="control-label mb-1">Total</label>
+							<div class="input-group">
+								<input id="brr" name="brr" type="text" class="form-control brr"
+									value="${valorTotal}" placeholder="${valorTotal}"
+									autocomplete="off" disabled="">
 
+							</div>
+							<div class="col-2"></div>
 						</div>
-						<div class="col-2"></div>
-					</div>
 					</div>
 
 
 
 				</div>
 
-					<div style="text-align: right; display-inline: block;">
-						<a href="ListarPedidoVendaServlet" type="button"
-							class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
-						<button type="button" class="btn btn-primary">Confirmar</button>
-					</div>
-
+				<div style="text-align: right; display-inline: block;">
+					<a href="ListarPedidoVendaServlet" type="button"
+						class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+					<button type="button" class="btn btn-primary">Confirmar</button>
 				</div>
 
 			</div>
+
 		</div>
-		<!-- FIM DO FORMULﾁRIO DE PEDIDOS -->
+	</div>
+	<!-- FIM DO FORMULﾁRIO DE PEDIDOS -->
 
 
-		<!-- modal produtos -->
-		<div class="modal fade" id="ModalProdutos" tabindex="-1" role="dialog"
-			aria-labelledby="staticModalLabel" aria-hidden="true"
-			data-backdrop="static">
-			<div class="modal-dialog modal-sm" role="document"
-				style="max-width: 100%; width: auto; display: table;">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="staticModalLabel">Produtos</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<c:choose>
-							<c:when test="${not empty listaProdutos}">
-								<div class="table-data__tool">
-									<div class="table-data__tool-left">
-										<button class="au-btn-filter">
-											<i class="zmdi zmdi-filter-list"></i>Filtrar
-										</button>
-									</div>
+	<!-- modal produtos -->
+	<div class="modal fade" id="ModalProdutos" tabindex="-1" role="dialog"
+		aria-labelledby="staticModalLabel" aria-hidden="true"
+		data-backdrop="static">
+		<div class="modal-dialog modal-sm" role="document"
+			style="max-width: 100%; width: auto; display: table;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticModalLabel">Produtos</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<c:choose>
+						<c:when test="${not empty listaProdutos}">
+							<div class="table-data__tool">
+								<div class="table-data__tool-left">
+									<button class="au-btn-filter">
+										<i class="zmdi zmdi-filter-list"></i>Filtrar
+									</button>
 								</div>
-								<div class="table-responsive table-responsive-data2">
-									<table class="table table-data2">
-										<thead>
-											<tr>
-												<th>ID</th>
-												<th>Descri&ccedil;&atilde;o</th>
-												<th>Cor</th>
-												<th>Tamanho</th>
-												<th>Estoque</th>
-												<th>Pre&ccedil;o</th>
-												<th></th>
+							</div>
+							<div class="table-responsive table-responsive-data2">
+								<table class="table table-data2">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Descri&ccedil;&atilde;o</th>
+											<th>Cor</th>
+											<th>Tamanho</th>
+											<th>Estoque</th>
+											<th>Pre&ccedil;o</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="produto" items="${listaProdutos}">
+											<tr class="tr-shadow">
+												<td class="desc">${produto.id}</td>
+												<td>${produto.descricao}</td>
+												<td class="desc">${produto.cor}</td>
+												<td>${produto.tamanho}</td>
+												<td><span class="status--process">${produto.quantidadeEstoque}</span></td>
+												<td><span class="block-email">${produto.preco}</span></td>
+												<td>
+													<form
+														action="InserirProdutoServlet?idProduto=${produto.id}"
+														method="post">
+														<div class="table-data-feature">
+															<input type="text" id="qtdProduto" name="qtdProduto"
+																placeholder="Quantidade" class="form-control"
+																align="center">
+															<button class="item" data-toggle="tooltip"
+																data-placement="top" title="Adicionar ao Pedido"
+																data-toggle="modal" data-target="#modalQuantia">
+																<i class="zmdi zmdi-assignment-check"></i>
+															</button>
+														</div>
+													</form>
+												</td>
 											</tr>
-										</thead>
-										<tbody>
-											<c:forEach var="produto" items="${listaProdutos}">
-												<tr class="tr-shadow">
-													<td class="desc">${produto.id}</td>
-													<td>${produto.descricao}</td>
-													<td class="desc">${produto.cor}</td>
-													<td>${produto.tamanho}</td>
-													<td><span class="status--process">${produto.quantidadeEstoque}</span></td>
-													<td><span class="block-email">${produto.preco}</span></td>
-													<td>
-														<form
-															action="InserirProdutoServlet?idProduto=${produto.id}"
-															method="post">
-															<div class="table-data-feature">
-																<input type="text" id="qtdProduto" name="qtdProduto"
-																	placeholder="Quantidade" class="form-control"
-																	align="center">
-																<button class="item" data-toggle="tooltip"
-																	data-placement="top" title="Adicionar ao Pedido"
-																	data-toggle="modal" data-target="#modalQuantia">
-																	<i class="zmdi zmdi-assignment-check"></i>
-																</button>
-															</div>
-														</form>
-													</td>
-												</tr>
-												<tr class="spacer"></tr>
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
+											<tr class="spacer"></tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="alert alert-info">Nenhum Produto Cadastrado!</div>
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end modal produtos -->
+
+	<!-- modal quantiaProdutos -->
+	<div class="modal fade" id="modalQuantia" tabindex="-1" role="dialog"
+		aria-labelledby="staticModalLabel" aria-hidden="true"
+		data-backdrop="static">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticModalLabel">Quantia</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="quantia" class="control-label mb-1">Quantia </label> <input
+							id="quantia" name="quantia" type="text"
+							class="form-control npedido" value=""
+							placeholder="Insira Quantia de Produto">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Cancelar</button>
+					<button type="button" class="btn btn-primary">Confirmar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end modal quantiaProdutos -->
+
+	<!-- modal clientes -->
+	<div class="modal fade" id="ModalClientes" tabindex="-1" role="dialog"
+		aria-labelledby="staticModalLabel" aria-hidden="true"
+		data-backdrop="static">
+		<div class="modal-dialog modal-sm" role="document"
+			style="max-width: 100%; width: auto; display: table;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticModalLabel">Clientes</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive m-b-40">
+						<c:choose>
+							<c:when test="${not empty listaClientes}">
+								<input class="form-control" id="buscaClientes" type="text"
+									placeholder="Buscar cliente..." />
+								<table class="table table-borderless table-data3">
+									<thead>
+										<tr>
+											<th>Cod. Cliente</th>
+											<th>Nome</th>
+											<th>CPF</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody id="tabelaClientes">
+										<c:forEach var="cliente" items="${listaClientes}">
+											<tr>
+												<td>${cliente.id}</td>
+												<td>${cliente.nome}</td>
+												<td>${cliente.cpf}</td>
+												<td>
+													<form
+														action="InserirClienteServlet?idCliente=${cliente.id}"
+														method="post">
+														<div class="table-data-feature">
+															<button class="item" data-toggle="tooltip"
+																data-placement="top" title="Adicionar" id="idCliente"
+																value="${cliente.id}">
+																<i class="zmdi zmdi-check"></i>
+															</button>
+														</div>
+													</form>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
 							</c:when>
 							<c:otherwise>
-								<div class="alert alert-info">Nenhum Produto Cadastrado!</div>
+								<div class="alert alert-info">Nenhum Cliente Cadastrado!</div>
 							</c:otherwise>
 						</c:choose>
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Fechar</button>
-					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Fechar</button>
 				</div>
 			</div>
 		</div>
-		<!-- end modal produtos -->
+	</div>
+	<!-- end modal clientes -->
 
-		<!-- modal quantiaProdutos -->
-		<div class="modal fade" id="modalQuantia" tabindex="-1" role="dialog"
-			aria-labelledby="staticModalLabel" aria-hidden="true"
-			data-backdrop="static">
-			<div class="modal-dialog modal-sm" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="staticModalLabel">Quantia</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label for="quantia" class="control-label mb-1">Quantia </label>
-							<input id="quantia" name="quantia" type="text"
-								class="form-control npedido" value=""
-								placeholder="Insira Quantia de Produto">
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Cancelar</button>
-						<button type="button" class="btn btn-primary">Confirmar</button>
-					</div>
+	<!-- modal vendedor -->
+	<div class="modal fade" id="ModalVendedor" tabindex="-1" role="dialog"
+		aria-labelledby="staticModalLabel" aria-hidden="true"
+		data-backdrop="static">
+		<div class="modal-dialog modal-sm" role="document"
+			style="max-width: 100%; width: auto; display: table;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticModalLabel">Vendedores</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-			</div>
-		</div>
-		<!-- end modal quantiaProdutos -->
-
-		<!-- modal clientes -->
-		<div class="modal fade" id="ModalClientes" tabindex="-1" role="dialog"
-			aria-labelledby="staticModalLabel" aria-hidden="true"
-			data-backdrop="static">
-			<div class="modal-dialog modal-sm" role="document"
-				style="max-width: 100%; width: auto; display: table;">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="staticModalLabel">Clientes</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="table-responsive m-b-40">
-							<c:choose>
-								<c:when test="${not empty listaClientes}">
-									<table class="table table-borderless table-data3">
-										<input class="form-control" id="buscaClientes" type="text"
-											placeholder="Buscar cliente..." />
-										<thead>
+				<div class="modal-body">
+					<div class="table-responsive m-b-40">
+						<c:choose>
+							<c:when test="${not empty listaVendedores}">
+								<input class="form-control" id="buscaVendedores" type="text"
+									placeholder="Buscar vendedor...">
+								<table class="table table-borderless table-data3">
+									<thead>
+										<tr>
+											<th>Cod. Vendedor</th>
+											<th>Nome</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody id="tabelaVendedores">
+										<c:forEach var="vendedor" items="${listaVendedores}">
 											<tr>
-												<th>Cod. Cliente</th>
-												<th>Nome</th>
-												<th>CPF</th>
-												<th></th>
+												<td>${vendedor.id}</td>
+												<td>${vendedor.nome}</td>
+												<td>
+													<form
+														action="InserirVendedorServlet?idVendedor=${vendedor.id}"
+														method="post">
+														<div class="table-data-feature">
+															<button class="item" data-toggle="tooltip"
+																data-placement="top" title="Adicionar" id="idVendedor"
+																value="${vendedor.id}">
+																<i class="zmdi zmdi-check"></i>
+															</button>
+														</div>
+													</form>
+												</td>
 											</tr>
-										</thead>
-										<tbody id="tabelaClientes">
-											<c:forEach var="cliente" items="${listaClientes}">
-												<tr>
-													<td>${cliente.id}</td>
-													<td>${cliente.nome}</td>
-													<td>${cliente.cpf}</td>
-													<td>
-														<form
-															action="InserirClienteServlet?idCliente=${cliente.id}"
-															method="post">
-															<div class="table-data-feature">
-																<button class="item" data-toggle="tooltip"
-																	data-placement="top" title="Adicionar" id="idCliente"
-																	value="${cliente.id}">
-																	<i class="zmdi zmdi-check"></i>
-																</button>
-															</div>
-														</form>
-													</td>
-												</tr>
-											</c:forEach>
-										</tbody>
-										<script>
-											$(document)
-													.ready(
-															function() {
-																$(
-																		"#buscaClientes")
-																		.on(
-																				"keyup",
-																				function() {
-																					var value = $(
-																							this)
-																							.val()
-																							.toLowerCase();
-																					$(
-																							"#tabelaClientes tr")
-																							.filter(
-																									function() {
-																										$(
-																												this)
-																												.toggle(
-																														$(
-																																this)
-																																.text()
-																																.toLowerCase()
-																																.indexOf(
-																																		value) > -1)
-																									});
-																				});
-															});
-										</script>
-									</table>
-								</c:when>
-								<c:otherwise>
-									<div class="alert alert-info">Nenhum Cliente Cadastrado!</div>
-								</c:otherwise>
-							</c:choose>
-						</div>
+										</c:forEach>
+									</tbody>
+								</table>
+							</c:when>
+							<c:otherwise>
+								<div class="alert alert-info">Nenhum Vendedor Cadastrado!</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Fechar</button>
-					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Fechar</button>
 				</div>
 			</div>
 		</div>
-		<!-- end modal clientes -->
+	</div>
+	<!-- end modal Vendedor -->
 
-		<!-- modal vendedor -->
-		<div class="modal fade" id="ModalVendedor" tabindex="-1" role="dialog"
-			aria-labelledby="staticModalLabel" aria-hidden="true"
-			data-backdrop="static">
-			<div class="modal-dialog modal-sm" role="document"
-				style="max-width: 100%; width: auto; display: table;">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="staticModalLabel">Vendedores</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="table-responsive m-b-40">
-							<c:choose>
-								<c:when test="${not empty listaVendedores}">
-									<table class="table table-borderless table-data3">
-										<input class="form-control" id="buscaVendedores" type="text"
-											placeholder="Buscar vendedor...">
-										<thead>
+	<!-- modal CondPag -->
+	<div class="modal fade" id="ModalCP" tabindex="-1" role="dialog"
+		aria-labelledby="staticModalLabel" aria-hidden="true"
+		data-backdrop="static">
+		<div class="modal-dialog modal-sm" role="document"
+			style="max-width: 100%; width: auto; display: table;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticModalLabel">Condi&#231;&otilde;es
+						de Pagamento</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive m-b-40">
+						<c:choose>
+							<c:when test="${not empty listaCondPag}">
+								<input class="form-control" id="buscaCP" type="text"
+									placeholder="Buscar condi&ccedil;&atilde;o...">
+								<table class="table table-borderless table-data3">
+									<thead>
+										<tr>
+											<th>Cod. Condi&#231;&atilde;o de Pagamento</th>
+											<th>Descri&ccedil;&atilde;o</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody id="tabelaCP">
+										<c:forEach var="cp" items="${listaCondPag}">
 											<tr>
-												<th>Cod. Vendedor</th>
-												<th>Nome</th>
-												<th></th>
+												<td>${cp.id}</td>
+												<td>${cp.descricao}</td>
+												<td>
+													<form action="InserirCondPagamentoServlet?idCP=${cp.id}"
+														method="post">
+														<div class="table-data-feature">
+															<button class="item" data-toggle="tooltip"
+																data-placement="top" title="Adicionar" id="idCP"
+																value="${cp.id}">
+																<i class="zmdi zmdi-check"></i>
+															</button>
+														</div>
+													</form>
+												</td>
 											</tr>
-										</thead>
-										<tbody id="tabelaVendedores">
-											<c:forEach var="vendedor" items="${listaVendedores}">
-												<tr>
-													<td>${vendedor.id}</td>
-													<td>${vendedor.nome}</td>
-													<td>
-														<form
-															action="InserirVendedorServlet?idVendedor=${vendedor.id}"
-															method="post">
-															<div class="table-data-feature">
-																<button class="item" data-toggle="tooltip"
-																	data-placement="top" title="Adicionar" id="idVendedor"
-																	value="${vendedor.id}">
-																	<i class="zmdi zmdi-check"></i>
-																</button>
-															</div>
-														</form>
-													</td>
-												</tr>
-											</c:forEach>
-										</tbody>
-										<script>
-											$(document)
-													.ready(
-															function() {
-																$(
-																		"#buscaVendedores")
-																		.on(
-																				"keyup",
-																				function() {
-																					var value = $(
-																							this)
-																							.val()
-																							.toLowerCase();
-																					$(
-																							"#tabelaVendedores tr")
-																							.filter(
-																									function() {
-																										$(
-																												this)
-																												.toggle(
-																														$(
-																																this)
-																																.text()
-																																.toLowerCase()
-																																.indexOf(
-																																		value) > -1)
-																									});
-																				});
-															});
-										</script>
-									</table>
-								</c:when>
-								<c:otherwise>
-									<div class="alert alert-info">Nenhum Vendedor Cadastrado!</div>
-								</c:otherwise>
-							</c:choose>
-						</div>
+										</c:forEach>
+									</tbody>
+								</table>
+							</c:when>
+							<c:otherwise>
+								<div class="alert alert-info">Nenhuma Condição de
+									Pagamento Cadastrada!</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Fechar</button>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end modal CondPag -->
+
+
+	<!-- Footer -->
+	<section>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="copyright">
+						<p>Copyright &#169; 2018 VSET Sistemas. Nenhum direito
+							reservado.</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- end modal Vendedor -->
+	</section>
 
-		<!-- modal CondPag -->
-		<div class="modal fade" id="ModalCP" tabindex="-1" role="dialog"
-			aria-labelledby="staticModalLabel" aria-hidden="true"
-			data-backdrop="static">
-			<div class="modal-dialog modal-sm" role="document"
-				style="max-width: 100%; width: auto; display: table;">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="staticModalLabel">Condi&#231;&otilde;es
-							de Pagamento</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="table-responsive m-b-40">
-							<c:choose>
-								<c:when test="${not empty listaCondPag}">
-									<table class="table table-borderless table-data3">
-										<input class="form-control" id="buscaCP" type="text"
-											placeholder="Buscar condi&ccedil;&atilde;o...">
-										<thead>
-											<tr>
-												<th>Cod. Condi&#231;&atilde;o de Pagamento</th>
-												<th>Descri&ccedil;&atilde;o</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody id="tabelaCP">
-											<c:forEach var="cp" items="${listaCondPag}">
-												<tr>
-													<td>${cp.id}</td>
-													<td>${cp.descricao}</td>
-													<td>
-														<form action="InserirCondPagamentoServlet?idCP=${cp.id}"
-															method="post">
-															<div class="table-data-feature">
-																<button class="item" data-toggle="tooltip"
-																	data-placement="top" title="Adicionar" id="idCP"
-																	value="${cp.id}">
-																	<i class="zmdi zmdi-check"></i>
-																</button>
-															</div>
-														</form>
-													</td>
-												</tr>
-											</c:forEach>
-										</tbody>
-										<script>
-											$(document)
-													.ready(
-															function() {
-																$("#buscaCP")
-																		.on(
-																				"keyup",
-																				function() {
-																					var value = $(
-																							this)
-																							.val()
-																							.toLowerCase();
-																					$(
-																							"#tabelaCP tr")
-																							.filter(
-																									function() {
-																										$(
-																												this)
-																												.toggle(
-																														$(
-																																this)
-																																.text()
-																																.toLowerCase()
-																																.indexOf(
-																																		value) > -1)
-																									});
-																				});
-															});
-										</script>
-									</table>
-								</c:when>
-								<c:otherwise>
-									<div class="alert alert-info">Nenhuma Condição de
-										Pagamento Cadastrada!</div>
-								</c:otherwise>
-							</c:choose>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Fechar</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- end modal CondPag -->
-
-
-		<!-- Footer -->
-		<section>
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="copyright">
-							<p>Copyright &#169; 2018 VSET Sistemas. Nenhum direito
-								reservado.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- END PAGE CONTAINER -->
+	<!-- END PAGE CONTAINER -->
 	</div>
 
 	<!-- Jquery JS-->
@@ -986,6 +897,74 @@
 
 	<!-- Main JS-->
 	<script src="js/main.js"></script>
+
+	<!-- Scripts -->
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$("#buscaClientes")
+									.on(
+											"keyup",
+											function() {
+												var value = $(this).val()
+														.toLowerCase();
+												$("#tabelaClientes tr")
+														.filter(
+																function() {
+																	$(this)
+																			.toggle(
+																					$(
+																							this)
+																							.text()
+																							.toLowerCase()
+																							.indexOf(
+																									value) > -1)
+																});
+											});
+
+							$("#buscaVendedores")
+									.on(
+											"keyup",
+											function() {
+												var value = $(this).val()
+														.toLowerCase();
+												$("#tabelaVendedores tr")
+														.filter(
+																function() {
+																	$(this)
+																			.toggle(
+																					$(
+																							this)
+																							.text()
+																							.toLowerCase()
+																							.indexOf(
+																									value) > -1)
+																});
+											});
+
+							$("#buscaCP")
+									.on(
+											"keyup",
+											function() {
+												var value = $(this).val()
+														.toLowerCase();
+												$("#tabelaCP tr")
+														.filter(
+																function() {
+																	$(this)
+																			.toggle(
+																					$(
+																							this)
+																							.text()
+																							.toLowerCase()
+																							.indexOf(
+																									value) > -1)
+																});
+											});
+
+						});
+	</script>
 
 </body>
 
