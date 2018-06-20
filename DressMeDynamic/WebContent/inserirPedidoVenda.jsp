@@ -389,8 +389,9 @@
 										<i class="fa fa-search"></i> Buscar
 									</button>
 								</div>
-								<input id="vendedor" name="vendedor" type="text" class="form-control vdd"
-									value="${vendedor.nome}" placeholder="Vendedor" disabled=""/>
+								<input id="vendedor" name="vendedor" type="text"
+									class="form-control vdd" value="${vendedor.nome}"
+									placeholder="Vendedor" disabled="" />
 							</div>
 						</div>
 					</div>
@@ -432,7 +433,7 @@
 										<tbody>
 											<c:forEach var="item" items="${listaProdutosPedidoVenda}">
 												<tr class="tr-shadow">
-													<td class="desc">${item.produto.id}</td>
+													<td class="desc">${item.id}</td>
 													<td>${item.produto.descricao}</td>
 													<td class="desc">${item.produto.cor}</td>
 													<td>${item.produto.tamanho}</td>
@@ -479,38 +480,49 @@
 							<div class="form-group">
 								<label for="rua" class="control-label mb-1">Subtotal </label> <input
 									id="rua" name="rua" type="text" class="form-control subtotal"
-									value="${subTotal}" placeholder="${pedidovenda.subtotal}" disabled=""
-									autocomplete="rua">
+									value="${subTotal}" placeholder="${pedidovenda.subtotal}"
+									disabled="" autocomplete="rua">
 							</div>
 						</div>
 						<div class="col-2">
 							<label for="nst" class="control-label mb-1">Desconto</label>
 							<div class="input-group">
-								<input id="nst" name="nst" type="text" class="form-control nst"
-									value="" placeholder="${pedidovenda.desconto}"
-									autocomplete="off">
-
+								<form action="PrePedidoVendaServlet" method="post">
+									<div class="table-data-feature">
+									<input id="nst" name="vlrDesconto" type="text"
+										class="form-control nst" value=""
+										placeholder="${pedidovenda.desconto}" autocomplete="off">
+										<div style="margin-top:4px; margin-left:4px">
+										<button class="item" data-toggle="tooltip"
+											data-placement="top" title="Confirmar desconto" id="desconto">
+											<i class="zmdi zmdi-check"></i>
+										</button>
+										</div>
+									</div>
+								</form>
 							</div>
 						</div>
 
-						<div class="col-2">
-							<label for="brr" class="control-label mb-1">Total</label>
-							<div class="input-group">
-								<input id="brr" name="brr" type="text" class="form-control brr"
-									value="" placeholder="${pedidovenda.total}" autocomplete="off"
-									disabled="">
+					<div class="col-2">
+						<label for="brr" class="control-label mb-1">Total</label>
+						<div class="input-group">
+							<input id="brr" name="brr" type="text" class="form-control brr"
+								value="${valorTotal}"
+								placeholder="${valorTotal}" autocomplete="off"
+								disabled="">
 
-							</div>
-							<div class="col-2"></div>
 						</div>
-
-
-
+						<div class="col-2"></div>
+					</div>
 					</div>
 
+
+
+				</div>
+
 					<div style="text-align: right; display-inline: block;">
-						<a href="ListarPedidoVendaServlet" type="button" class="btn btn-secondary"
-							data-dismiss="modal">Cancelar</a>
+						<a href="ListarPedidoVendaServlet" type="button"
+							class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
 						<button type="button" class="btn btn-primary">Confirmar</button>
 					</div>
 
@@ -573,7 +585,8 @@
 															method="post">
 															<div class="table-data-feature">
 																<input type="text" id="qtdProduto" name="qtdProduto"
-																	placeholder="Quantidade" class="form-control" align="center">
+																	placeholder="Quantidade" class="form-control"
+																	align="center">
 																<button class="item" data-toggle="tooltip"
 																	data-placement="top" title="Adicionar ao Pedido"
 																	data-toggle="modal" data-target="#modalQuantia">
@@ -766,7 +779,8 @@
 													<td>${vendedor.id}</td>
 													<td>${vendedor.nome}</td>
 													<td>
-														<form action="InserirVendedorServlet?idVendedor=${vendedor.id}"
+														<form
+															action="InserirVendedorServlet?idVendedor=${vendedor.id}"
 															method="post">
 															<div class="table-data-feature">
 																<button class="item" data-toggle="tooltip"

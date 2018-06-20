@@ -18,7 +18,6 @@ import br.com.vsetsistemas.session.FuncionarioSession;
 @WebServlet("/InserirVendedorServlet")
 public class InserirVendedorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static Funcionario vendedor;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -43,8 +42,8 @@ public class InserirVendedorServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		FuncionarioSession fs = new FuncionarioSession();
-		vendedor = fs.getFuncionarioById(Long.parseLong(request.getParameter("idVendedor")));
-		System.out.println(request.getParameter("idVendedor"));
+		Funcionario vendedor = fs.getFuncionarioById(Long.parseLong(request.getParameter("idVendedor")));
+		PrePedidoVendaServlet.pedidoVenda.setVendedor(vendedor);
 		request.getSession().setAttribute("vendedor", vendedor);
 		
 		String nextJSP = "/PrePedidoVendaServlet";

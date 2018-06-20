@@ -18,7 +18,6 @@ import br.com.vsetsistemas.session.CondicaoPagamentoSession;
 @WebServlet("/InserirCondPagamentoServlet")
 public class InserirCondPagamentoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static CondicaoPagamento condPag;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -43,7 +42,8 @@ public class InserirCondPagamentoServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		CondicaoPagamentoSession cps = new CondicaoPagamentoSession();
-		condPag = cps.obtainById(Integer.parseInt(request.getParameter("idCP")));
+		CondicaoPagamento condPag = cps.obtainById(Integer.parseInt(request.getParameter("idCP")));
+		PrePedidoVendaServlet.pedidoVenda.setCondPagamento(condPag);
 		request.getSession().setAttribute("condPag", condPag);
 		
 		String nextJSP = "/PrePedidoVendaServlet";

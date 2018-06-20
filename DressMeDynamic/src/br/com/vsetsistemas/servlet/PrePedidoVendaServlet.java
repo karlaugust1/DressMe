@@ -44,41 +44,49 @@ public class PrePedidoVendaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
+
+		System.out.println(request.getParameter("vlrDesconto"));
+
 		PedidoVendaSession session = new PedidoVendaSession();
 		pedidoVenda = session.loadInitialParameters();
-		request.getSession().setAttribute("numeroPedido", pedidoVenda.getNumero()+1);
-		
+		request.getSession().setAttribute("numeroPedido", pedidoVenda.getNumero() + 1);
+
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		request.getSession().setAttribute("dataPedido", format.format(pedidoVenda.getDataAbertura()));
-		
+
 		ClienteSession cs = new ClienteSession();
 		List<Cliente> listaClientes = cs.listAll();
 		request.getSession().setAttribute("listaClientes", listaClientes);
 
 		FuncionarioSession fs = new FuncionarioSession();
-		List<Funcionario> listaVendedores = fs.listAll(); 
+		List<Funcionario> listaVendedores = fs.listAll();
 		request.getSession().setAttribute("listaVendedores", listaVendedores);
-		
+
 		CondicaoPagamentoSession cps = new CondicaoPagamentoSession();
 		List<CondicaoPagamento> listaCondPag = cps.listAll();
 		request.getSession().setAttribute("listaCondPag", listaCondPag);
-		
+
 		ProdutoSession ps = new ProdutoSession();
 		List<Produto> listaProdutos = ps.listAll();
 		request.getSession().setAttribute("listaProdutos", listaProdutos);
-		
+
 		request.getSession().setAttribute("pedidoVenda", pedidoVenda);
-		
+		if (request.getParameter("vlrDesconto") != null)
+			request.getSession().setAttribute("valorTotal", pedidoVenda.getValorSubtotal() - Double.parseDouble(request.getParameter("vlrDesconto")));
+		else
+			request.getSession().setAttribute("valorTotal", pedidoVenda.getValorTotal());
+
 		String nextJSP = "/inserirPedidoVenda.jsp";
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

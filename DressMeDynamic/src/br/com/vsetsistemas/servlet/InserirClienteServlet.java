@@ -18,7 +18,6 @@ import br.com.vsetsistemas.session.ClienteSession;
 @WebServlet("/InserirClienteServlet")
 public class InserirClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static Cliente cliente;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -45,7 +44,7 @@ public class InserirClienteServlet extends HttpServlet {
 		//c.setId((long) request.getAttribute("idCliente"));
 		//System.out.println("Parameter: " + request.getParameter("idCliente"));
 		ClienteSession cs = new ClienteSession();
-		cliente = cs.obtainById(new Long(0).parseLong(request.getParameter("idCliente")));
+		Cliente cliente = cs.obtainById(Long.parseLong(request.getParameter("idCliente")));
 		PrePedidoVendaServlet.pedidoVenda.setCliente(cliente);
 		request.getSession().setAttribute("cliente", cliente);
 		
