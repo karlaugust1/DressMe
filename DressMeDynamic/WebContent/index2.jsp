@@ -67,7 +67,7 @@
 				</div>
 				<nav class="navbar-sidebar2">
 					<ul class="list-unstyled navbar__list">
-						<li><a href="index2.jsp"> <i
+						<li><a href="#"> <i
 								class="fas fa-tachometer-alt"></i>Painel Principal
 						</a></li>
 						<li class="active has-sub"><a class="js-arrow" href="#">
@@ -76,16 +76,16 @@
 							</span>
 						</a>
 							<ul class="list-unstyled navbar__sub-list js-sub-list">
-								<li><a href="index2.html"> <i
+								<li><a href="#"> <i
 										class="fas fa-pencil-square-o"></i>Orçamento
 								</a></li>
 								<li><a href="ListarPedidoVendaServlet"> <i
 										class="fas fa-shopping-cart"></i>Pedido de Venda
 								</a></li>
-								<li><a href="index2.html"> <i class="fas fa-print"></i>Nota
+								<li><a href="#"> <i class="fas fa-print"></i>Nota
 										Fiscal
 								</a></li>
-								<li><a href="index2.html"> <i class="fas fa-file"></i>Relatórios
+								<li><a href="#"> <i class="fas fa-file"></i>Relatórios
 								</a></li>
 							</ul></li>
 						<li><a href="#"> <i class="fas fa-download"></i>Compras
@@ -179,11 +179,11 @@
 							<img src="images/icon/avatar-big-01.jpg" alt="John Doe" />
 						</div>
 						<h4 class="name">john doe</h4>
-						<a href="#">Sign out</a>
+						<a href="login.html">Sign out</a>
 					</div>
 					<nav class="navbar-sidebar2">
 						<ul class="list-unstyled navbar__list">
-							<li><a href="../index2.html"> <i
+							<li><a href="DashboardServlet"> <i
 									class="fas fa-tachometer-alt"></i>Painel Principal
 							</a></li>
 							<li class="active has-sub"><a class="js-arrow" href="#">
@@ -192,23 +192,23 @@
 								</span>
 							</a>
 								<ul class="list-unstyled navbar__sub-list js-sub-list">
-									<li><a href="index2.html"> <i
+									<li><a href="#"> <i
 											class="fas fa-pencil-square-o"></i>Orçamento
 									</a></li>
 									<li><a href="ListarPedidoVendaServlet"> <i
 											class="fas fa-shopping-cart"></i>Pedido de Venda
 									</a></li>
-									<li><a href="index2.html"> <i class="fas fa-print"></i>Nota
+									<li><a href=#> <i class="fas fa-print"></i>Nota
 											Fiscal
 									</a></li>
-									<li><a href="index2.html"> <i class="fas fa-file"></i>Relatórios
+									<li><a href="#"> <i class="fas fa-file"></i>Relatórios
 									</a></li>
 								</ul></li>
-							<li><a href="../index2.html"> <i class="fas fa-download"></i>Compras
+							<li><a href="#"> <i class="fas fa-download"></i>Compras
 							</a></li>
-							<li><a href="../index2.html"> <i class="fas fa-inbox"></i>Estoque
+							<li><a href="#"> <i class="fas fa-inbox"></i>Estoque
 							</a></li>
-							<li><a href="../index2.html"> <i class="fas fa-group"></i>Fidelização
+							<li><a href="#"> <i class="fas fa-group"></i>Fidelização
 							</a></li>
 						</ul>
 					</nav>

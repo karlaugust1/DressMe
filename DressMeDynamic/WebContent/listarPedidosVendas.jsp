@@ -66,7 +66,7 @@
 				</div>
 				<nav class="navbar-sidebar2">
 					<ul class="list-unstyled navbar__list">
-						<li><a href="index2.html"> <i
+						<li><a href="DashboardServlet"> <i
 								class="fas fa-tachometer-alt"></i>Painel Principal
 						</a></li>
 						<li class="active has-sub"><a class="js-arrow" href="#">
@@ -75,23 +75,22 @@
 							</span>
 						</a>
 							<ul class="list-unstyled navbar__sub-list js-sub-list">
-								<li><a href="index2.html"> <i
-										class="fas fa-pencil-square-o"></i>Orçamento
+								<li><a href="#"> <i class="fas fa-pencil-square-o"></i>Orçamento
 								</a></li>
-								<li><a href="#"> <i class="fas fa-shopping-cart"></i>Pedido
-										de Venda
+								<li><a href="ListarPedidoVendaServlet"> <i
+										class="fas fa-shopping-cart"></i>Pedido de Venda
 								</a></li>
-								<li><a href="index2.html"> <i class="fas fa-print"></i>Nota
+								<li><a href="#"> <i class="fas fa-print"></i>Nota
 										Fiscal
 								</a></li>
-								<li><a href="index2.html"> <i class="fas fa-file"></i>Relatórios
+								<li><a href="#"> <i class="fas fa-file"></i>Relatórios
 								</a></li>
 							</ul></li>
-						<li><a href="../index2.html"> <i class="fas fa-download"></i>Compras
+						<li><a href="#"> <i class="fas fa-download"></i>Compras
 						</a></li>
-						<li><a href="../index2.html"> <i class="fas fa-inbox"></i>Estoque
+						<li><a href="#"> <i class="fas fa-inbox"></i>Estoque
 						</a></li>
-						<li><a href="../index2.html"> <i class="fas fa-group"></i>Fidelização
+						<li><a href="#"> <i class="fas fa-group"></i>Fidelização
 						</a></li>
 
 					</ul>
@@ -183,7 +182,7 @@
 					</div>
 					<nav class="navbar-sidebar2">
 						<ul class="list-unstyled navbar__list">
-							<li><a href="index2.html"> <i
+							<li><a href="DashboardServlet"> <i
 									class="fas fa-tachometer-alt"></i>Painel Principal
 							</a></li>
 							<li class="active has-sub"><a class="js-arrow" href="#">
@@ -192,23 +191,22 @@
 								</span>
 							</a>
 								<ul class="list-unstyled navbar__sub-list js-sub-list">
-									<li><a href="index2.html"> <i
-											class="fas fa-pencil-square-o"></i>Orçamento
+									<li><a href="#"> <i class="fas fa-pencil-square-o"></i>Orçamento
 									</a></li>
-									<li><a href="pedidovenda/listarPedidosVendas.jsp"> <i
+									<li><a href="ListarPedidoVendaServlet"> <i
 											class="fas fa-shopping-cart"></i>Pedido de Venda
 									</a></li>
-									<li><a href="index2.html"> <i class="fas fa-print"></i>Nota
+									<li><a href="#"> <i class="fas fa-print"></i>Nota
 											Fiscal
 									</a></li>
-									<li><a href="index2.html"> <i class="fas fa-file"></i>Relatórios
+									<li><a href="#"> <i class="fas fa-file"></i>Relatórios
 									</a></li>
 								</ul></li>
-							<li><a href="../index2.html"> <i class="fas fa-download"></i>Compras
+							<li><a href="#"> <i class="fas fa-download"></i>Compras
 							</a></li>
-							<li><a href="../index2.html"> <i class="fas fa-inbox"></i>Estoque
+							<li><a href="#"> <i class="fas fa-inbox"></i>Estoque
 							</a></li>
-							<li><a href="../index2.html"> <i class="fas fa-group"></i>Fidelização
+							<li><a href="#"> <i class="fas fa-group"></i>Fidelização
 							</a></li>
 						</ul>
 					</nav>
@@ -250,9 +248,9 @@
 							<button class="au-btn-filter">
 								<i class="zmdi zmdi-filter-list"></i>Filtrar
 							</button>
+							<input type="form-control" id="filtroped" name="input1-group2"
+								placeholder="Parâmetros..." class="form-control">
 						</div>
-						<input type="text" id="filtroped" name="input1-group2"
-							placeholder="Parâmetros..." class="form-control">
 					</div>
 
 				</div>
@@ -264,7 +262,6 @@
 					</a>
 				</div>
 			</div>
-			<form action="/ListarPedidoVendaServlet" method="post">
 				<c:choose>
 					<c:when test="${not empty listarPedidosVendas}">
 						<div class="table-responsive table-responsive-data2">
@@ -303,26 +300,18 @@
 														data-placement="top" title="Deletar">
 														<i class="zmdi zmdi-delete"></i>
 													</button>
+												<form action="ExibirPedidoVendaServlet?numero=${pedidoVenda.numero}" method="post">
 													<button class="item" data-toggle="tooltip"
 														data-placement="top" title="Visualizar">
 														<i class="zmdi zmdi-eye"></i>
 													</button>
-												</div>
+												</form>
+											</div>
 											</td>
 										</tr>
 										<tr class="spacer"></tr>
 									</c:forEach>
 								</tbody>
-								<script>
-									$(document).ready(function() {
-										$("#filtroped").on("keyup", function() {
-											var value = $(this).val().toLowerCase();
-											$("#listaPedidos tr").filter(function() {
-												$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-											});
-										});
-									});
-								</script>
 							</table>
 						</div>
 					</c:when>
@@ -332,7 +321,6 @@
 							encontrado!</div>
 					</c:otherwise>
 				</c:choose>
-			</form>
 			<!-- FIM DA LISTAGEM DE PEDIDOS -->
 
 
@@ -386,6 +374,34 @@
 
 	<!-- Main JS-->
 	<script src="js/main.js"></script>
+
+	<!-- Scripts -->
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$("#filtroped")
+									.on(
+											"keyup",
+											function() {
+												var value = $(this).val()
+														.toLowerCase();
+												$("#listaPedidos tr")
+														.filter(
+																function() {
+																	$(this)
+																			.toggle(
+																					$(
+																							this)
+																							.text()
+																							.toLowerCase()
+																							.indexOf(
+																									value) > -1)
+																});
+											});
+
+						});
+	</script>
 
 </body>
 

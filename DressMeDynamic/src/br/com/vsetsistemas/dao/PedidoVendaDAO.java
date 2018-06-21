@@ -217,7 +217,7 @@ public class PedidoVendaDAO extends DAO {
 
 	}
 
-	public Double[] insertProduct(Item i) {
+	public void insertProduct(Item i) {
 
 		try {
 			conectar();
@@ -238,8 +238,6 @@ public class PedidoVendaDAO extends DAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return this.sumValues(i.getPedido().getNumero());
 
 	}
 

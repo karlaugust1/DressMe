@@ -13,21 +13,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.vsetsistemas.model.Item;
-import br.com.vsetsistemas.session.ProdutoSession;
 
 
 /**
- * Servlet implementation class InserirProdutoServlet
+ * Servlet implementation class DeletarProdutoServlet
  */
-@WebServlet("/InserirProdutoServlet")
-public class InserirProdutoServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;	
-      public static List<Item> listaProdutosPedidoVenda = new ArrayList<>();
-      
+@WebServlet("/DeletarProdutoServlet")
+public class DeletarProdutoServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InserirProdutoServlet() {
+    public DeletarProdutoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,33 +43,28 @@ public class InserirProdutoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-
+		long idItem = Long.parseLong(request.getParameter("idProduto"));
 		
-		ProdutoSession ps = new ProdutoSession();
-		Item i = new Item();
-		
-		i.setProduto(ps.obtainById(Integer.parseInt(request.getParameter("idProduto"))));
-		i.setQuantidade(Integer.parseInt(request.getParameter("qtdProduto")));//implementação do código de getParameter
-		i.setId(listaProdutosPedidoVenda.size()+1);
-		i.setValorUnitario(ps.obtainById(Integer.parseInt(request.getParameter("idProduto"))).getPreco());
-		i.setSubtotal(ps.obtainById(Integer.parseInt(request.getParameter("idProduto"))).getPreco()*Integer.parseInt(request.getParameter("qtdProduto")));
-			
-		listaProdutosPedidoVenda.add(i);
-		Double subTotal = 0.0;
-		
-		for(Item item : listaProdutosPedidoVenda) {
-			subTotal += item.getProduto().getPreco() * item.getQuantidade();
+		for(Item i : PrePedidoVendaServlet.pedidoVenda.getListaProduto()) {
+			if(i.getId() == idItem) {
+				PrePedidoVendaServlet.pedidoVenda.getListaProduto().remove(i);
+				InserirProdutoServlet.listaProdutosPedidoVenda.remove(i);
+				break;
+			}
 		}
 		
+		Double subTotal = 0.0;
+		
+		for(Item item : InserirProdutoServlet.listaProdutosPedidoVenda) {
+			subTotal += item.getProduto().getPreco() * item.getQuantidade();
+		}
+				
+		DecimalFormat dfmt = new DecimalFormat("0.00");
+		//
 		PrePedidoVendaServlet.pedidoVenda.setValorSubtotal(subTotal);
 		PrePedidoVendaServlet.pedidoVenda.setValorTotal(subTotal - PrePedidoVendaServlet.pedidoVenda.getDesconto());
-		PrePedidoVendaServlet.pedidoVenda.setListaProduto(listaProdutosPedidoVenda);
-		
-		DecimalFormat dfmt = new DecimalFormat("0.00");
-		request.getSession().setAttribute("listaProdutosPedidoVenda", listaProdutosPedidoVenda);
+		//
 		request.getSession().setAttribute("subTotal", dfmt.format(subTotal));
-		
 		
 		String nextJSP = "/PrePedidoVendaServlet";
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);

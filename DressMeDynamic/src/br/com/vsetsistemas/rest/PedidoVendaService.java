@@ -19,14 +19,14 @@ import br.com.vsetsistemas.session.PedidoVendaSession;
 
 @Path("/pedidovenda")
 public class PedidoVendaService {
-	
+
 	PedidoVendaSession session = new PedidoVendaSession();
 
 	@GET
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response loadInitialParameters() {
-		
+
 		PedidoVenda pv = null;
 		pv = session.loadInitialParameters();
 		pv.setOrcamento(false);
@@ -36,102 +36,100 @@ public class PedidoVendaService {
 	@GET
 	@Path("/obtain")
 	@Produces(MediaType.APPLICATION_JSON)
-	public PedidoVenda obterPorId(@QueryParam("numero")long numero) {
-	
+	public PedidoVenda obterPorId(@QueryParam("numero") long numero) {
+
 		PedidoVenda pv = session.obtainById(numero);
 		return pv;
 	}
-	
+
 	@GET
 	@Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listAll() {
 
 		List<PedidoVenda> lista = session.listAll();
-		
-		if(lista == null || lista.size() == 0) {
+
+		if (lista == null || lista.size() == 0) {
 			return Response.status(400).entity("Lista vazia").build();
 		}
 		return Response.status(200).entity(lista).build();
 	}
-	
+
 	@POST
 	@Path("/insert")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response inserirPedidoVenda(PedidoVenda pv){
-		
+	public Response inserirPedidoVenda(PedidoVenda pv) {
+
 		String result = "Pedido de venda inserido com sucesso";
-		
-		if(this.session.insertPedidoVenda(pv)){			
+
+		if (this.session.insertPedidoVenda(pv)) {
 			return Response.status(201).entity(result).build();
 		}
-		
+
 		result = "Pedido de venda não foi inserido com sucesso";
 		return Response.status(400).entity(result).build();
 	}
-	
+
 	@POST
 	@Path("/insert/iten")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response inserirProduto(Item i) {
-					
-			String result = "Não foi possível inserir o item";
-			Double[] sum = session.insertProduct(i);
-			if(sum[0] == 0.0) {
-				return Response.status(200).entity(result).build();				
-			}else
-				return Response.status(200).entity(sum).build();
+
+		String result = "Produto inserido com sucesso";
+		session.insertProduct(i);
+
+		return Response.status(200).entity(result).build();
+
 	}
-	
+
 	@GET
 	@Path("list/itens")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response listItens(PedidoVenda pv){
-		
+	public Response listItens(PedidoVenda pv) {
+
 		List<Item> itemList = new ArrayList<>();
 		itemList = this.session.listAllProduct(pv);
 		return Response.status(200).entity(itemList).build();
-		
+
 	}
-	
+
 	@PUT
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updatePedidoVenda(PedidoVenda pv){
-		
+	public Response updatePedidoVenda(PedidoVenda pv) {
+
 		String result = "Pedido de venda alterado com sucesso";
-		if(this.session.updatePedidoVenda(pv)){
-			return Response.status(201).entity(result).build();			
+		if (this.session.updatePedidoVenda(pv)) {
+			return Response.status(201).entity(result).build();
 		}
 		result = "Pedido de venda não foi alterado com sucesso";
-		return Response.status(400).entity(result).build();	
+		return Response.status(400).entity(result).build();
 	}
-	
+
 	@DELETE
 	@Path("/delete")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deletePedidoVenda(@QueryParam("numero") Long numero){
-		
+	public Response deletePedidoVenda(@QueryParam("numero") Long numero) {
+
 		PedidoVenda pv = new PedidoVenda();
 		pv.setNumero(numero);
 		String result = "Pedido de venda excluido com sucesso";
-		if(session.deletePedidoVenda(pv)) {
+		if (session.deletePedidoVenda(pv)) {
 			return Response.status(200).entity(result).build();
-		}else {
+		} else {
 			result = "Pedido de venda não foi excluido com sucesso";
 			return Response.status(400).entity(result).build();
 		}
 	}
-	
+
 	@POST
 	@Path("/invoice")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response invoicePedidoVenda(PedidoVenda pv) {
-		
+
 		this.session.invoicePedidoVenda(pv);
 		String result = "Pedido de venda faturado com sucesso!";
 		return Response.status(200).entity(result).build();
 	}
-	
-	
+
 }

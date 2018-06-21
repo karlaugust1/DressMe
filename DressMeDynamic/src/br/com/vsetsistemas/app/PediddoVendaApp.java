@@ -25,8 +25,8 @@ public class PediddoVendaApp {
 		//, valorTotal, valorSubtotal, desconto, numero_pontos, status) values(?, ?, sysdate(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 		
 		//INSERIR PEDIDO DE VENDA
-		
 		/*
+		
 		ClienteDAO cdao = new ClienteDAO();
 		Cliente c = cdao.obtainById(3);
 		
@@ -78,7 +78,7 @@ public class PediddoVendaApp {
 		for (int i2 = 0; i2<pv1.getListaProduto().size();i2++) {
 			System.out.println(pv1.getListaProduto().get(i2).getId());
 		}
-		*/
+		/*
 		/*
 		//EDITAR PEDIDO DE VENDA
 		PedidoVenda pv = null;

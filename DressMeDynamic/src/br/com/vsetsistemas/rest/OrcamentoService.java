@@ -75,8 +75,8 @@ public class OrcamentoService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response inserirProduto(Item i) {
 						
-			Double[] sum = session.insertProduct(i);
-			
+			session.insertProduct(i);
+			String sum = "Inserido com sucesso";
 			return Response.status(200).entity(sum).build();
 	}
 	

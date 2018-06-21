@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import br.com.vsetsistemas.model.Cliente;
 import br.com.vsetsistemas.model.CondicaoPagamento;
@@ -20,7 +19,6 @@ import br.com.vsetsistemas.model.Produto;
 import br.com.vsetsistemas.session.ClienteSession;
 import br.com.vsetsistemas.session.CondicaoPagamentoSession;
 import br.com.vsetsistemas.session.FuncionarioSession;
-import br.com.vsetsistemas.session.PedidoVendaSession;
 import br.com.vsetsistemas.session.ProdutoSession;
 
 /**
@@ -48,16 +46,6 @@ public class PrePedidoVendaServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		// response.getWriter().append("Served at: ").append(request.getContextPath());
 
-		System.out.println(request.getParameter("vlrDesconto"));
-
-		
-		/*try {
-			if (pedidoVenda.getListaProduto().isEmpty() || pedidoVenda.getListaProduto().size() == 0) {
-				
-			}
-		} catch (Exception e) {
-			pedidoVenda = session.loadInitialParameters();
-		}*/
 		request.getSession().setAttribute("numeroPedido", pedidoVenda.getNumero());
 
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -80,7 +68,9 @@ public class PrePedidoVendaServlet extends HttpServlet {
 		request.getSession().setAttribute("listaProdutos", listaProdutos);
 
 		request.getSession().setAttribute("pedidoVenda", pedidoVenda);
+		
 		if (request.getParameter("vlrDesconto") != null) {
+			
 			pedidoVenda.setDesconto(Double.parseDouble(request.getParameter("vlrDesconto")));
 			request.getSession().setAttribute("valorTotal", pedidoVenda.getValorSubtotal() - pedidoVenda.getDesconto());
 			request.getSession().setAttribute("desconto", pedidoVenda.getDesconto());

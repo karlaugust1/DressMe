@@ -25,6 +25,7 @@ import br.com.vsetsistemas.session.PedidoVendaSession;
 @WebServlet("/DashboardServlet")
 public class DashboardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static boolean logar = true;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -46,17 +47,19 @@ public class DashboardServlet extends HttpServlet {
 	
 		FuncionarioSession fsession = new FuncionarioSession();
 		
-		if(fsession.authenticateFuncionario(f)) {
+		if(fsession.authenticateFuncionario(f) && logar) {
 			
 			PedidoVendaSession ps = new PedidoVendaSession();
 			ClienteSession cs = new ClienteSession();
 			List<PedidoVenda> listaPedidos = null;
 			listaPedidos = ps.listAll();
+			
 			request.getSession().setAttribute("clientes", cs.countClientes());
 			request.getSession().setAttribute("pedidos", ps.countPedidoVendas());
 			request.getSession().setAttribute("pedidosMes",ps.countPedidoVendasMes());
 			request.getSession().setAttribute("total", ps.sumAllValues());
 			request.getSession().setAttribute("listaPedidos", listaPedidos);
+			logar=false;
 			RequestDispatcher rd = request.getRequestDispatcher("index2.jsp");
 			rd.forward(request, response);
 			

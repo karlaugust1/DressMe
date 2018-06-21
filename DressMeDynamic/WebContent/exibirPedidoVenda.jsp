@@ -248,14 +248,14 @@
 								<label for="npedido" class="control-label mb-1">N&#186;
 									Pedido</label> <input id="npedido" name="npedido" type="text"
 									class="form-control npedido" placeholder="" disabled=""
-									autocomplete="npedido" value="${sessionScope.numeroPedido}">
+									autocomplete="npedido" value="${pedidoVenda.numero}">
 							</div>
 						</div>
 						<div class="col-4">
 							<label for="datap" class="control-label mb-1">Data</label>
 							<div class="input-group">
 								<input id="datap" name="datap" type="text"
-									class="form-control datap" value="${sessionScope.dataPedido}"
+									class="form-control datap" value="${pedidoVenda.dataAbertura}"
 									placeholder="" autocomplete="off" disabled="">
 							</div>
 						</div>
@@ -266,15 +266,9 @@
 							<div class="form-group">
 								<label for="clientecod" class="control-label mb-1">Cliente</label>
 								<div class="input-group">
-									<div class="input-group-btn">
-										<button class="btn btn-primary" data-toggle="modal"
-											data-target="#ModalClientes">
-											<i class="fa fa-search"></i> Buscar
-										</button>
-									</div>
 									<input type="text" id="clientecod" name="input1-group2"
 										placeholder="Cliente" class="form-control" disabled=""
-										value="${cliente.id}">
+										value="${pedidoVenda.cliente.id}">
 								</div>
 							</div>
 						</div>
@@ -283,7 +277,7 @@
 								do Cliente</label>
 							<div class="input-group">
 								<input id="clientenome" name="clientenome" type="text"
-									class="form-control clientenome" value="${cliente.nome}"
+									class="form-control clientenome" value="${pedidoVenda.cliente.nome}"
 									placeholder="Nome do Cliente" autocomplete="off" disabled="">
 
 							</div>
@@ -295,7 +289,7 @@
 							<div class="form-group">
 								<label for="cpfcnpj" class="control-label mb-1">CPF/CNPJ
 								</label> <input id="cpfcnpj" name="cpfcnpj" type="text"
-									class="form-control cpfcnpj" value="${cliente.cpf}"
+									class="form-control cpfcnpj" value="${pedidoVenda.cliente.cpf}"
 									placeholder="CPF/CNPJ" disabled="" autocomplete="cpfcnpj">
 							</div>
 						</div>
@@ -304,7 +298,7 @@
 								Estadual</label>
 							<div class="input-group">
 								<input id="ies" name="ies" type="text" class="form-control ies"
-									value="${cliente.inscricaoEstadual}" placeholder="IES"
+									value="${pedidoVenda.cliente.inscricaoEstadual}" placeholder="IES"
 									autocomplete="off" disabled="">
 
 							</div>
@@ -316,7 +310,7 @@
 							<div class="form-group">
 								<label for="rua" class="control-label mb-1">Rua </label> <input
 									id="rua" name="rua" type="text" class="form-control rua"
-									value="${cliente.rua}" placeholder="Rua" disabled=""
+									value="${pedidoVenda.cliente.rua}" placeholder="Rua" disabled=""
 									autocomplete="rua">
 							</div>
 						</div>
@@ -324,7 +318,7 @@
 							<label for="nst" class="control-label mb-1">N&#250;mero</label>
 							<div class="input-group">
 								<input id="nst" name="nst" type="text" class="form-control nst"
-									value="${cliente.numero}" placeholder="N&uacute;mero"
+									value="${pedidoVenda.cliente.numero}" placeholder="N&uacute;mero"
 									autocomplete="off" disabled="">
 
 							</div>
@@ -346,7 +340,7 @@
 							<div class="form-group">
 								<label for="cdd" class="control-label mb-1">Cidade </label> <input
 									id="cdd" name="cdd" type="text" class="form-control cdd"
-									value="${cliente.cidade}" placeholder="Cidade" disabled=""
+									value="${pedidoVenda.cliente.cidade}" placeholder="Cidade" disabled=""
 									autocomplete="cdd">
 							</div>
 						</div>
@@ -354,7 +348,7 @@
 							<label for="cmp" class="control-label mb-1">Complemento</label>
 							<div class="input-group">
 								<input id="cmp" name="cmp" type="text" class="form-control ies"
-									value="${cliente.complemento}" placeholder="Complemento"
+									value="${pedidoVenda.cliente.complemento}" placeholder="Complemento"
 									autocomplete="off" disabled="">
 
 							</div>
@@ -368,29 +362,17 @@
 								<label for="condpag" class="control-label mb-1">Condi&#231;&#227;o
 									de Pagamento</label>
 								<div class="input-group">
-									<div class="input-group-btn">
-										<button class="btn btn-primary" data-toggle="modal"
-											data-target="#ModalCP">
-											<i class="fa fa-search"></i> Buscar
-										</button>
-									</div>
 									<input type="text" id="condpag" name="condpag"
 										placeholder="Condi&ccedil;&atilde;o de Pagamento"
-										class="form-control" disabled="" value="${condPag.descricao}">
+										class="form-control" disabled="" value="${pedidoVenda.condPagamento.descricao}">
 								</div>
 							</div>
 						</div>
 						<div class="col-5">
 							<label for="vdd" class="control-label mb-1">Vendedor</label>
 							<div class="input-group">
-								<div class="input-group-btn">
-									<button class="btn btn-primary" data-toggle="modal"
-										data-target="#ModalVendedor">
-										<i class="fa fa-search"></i> Buscar
-									</button>
-								</div>
 								<input id="vendedor" name="vendedor" type="text"
-									class="form-control vdd" value="${vendedor.nome}"
+									class="form-control vdd" value="${pedidoVenda.vendedor.nome}"
 									placeholder="Vendedor" disabled="" />
 							</div>
 						</div>
@@ -407,14 +389,8 @@
 					<div class="card-header" style="text-align: center">
 						<strong>Produtos</strong> <small>- Pedido de Venda</small>
 					</div>
-					<div style="text-align: right; display-inline: block;">
-						<button class="au-btn au-btn-icon au-btn--green au-btn--small"
-							data-toggle="modal" data-target="#ModalProdutos">
-							<i class="zmdi zmdi-plus"></i>Adicionar Produto
-						</button>
-					</div>
 						<c:choose>
-							<c:when test="${not empty listaProdutosPedidoVenda}">
+							<c:when test="${not empty pedidoVenda.listaProduto}">
 								<div class="table-responsive table-responsive-data2">
 									<table class="table table-data2">
 										<thead>
@@ -424,13 +400,13 @@
 												<th>cor</th>
 												<th>tamanho</th>
 												<th>quantidade</th>
-												<th>valor unitário</th>
+												<th>valor unit&aacute;rio</th>
 												<th>valor total</th>
 												<th></th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="item" items="${listaProdutosPedidoVenda}">
+											<c:forEach var="item" items="${pedidoVenda.listaProduto}">
 												<tr class="tr-shadow">
 													<td class="desc">${item.id}</td>
 													<td>${item.produto.descricao}</td>
@@ -473,7 +449,7 @@
 							<div class="form-group">
 								<label for="rua" class="control-label mb-1">Subtotal </label> <input
 									id="rua" name="rua" type="text" class="form-control subtotal"
-									value="${subTotal}" placeholder="0.00" disabled=""
+									value="${pedidoVenda.valorSubtotal}" placeholder="0.00" disabled=""
 									autocomplete="rua">
 							</div>
 						</div>
@@ -482,16 +458,9 @@
 							<div class="input-group">
 								<form action="PrePedidoVendaServlet" method="post">
 									<div class="table-data-feature">
-										<input id="nst" name="vlrDesconto" type="text" value="${desconto}"
-											class="form-control nst" value="" placeholder="${desconto}"
+										<input id="nst" name="vlrDesconto" type="text" value="${pedidoVenda.desconto}"
+											class="form-control nst" value="" placeholder="${pedidoVenda.desconto}"
 											autocomplete="off">
-										<div style="margin-top: 4px; margin-left: 4px">
-											<button class="item" data-toggle="tooltip"
-												data-placement="top" title="Confirmar desconto"
-												id="desconto">
-												<i class="zmdi zmdi-check"></i>
-											</button>
-										</div>
 									</div>
 								</form>
 							</div>
@@ -501,7 +470,7 @@
 							<label for="brr" class="control-label mb-1">Total</label>
 							<div class="input-group">
 								<input id="brr" name="brr" type="text" class="form-control brr"
-									value="${valorTotal}" placeholder="${valorTotal}"
+									value="${pedidoVenda.valorTotal}" placeholder="${pedidoVenda.valorTotal}"
 									autocomplete="off" disabled="">
 
 
@@ -509,16 +478,10 @@
 							<div class="col-2"></div>
 						</div>
 					</div>
-					<div style="margin: 5px">
-						<input type="checkbox" name="utilizarPontos" onClick="verUtilizacaoPontos(this)">Utilizar
-						pontos para gerar desconto
-					</div>
 				</div>
 				<div style="text-align: right; display-inline: block;">
 					<a href="ListarPedidoVendaServlet" type="button"
-						class="btn btn-secondary" data-dismiss="modal">Cancelar</a> <a
-						href="InserirPedidoVendaServlet" type="button"
-						class="btn btn-primary" data-dismiss="modal">Confirmar</a>
+						class="btn btn-secondary" data-dismiss="modal">Cancelar</a> 
 				</div>
 			</div>
 		</div>

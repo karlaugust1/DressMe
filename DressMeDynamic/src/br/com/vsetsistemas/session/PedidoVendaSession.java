@@ -45,7 +45,6 @@ public class PedidoVendaSession {
 
 	public boolean insertPedidoVenda(PedidoVenda pv) {
 
-		// pv.setNumero(obtainLastRegister());
 		pv.setNumeroPontos(convertIntoPoints(pv.getValorTotal()));
 
 		try {
@@ -133,25 +132,14 @@ public class PedidoVendaSession {
 		return retPv;
 	}
 
-	public Double[] insertProduct(Item i) {
+	public void insertProduct(Item i) {
 
 		try {
-			ProdutoSession ps = new ProdutoSession();
-			Produto p = ps.obtainById(i.getProduto().getId());
-
-			if (p.getQuantidadeEstoque() > i.getQuantidade()) {
-				// se a posição 0 do array for 0 então algo errado aconteceu
-				Double[] d = { 0.0 };
-				d[0] = 0.0;
-				return d;
-			}
-
-			return dao.insertProduct(i);
+			dao.insertProduct(i);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return null;
 	}
 
 	public void deleteProduct(Produto p) {
