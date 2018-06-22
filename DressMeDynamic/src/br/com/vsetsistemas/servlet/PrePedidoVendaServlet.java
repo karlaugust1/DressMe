@@ -16,9 +16,11 @@ import br.com.vsetsistemas.model.CondicaoPagamento;
 import br.com.vsetsistemas.model.Funcionario;
 import br.com.vsetsistemas.model.PedidoVenda;
 import br.com.vsetsistemas.model.Produto;
+import br.com.vsetsistemas.services.ClienteWebServices;
 import br.com.vsetsistemas.services.CondicaoPagamentoWebService;
+import br.com.vsetsistemas.services.FuncionarioWebService;
+import br.com.vsetsistemas.services.ProdutoWebService;
 import br.com.vsetsistemas.session.ClienteSession;
-import br.com.vsetsistemas.session.CondicaoPagamentoSession;
 import br.com.vsetsistemas.session.FuncionarioSession;
 import br.com.vsetsistemas.session.ProdutoSession;
 
@@ -52,12 +54,16 @@ public class PrePedidoVendaServlet extends HttpServlet {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		request.getSession().setAttribute("dataPedido", format.format(pedidoVenda.getDataAbertura()));
 
-		ClienteSession cs = new ClienteSession();
-		List<Cliente> listaClientes = cs.listAll();
+		//ClienteSession cs = new ClienteSession();
+		//List<Cliente> listaClientes = cs.listAll();
+		ClienteWebServices cws = new ClienteWebServices();
+		List<Cliente> listaClientes = cws.listarTodos();
 		request.getSession().setAttribute("listaClientes", listaClientes);
 
-		FuncionarioSession fs = new FuncionarioSession();
-		List<Funcionario> listaVendedores = fs.listAll();
+		//FuncionarioSession fs = new FuncionarioSession();
+		//List<Funcionario> listaVendedores = fs.listAll();
+		FuncionarioWebService fws = new FuncionarioWebService();
+		List<Funcionario> listaVendedores = fws.listarTodos();
 		request.getSession().setAttribute("listaVendedores", listaVendedores);
 
 		//CondicaoPagamentoSession cps = new CondicaoPagamentoSession();
@@ -66,8 +72,10 @@ public class PrePedidoVendaServlet extends HttpServlet {
 		List<CondicaoPagamento> listaCondPag = cpws.listarTodos();
 		request.getSession().setAttribute("listaCondPag", listaCondPag);
 
-		ProdutoSession ps = new ProdutoSession();
-		List<Produto> listaProdutos = ps.listAll();
+		//ProdutoSession ps = new ProdutoSession();
+		//List<Produto> listaProdutos = ps.listAll();
+		ProdutoWebService pws = new ProdutoWebService();
+		List<Produto> listaProdutos = pws.listarTodos();
 		request.getSession().setAttribute("listaProdutos", listaProdutos);
 
 		request.getSession().setAttribute("pedidoVenda", pedidoVenda);

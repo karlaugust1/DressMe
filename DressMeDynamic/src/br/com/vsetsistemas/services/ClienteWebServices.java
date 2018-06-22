@@ -3,19 +3,20 @@ package br.com.vsetsistemas.services;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-import br.com.vsetsistemas.model.CondicaoPagamento;
+import br.com.vsetsistemas.model.Cliente;
 
-
-public class CondicaoPagamentoWebService {
-	public List<CondicaoPagamento> listarTodos(){
+public class ClienteWebServices {
+	
+	public List<Cliente> listarTodos(){
 		//Chamar serviço de obterPorCPF passando no final da URL o valor desejado
 		Client client = Client.create();
-		WebResource webResource = client.resource("http://localhost:8080/DressMeDynamic/rest/condicaoPagamento/list");
+		WebResource webResource = client.resource("http://localhost:8080/DressMeDynamic/rest/cliente/list");
 
 		//Informar o tipo de conteúdo que será enviado, o valor foi passado na linha anterior
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
@@ -25,8 +26,8 @@ public class CondicaoPagamentoWebService {
 			String json = response.getEntity(String.class);
 			
 			//Instanciar Gson
-			Gson gson = new Gson();
-			List<CondicaoPagamento> lista = gson.fromJson(json, new TypeToken<List<CondicaoPagamento>>(){}.getType());
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			List<Cliente> lista = gson.fromJson(json, new TypeToken<List<Cliente>>(){}.getType());
 
 			return lista;
 		}
