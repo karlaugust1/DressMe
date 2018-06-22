@@ -48,6 +48,7 @@ public class ListarPedidoVendaServlet extends HttpServlet {
 		//PrePedidoVendaServlet.pedidoVenda = new PedidoVenda();
 		PedidoVendaSession session = new PedidoVendaSession();
 		PrePedidoVendaServlet.pedidoVenda = session.loadInitialParameters();
+		EditarPedidoVendaServlet.pv = new PedidoVenda();
 
 		String nextJSP = "/listarPedidosVendas.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);

@@ -262,65 +262,71 @@
 					</a>
 				</div>
 			</div>
-				<c:choose>
-					<c:when test="${not empty listarPedidosVendas}">
-						<div class="table-responsive table-responsive-data2">
-							<table class="table table-data2">
-								<thead>
-									<tr>
-										<th>número</th>
-										<th>data</th>
-										<th>cod. cliente</th>
-										<th>cliente</th>
-										<th>situação</th>
-										<th>total</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody id="listaPedidos">
-									<c:forEach var="pedidoVenda" items="${listarPedidosVendas}">
-										<tr class="tr-shadow">
-											<td class="desc">${pedidoVenda.numero}</td>
-											<td>${pedidoVenda.dataAbertura}</td>
-											<td class="desc">${pedidoVenda.cliente.id}</td>
-											<td>${pedidoVenda.cliente.nome}</td>
-											<td><span class="status--process">${pedidoVenda.situacao}</span></td>
-											<td><span class="block-email">${pedidoVenda.valorTotal}</span></td>
-											<td>
-												<div class="table-data-feature">
-													<button class="item" data-toggle="tooltip"
-														data-placement="top" title="Faturar">
-														<i class="zmdi zmdi-assignment-check"></i>
-													</button>
+			<c:choose>
+				<c:when test="${not empty listarPedidosVendas}">
+					<div class="table-responsive table-responsive-data2">
+						<table class="table table-data2">
+							<thead>
+								<tr>
+									<th>número</th>
+									<th>data</th>
+									<th>cod. cliente</th>
+									<th>cliente</th>
+									<th>situação</th>
+									<th>total</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody id="listaPedidos">
+								<c:forEach var="pedidoVenda" items="${listarPedidosVendas}">
+									<tr class="tr-shadow">
+										<td class="desc">${pedidoVenda.numero}</td>
+										<td>${pedidoVenda.dataAbertura}</td>
+										<td class="desc">${pedidoVenda.cliente.id}</td>
+										<td>${pedidoVenda.cliente.nome}</td>
+										<td><span class="status--process">${pedidoVenda.situacao}</span></td>
+										<td><span class="block-email">${pedidoVenda.valorTotal}</span></td>
+										<td>
+											<div class="table-data-feature">
+												<button class="item" data-toggle="tooltip"
+													data-placement="top" title="Faturar">
+													<i class="zmdi zmdi-assignment-check"></i>
+												</button>
+												<form
+													action="EditarPedidoVendaServlet?numero=${pedidoVenda.numero}"
+													method="post">
 													<button class="item" data-toggle="tooltip"
 														data-placement="top" title="Editar">
 														<i class="zmdi zmdi-edit"></i>
 													</button>
-													<button class="item" data-toggle="tooltip"
-														data-placement="top" title="Deletar">
-														<i class="zmdi zmdi-delete"></i>
-													</button>
-												<form action="ExibirPedidoVendaServlet?numero=${pedidoVenda.numero}" method="post">
+												</form>
+												<button class="item" data-toggle="tooltip"
+													data-placement="top" title="Deletar">
+													<i class="zmdi zmdi-delete"></i>
+												</button>
+												<form
+													action="ExibirPedidoVendaServlet?numero=${pedidoVenda.numero}"
+													method="post">
 													<button class="item" data-toggle="tooltip"
 														data-placement="top" title="Visualizar">
 														<i class="zmdi zmdi-eye"></i>
 													</button>
 												</form>
 											</div>
-											</td>
-										</tr>
-										<tr class="spacer"></tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<br>
-						<div class="alert alert-info">Nenhum Pedido de Venda
-							encontrado!</div>
-					</c:otherwise>
-				</c:choose>
+										</td>
+									</tr>
+									<tr class="spacer"></tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<br>
+					<div class="alert alert-info">Nenhum Pedido de Venda
+						encontrado!</div>
+				</c:otherwise>
+			</c:choose>
 			<!-- FIM DA LISTAGEM DE PEDIDOS -->
 
 

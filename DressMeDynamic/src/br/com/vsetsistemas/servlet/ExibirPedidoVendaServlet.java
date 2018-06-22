@@ -33,13 +33,7 @@ public class ExibirPedidoVendaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		PedidoVendaSession session = new PedidoVendaSession();
-		PedidoVenda pv = session.obtainById(Long.parseLong(request.getParameter("numero")));
-		request.getSession().setAttribute("pedidoVenda", pv);
 		
-		String nextJSP = "/exibirPedidoVenda.jsp";
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-        dispatcher.forward(request, response);
 	}
 
 	/**
