@@ -16,6 +16,7 @@ import br.com.vsetsistemas.model.CondicaoPagamento;
 import br.com.vsetsistemas.model.Funcionario;
 import br.com.vsetsistemas.model.PedidoVenda;
 import br.com.vsetsistemas.model.Produto;
+import br.com.vsetsistemas.services.CondicaoPagamentoWebService;
 import br.com.vsetsistemas.session.ClienteSession;
 import br.com.vsetsistemas.session.CondicaoPagamentoSession;
 import br.com.vsetsistemas.session.FuncionarioSession;
@@ -59,8 +60,10 @@ public class PrePedidoVendaServlet extends HttpServlet {
 		List<Funcionario> listaVendedores = fs.listAll();
 		request.getSession().setAttribute("listaVendedores", listaVendedores);
 
-		CondicaoPagamentoSession cps = new CondicaoPagamentoSession();
-		List<CondicaoPagamento> listaCondPag = cps.listAll();
+		//CondicaoPagamentoSession cps = new CondicaoPagamentoSession();
+		//List<CondicaoPagamento> listaCondPag = cps.listAll();
+		CondicaoPagamentoWebService cpws = new CondicaoPagamentoWebService();
+		List<CondicaoPagamento> listaCondPag = cpws.listarTodos();
 		request.getSession().setAttribute("listaCondPag", listaCondPag);
 
 		ProdutoSession ps = new ProdutoSession();
