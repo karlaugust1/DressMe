@@ -12,10 +12,11 @@ public class Cliente extends Pessoa {
 	private String telefoneResidencial;
 	private String telefoneComercial;
 	private String rua;
+	private int qtdPontos;
 
 	public Cliente(long id, String nome, int numero, String complemento, long cep, String cidade,
 			String email, long cpf, Date dataNascimento, long rg, long inscricaoEstadual,
-			String telefoneCelular, String telefoneResidencial, String telefoneComercial, Boolean status, String rua) {
+			String telefoneCelular, String telefoneResidencial, String telefoneComercial, Boolean status, String rua, int qtdPontos) {
 
 		super(id, nome, numero, complemento, cep, cidade, email, status);
 
@@ -27,6 +28,7 @@ public class Cliente extends Pessoa {
 		this.telefoneResidencial = telefoneResidencial;
 		this.telefoneComercial = telefoneComercial;
 		this.rua = rua;
+		this.qtdPontos = qtdPontos;
 	}
 
 	public Cliente() {
@@ -97,5 +99,12 @@ public class Cliente extends Pessoa {
 		this.rua = rua;
 	}
 
+	public int getQtdPontos() {
+		return qtdPontos;
+	}
+
+	public void setQtdPontos(int qtdPontos) {
+		this.qtdPontos = qtdPontos;
+	}
 	
 }

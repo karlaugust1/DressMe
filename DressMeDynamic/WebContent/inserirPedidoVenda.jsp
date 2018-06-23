@@ -73,8 +73,8 @@
 				</div>
 				<nav class="navbar-sidebar2">
 					<ul class="list-unstyled navbar__list">
-						<li><a href="#"> <i
-								class="fas fa-tachometer-alt"></i>Painel Principal
+						<li><a href="#"> <i class="fas fa-tachometer-alt"></i>Painel
+								Principal
 						</a></li>
 						<li class="active has-sub"><a class="js-arrow" href="#">
 								<i class="fas fa-shopping-basket"></i>Vendas <span class="arrow">
@@ -82,11 +82,10 @@
 							</span>
 						</a>
 							<ul class="list-unstyled navbar__sub-list js-sub-list">
-								<li><a href="#"> <i
-										class="fas fa-pencil-square-o"></i>Or&ccedil;amento
+								<li><a href="#"> <i class="fas fa-pencil-square-o"></i>Or&ccedil;amento
 								</a></li>
-								<li><a href="ListarPedidoVendaServlet"> <i class="fas fa-shopping-cart"></i>Pedido
-										de Venda
+								<li><a href="ListarPedidoVendaServlet"> <i
+										class="fas fa-shopping-cart"></i>Pedido de Venda
 								</a></li>
 								<li><a href="#"> <i class="fas fa-print"></i>Nota
 										Fiscal
@@ -190,8 +189,8 @@
 					</div>
 					<nav class="navbar-sidebar2">
 						<ul class="list-unstyled navbar__list">
-							<li><a href="#"> <i
-									class="fas fa-tachometer-alt"></i>Painel Principal
+							<li><a href="#"> <i class="fas fa-tachometer-alt"></i>Painel
+									Principal
 							</a></li>
 							<li class="active has-sub"><a class="js-arrow" href="#">
 									<i class="fas fa-shopping-basket"></i>Vendas <span
@@ -199,8 +198,7 @@
 								</span>
 							</a>
 								<ul class="list-unstyled navbar__sub-list js-sub-list">
-									<li><a href="#"> <i
-											class="fas fa-pencil-square-o"></i>Orçamento
+									<li><a href="#"> <i class="fas fa-pencil-square-o"></i>Orçamento
 									</a></li>
 									<li><a href="ListarPedidoVendaServlet"> <i
 											class="fas fa-shopping-cart"></i>Pedido de Venda
@@ -413,35 +411,36 @@
 							<i class="zmdi zmdi-plus"></i>Adicionar Produto
 						</button>
 					</div>
-						<c:choose>
-							<c:when test="${not empty listaProdutosPedidoVenda}">
-								<div class="table-responsive table-responsive-data2">
-									<table class="table table-data2">
-										<thead>
-											<tr>
-												<th>ID</th>
-												<th>produto</th>
-												<th>cor</th>
-												<th>tamanho</th>
-												<th>quantidade</th>
-												<th>valor unitário</th>
-												<th>valor total</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach var="item" items="${listaProdutosPedidoVenda}">
-												<tr class="tr-shadow">
-													<td class="desc">${item.id}</td>
-													<td>${item.produto.descricao}</td>
-													<td class="desc">${item.produto.cor}</td>
-													<td>${item.produto.tamanho}</td>
-													<td><span class="status--process">${item.quantidade}</span></td>
-													<td><span class="block-email">${item.valorUnitario}</span></td>
-													<td><span class="block-email">${item.valorUnitario*item.quantidade}</span></td>
-													<td>
-														<div class="table-data-feature">
-														<form action="DeletarProdutoServlet?idProduto=${item.id}" method="post">
+					<c:choose>
+						<c:when test="${not empty listaProdutosPedidoVenda}">
+							<div class="table-responsive table-responsive-data2">
+								<table class="table table-data2">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>produto</th>
+											<th>cor</th>
+											<th>tamanho</th>
+											<th>quantidade</th>
+											<th>valor unitário</th>
+											<th>valor total</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="item" items="${listaProdutosPedidoVenda}">
+											<tr class="tr-shadow">
+												<td class="desc">${item.id}</td>
+												<td>${item.produto.descricao}</td>
+												<td class="desc">${item.produto.cor}</td>
+												<td>${item.produto.tamanho}</td>
+												<td><span class="status--process">${item.quantidade}</span></td>
+												<td><span class="block-email">${item.valorUnitario}</span></td>
+												<td><span class="block-email">${item.valorUnitario*item.quantidade}</span></td>
+												<td>
+													<div class="table-data-feature">
+														<form action="DeletarProdutoServlet?idProduto=${item.id}"
+															method="post">
 															<button class="item" data-toggle="tooltip"
 																data-placement="top" title="Deletar">
 																<i class="zmdi zmdi-delete"></i>
@@ -449,22 +448,22 @@
 														</form>
 
 													</div>
-													</td>
-												</tr>
-												<tr class="spacer"></tr>
-												<script>
-													controleProduto++;
-												</script>
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
-							</c:when>
-							<c:otherwise>
-								<br>
-								<div class="alert alert-info">Nenhum Produto Inserido!</div>
-							</c:otherwise>
-						</c:choose>
+												</td>
+											</tr>
+											<tr class="spacer"></tr>
+											<script>
+												controleProduto++;
+											</script>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<br>
+							<div class="alert alert-info">Nenhum Produto Inserido!</div>
+						</c:otherwise>
+					</c:choose>
 
 					<!-- Finalização -->
 
@@ -482,9 +481,9 @@
 							<div class="input-group">
 								<form action="PrePedidoVendaServlet" method="post">
 									<div class="table-data-feature">
-										<input id="nst" name="vlrDesconto" type="text" value="${desconto}"
-											class="form-control nst" value="" placeholder="${desconto}"
-											autocomplete="off">
+										<input id="nst" name="vlrDesconto" type="text"
+											value="${desconto}" class="form-control nst" value=""
+											placeholder="${desconto}" autocomplete="off">
 										<div style="margin-top: 4px; margin-left: 4px">
 											<button class="item" data-toggle="tooltip"
 												data-placement="top" title="Confirmar desconto"
@@ -510,7 +509,12 @@
 						</div>
 					</div>
 					<div style="margin: 5px">
-						<input type="checkbox" name="utilizarPontos" onClick="verUtilizacaoPontos(this)">Utilizar
+						<c:if test="${not empty utilizar}">
+							<c:set value="1" scope="request" var="valor" />
+						</c:if>
+						<input value="1" type="checkbox"
+							name="utilizarPontos" onClick="verUtilizacaoPontos(this)"
+							<c:if test="${valor != null}">checked="checked"</c:if>>Utilizar
 						pontos para gerar desconto
 					</div>
 				</div>
@@ -959,11 +963,14 @@
 											});
 
 						});
-		
+
 		function verUtilizacaoPontos(campo) {
-			if(campo.checked){
-				location.href="PrePedidoVendaServlet";
+			if (campo.checked) {
+				location.href = "PrePedidoVendaServlet?utilizarPontos=true";
+			}else{
+				location.href = "PrePedidoVendaServlet?utilizarPontos=false";
 			}
+			
 		}
 	</script>
 

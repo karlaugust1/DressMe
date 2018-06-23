@@ -10,30 +10,30 @@ import br.com.vsetsistemas.model.Cliente;
 public class ClienteDAO extends DAO {
 
 	private String SQL_INSERT = "INSERT INTO cliente (id, data_nascimento, rg, inscricao_estadual, telefoneCelular, telefoneResidencial, telefoneComercial, cpf) values(?, ?, ?, ?, ?, ?, ?, ?);"
-			+ "INSERT INTO pessoa (id, cep, numero, complemento, email, nome, cidade, status) values (?, ?, ?, ?, ?, ?, ?, ?);";
+			+ "INSERT INTO pessoa (id, cep, numero, complemento, email, nome, cidade, status, qtd_pontos) values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 	private String SQL_UPDATE = "UPDATE cliente SET data_nascimento=?, rg=?, inscricao_estadual=?, telefoneCelular=?, telefoneResidencial=?, telefoneComercial=?, cpf=? WHERE id = ?;"
-			+ "UPDATE pessoa SET cep=?, numero=?, complemento=?, email=?, nome=?, cidade=?, status=? WHERE id=?";
+			+ "UPDATE pessoa SET cep=?, numero=?, complemento=?, email=?, nome=?, cidade=?, status=?, qtd_pontos = ? WHERE id=?";
 
 	private String SQL_DELETE = "UPDATE pessoa SET status = ? WHERE id = ?;";
 
 	private String SQL_SELECT = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.Cpfcnpj,"
-			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome, p.status "
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, " + "l.ufe_sg, l.log_nome, p.status, c.qtd_pontos "
 			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
 			+ " WHERE p.status = true;";
 
 	private String SQL_OBTAIN = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.Cpfcnpj,"
-			+ "			p.numero, p.complemento, p.email, p.nome, p.cidade, l.ufe_sg, l.log_nome, p.cep, p.status"
+			+ "			p.numero, p.complemento, p.email, p.nome, p.cidade, l.ufe_sg, l.log_nome, p.cep, p.status, c.qtd_pontos"
 			+ "			FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id) INNER JOIN log_logradouro l ON (p.cep = l.cep)"
 			+ "			WHERE p.status = true AND c.id = ?;";
 
 	private String SQL_OBTAIN_BY_CPF = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.cpfcnpj,"
-			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, p.status," + "l.ufe_sg, l.log_nome "
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, p.status, c.qtd_pontos," + "l.ufe_sg, l.log_nome "
 			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
 			+ " WHERE p.status = true AND c.cpf = ?;";
 
 	private String SQL_OBTAIN_BY_ID = "select c.id, c.data_nascimento, c.rg, c.inscricao_estadual, c.telefoneCelular, c.telefoneResidencial, c.telefoneComercial, c.cpfcnpj,"
-			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, p.status," + "l.ufe_sg, l.log_nome "
+			+ "p.cep, p.numero, p.complemento, p.email, p.nome, p.cidade, p.status, c.qtd_pontos," + "l.ufe_sg, l.log_nome "
 			+ "FROM Cliente c INNER JOIN pessoa p ON (c.id = p.id)" + " INNER JOIN log_logradouro l ON (p.cep = l.cep)"
 			+ " WHERE p.status = true AND c.id = ?;";
 
@@ -165,7 +165,7 @@ public class ClienteDAO extends DAO {
 						rs.getLong("cpfcnpj"), rs.getDate("data_nascimento"), rs.getLong("rg"),
 						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
 						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
-						rs.getBoolean("status"), rs.getString("log_nome"));
+						rs.getBoolean("status"), rs.getString("log_nome"), rs.getInt("qtd_pontos"));
 				l.add(c);
 			}
 
@@ -198,7 +198,7 @@ public class ClienteDAO extends DAO {
 						rs.getLong("cpfcnpj"), rs.getDate("data_nascimento"), rs.getLong("rg"),
 						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
 						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
-						rs.getBoolean("status"), rs.getString("log_nome"));
+						rs.getBoolean("status"), rs.getString("log_nome"), rs.getInt("qtd_pontos"));
 
 				if (c1 != null) {
 					rc = c1;
@@ -233,7 +233,7 @@ public class ClienteDAO extends DAO {
 						rs.getLong("cpfcnpj"), rs.getDate("data_nascimento"), rs.getLong("rg"),
 						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
 						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
-						rs.getBoolean("status"), rs.getString("log_nome"));
+						rs.getBoolean("status"), rs.getString("log_nome"),rs.getInt("qtd_pontos"));
 
 				if (c1 != null) {
 					c = c1;
@@ -268,7 +268,7 @@ public class ClienteDAO extends DAO {
 						rs.getLong("cpfcnpj"), rs.getDate("data_nascimento"), rs.getLong("rg"),
 						rs.getLong("inscricao_estadual"), rs.getString("telefoneCelular"),
 						rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"),
-						rs.getBoolean("status"), rs.getString("log_nome"));
+						rs.getBoolean("status"), rs.getString("log_nome"),rs.getInt("qtd_pontos"));
 
 				if (c1 != null) {
 					c = c1;
