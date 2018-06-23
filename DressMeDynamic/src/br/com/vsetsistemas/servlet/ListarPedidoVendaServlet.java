@@ -45,6 +45,7 @@ public class ListarPedidoVendaServlet extends HttpServlet {
 		request.getSession().removeAttribute("listaProdutosPedidoVenda");
 		request.getSession().removeAttribute("subTotal");
 		request.getSession().removeAttribute("desconto");
+		request.getSession().removeAttribute("utilizar");
 		//PrePedidoVendaServlet.pedidoVenda = new PedidoVenda();
 		PedidoVendaSession session = new PedidoVendaSession();
 		PrePedidoVendaServlet.pedidoVenda = session.loadInitialParameters();

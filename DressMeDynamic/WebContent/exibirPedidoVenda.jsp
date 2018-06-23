@@ -239,7 +239,7 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-header">
-						<strong>Novo</strong> <small> Pedido de Venda</small>
+						<strong>Exibir</strong> <small> Pedido de Venda</small>
 					</div>
 
 					<div class="row">
@@ -415,17 +415,6 @@
 													<td><span class="status--process">${item.quantidade}</span></td>
 													<td><span class="block-email">${item.valorUnitario}</span></td>
 													<td><span class="block-email">${item.valorUnitario*item.quantidade}</span></td>
-													<td>
-														<div class="table-data-feature">
-														<form action="DeletarProdutoServlet?idProduto=${item.id}" method="post">
-															<button class="item" data-toggle="tooltip"
-																data-placement="top" title="Deletar">
-																<i class="zmdi zmdi-delete"></i>
-															</button>
-														</form>
-
-													</div>
-													</td>
 												</tr>
 												<tr class="spacer"></tr>
 												<script>
@@ -481,7 +470,7 @@
 				</div>
 				<div style="text-align: right; display-inline: block;">
 					<a href="ListarPedidoVendaServlet" type="button"
-						class="btn btn-secondary" data-dismiss="modal">Cancelar</a> 
+						class="btn btn-secondary" data-dismiss="modal">Voltar</a> 
 				</div>
 			</div>
 		</div>

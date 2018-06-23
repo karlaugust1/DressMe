@@ -237,7 +237,7 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-header">
-						<strong>Novo</strong> <small> Pedido de Venda</small>
+						<strong>Editar</strong> <small> Pedido de Venda</small>
 					</div>
 
 					<div class="row">
@@ -511,9 +511,13 @@
 						</div>
 					</div>
 					<div style="margin: 5px">
-						<input type="checkbox" name="utilizarPontos"
-							onClick="verUtilizacaoPontos(this)">Utilizar pontos para
-						gerar desconto
+						<c:if test="${not empty utilizar}">
+							<c:set value="1" scope="request" var="valor" />
+						</c:if>
+						<input value="1" type="checkbox" name="utilizarPontos"
+							onClick="verUtilizacaoPontos(this)"
+							<c:if test="${valor != null}">checked="checked"</c:if>>Utilizar
+						pontos para gerar desconto
 					</div>
 				</div>
 				<div style="text-align: right; display-inline: block;">
@@ -966,8 +970,11 @@
 
 		function verUtilizacaoPontos(campo) {
 			if (campo.checked) {
-				location.href = "PrePedidoVendaServlet";
+				location.href = "EditarPedidoVendaServlet?utilizarPontos=true";
+			} else {
+				location.href = "EditarPedidoVendaServlet?utilizarPontos=false";
 			}
+
 		}
 	</script>
 

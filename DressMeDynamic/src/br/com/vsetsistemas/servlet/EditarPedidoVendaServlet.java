@@ -31,6 +31,7 @@ import br.com.vsetsistemas.session.ProdutoSession;
 public class EditarPedidoVendaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static PedidoVenda pv;
+	private double vlrDesconto = 0;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -46,8 +47,57 @@ public class EditarPedidoVendaServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		System.out.println("Entrou no get");
+
+		/* Lógica da utilização dos pontos here */
+		if (request.getParameter("utilizarPontos") != null)
+		if (request.getParameter("utilizarPontos").equals("false")) {
+			request.getSession().setAttribute("utilizar", "");
+			pv.setDesconto(pv.getDesconto() - vlrDesconto);
+			vlrDesconto = 0;
+			pv.setValorTotal(pv.getValorSubtotal() - pv.getDesconto());
+
+		}
+		if (request.getParameter("utilizarPontos") != null) {
+			if (request.getParameter("utilizarPontos").equals("true")) {
+				System.out.println("Entrou no true");
+
+				if (pv.getCliente() != null && pv.getValorSubtotal() != 0) {
+
+					ClienteSession csession = new ClienteSession();
+					Cliente c = csession.obtainById(pv.getCliente().getId());
+					float porcentagemDesconto = (c.getQtdPontos() / 100);
+					if (porcentagemDesconto > 0) {
+						vlrDesconto = (pv.getValorSubtotal() * porcentagemDesconto);
+						vlrDesconto = vlrDesconto / 100;
+						pv.setDesconto(pv.getDesconto() + vlrDesconto);
+						pv.setValorTotal(pv.getValorSubtotal() - pv.getDesconto());
+						request.getSession().setAttribute("utilizar", "utilizar");
+					}
+
+				}
+			}
+
+		} else if (vlrDesconto != 0) {
+			pv.setDesconto(pv.getDesconto() - vlrDesconto);
+			vlrDesconto = 0;
+			ClienteSession csession = new ClienteSession();
+			Cliente c = csession.obtainById(pv.getCliente().getId());
+			float porcentagemDesconto = (c.getQtdPontos() / 100);
+			if (porcentagemDesconto > 0) {
+				vlrDesconto = (pv.getValorSubtotal() * porcentagemDesconto);
+				vlrDesconto = vlrDesconto / 100;
+				pv.setDesconto(pv.getDesconto() + vlrDesconto);
+				pv.setValorTotal(pv.getValorSubtotal() - pv.getDesconto());
+			}
+
+		}
+
+		request.getSession().setAttribute("pedidoVenda", pv);
+		String nextJSP = "/editarPedidoVenda.jsp";
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+		dispatcher.forward(request, response);
+
 	}
 
 	/**
@@ -56,8 +106,6 @@ public class EditarPedidoVendaServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// doGet(request, response);
 
 		PedidoVendaSession session = new PedidoVendaSession();
 		if (pv.getNumero() == 0)
@@ -111,10 +159,6 @@ public class EditarPedidoVendaServlet extends HttpServlet {
 			for (Item item : pv.getListaProduto()) {
 				subTotal += item.getProduto().getPreco() * item.getQuantidade();
 			}
-			/*
-			 * excluir DecimalFormat dfmt = new DecimalFormat("0.00"); String aux =
-			 * dfmt.format(subTotal);
-			 */
 			pv.setValorSubtotal(subTotal);
 			pv.setValorTotal(subTotal - pv.getDesconto());
 		} else if (acao == 5) {
@@ -137,13 +181,27 @@ public class EditarPedidoVendaServlet extends HttpServlet {
 			pv.setValorSubtotal(subTotal);
 			pv.setValorTotal(subTotal - pv.getDesconto());
 		} else if (acao == 6) {
-						
+
 			if (request.getParameter("vlrDesconto") != null && !request.getParameter("vlrDesconto").isEmpty()) {
 				pv.setDesconto(Double.parseDouble(request.getParameter("vlrDesconto")));
 				pv.setValorTotal(pv.getValorSubtotal() - pv.getDesconto());
 
 			} else
 				request.getSession().setAttribute("valorTotal", pv.getValorTotal());
+		}
+
+		if (vlrDesconto != 0) {
+			pv.setDesconto(pv.getDesconto() - vlrDesconto);
+			vlrDesconto = 0;
+			ClienteSession csession = new ClienteSession();
+			Cliente c = csession.obtainById(pv.getCliente().getId());
+			float porcentagemDesconto = (c.getQtdPontos() / 100);
+			if (porcentagemDesconto > 0) {
+				vlrDesconto = (pv.getValorSubtotal() * porcentagemDesconto);
+				vlrDesconto = vlrDesconto / 100;
+				pv.setDesconto(pv.getDesconto() + vlrDesconto);
+				pv.setValorTotal(pv.getValorSubtotal() - pv.getDesconto());
+			}
 		}
 
 		request.getSession().setAttribute("pedidoVenda", pv);
