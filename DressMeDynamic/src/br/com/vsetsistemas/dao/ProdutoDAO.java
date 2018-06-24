@@ -16,7 +16,7 @@ public class ProdutoDAO extends DAO {
 	private String SQL_INSERT_CATEGORIA = "INSERT INTO Categoria_Produto (id_categoria, id_produto) values (?, ?);";
 	private String SQL_INSERT_FORNECEDOR = "INSERT INTO Fornecedor_Produto (id_fornecedor, id_produto) values (?, ?);";
 
-	private String SQL_UPDATE = "UPDATE Produto SET ean = ?, descricao=?, status=?, nome=?, genero=?, tamanho=?, cor=?, vunitario=?, categoria=?, fornecedor=? WHERE id = ?;";
+	private String SQL_UPDATE = "UPDATE Produto SET ean = ?, descricao=?, status=?, nome=?, genero=?, tamanho=?, cor=?, vunitario=?, categoria=?, fornecedor=?, qtd_estoque = ? WHERE id = ?;";
 
 	private String SQL_DELETE = "UPDATE produto SET status = ? WHERE id = ?;";
 
@@ -82,7 +82,7 @@ public class ProdutoDAO extends DAO {
 		try {
 
 			conectar();
-//UPDATE Produto SET ean = ?, descricao=?, status=?, nome=?, genero=?, tamanho=?, cor=?, vunitario=?, categoria=?, fornecedor=? WHERE id = ?
+//UPDATE Produto SET ean = ?, descricao=?, status=?, nome=?, genero=?, tamanho=?, cor=?, vunitario=?, categoria=?, fornecedor=?, qtd_estoque = ? WHERE id = ?
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE);
 			ps.setLong(1, p.getEan());
 			ps.setString(2, p.getDescricao());
@@ -94,7 +94,8 @@ public class ProdutoDAO extends DAO {
 			ps.setDouble(8, p.getPreco());
 			ps.setLong(9, p.getCategoria().getId());
 			ps.setLong(10, p.getFornecedor().getId());
-			ps.setInt(11, p.getId());
+			ps.setInt(11, p.getQuantidadeEstoque());
+			ps.setInt(12, p.getId());
 
 			ps.executeUpdate();
 

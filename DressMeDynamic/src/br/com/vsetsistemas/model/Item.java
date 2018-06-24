@@ -1,5 +1,8 @@
 package br.com.vsetsistemas.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"idItem"})
 public class Item {
 
 	private long idItem;

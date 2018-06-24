@@ -37,7 +37,7 @@ public class PedidoVendaDAO extends DAO {
 
 	/* DONE */private String SQL_DELETE_PRODUCT = "DELETE FROM produto_pedidovenda WHERE (idpedido=? AND idproduto=? AND iditem=?);";
 
-	/* DONE */private String SQL_SELECT = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where pv.status = true and pv.orcamento=false;";
+	/* DONE */private String SQL_SELECT = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where pv.status = true and pv.orcamento=false and pv.situacao='Realizado';";
 
 	/* DONE */private String SQL_SELECT_BUDGES = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where pv.status = true and pv.orcamento=true;";
 

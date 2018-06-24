@@ -44,6 +44,7 @@ public class ProdutoSession {
 	public void updateEstoque(Item i) {
 		
 		try {
+
 			Produto p = this.obtainById(i.getProduto().getId());
 			p.setQuantidadeEstoque(p.getQuantidadeEstoque()-i.getQuantidade());
 			dao.update(p);

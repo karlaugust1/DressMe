@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.vsetsistemas.model.Item;
+import br.com.vsetsistemas.services.ProdutoWebService;
 
 
 /**
@@ -21,6 +22,7 @@ import br.com.vsetsistemas.model.Item;
 @WebServlet("/DeletarProdutoServlet")
 public class DeletarProdutoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private ProdutoWebService pws = new ProdutoWebService();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -49,6 +51,8 @@ public class DeletarProdutoServlet extends HttpServlet {
 			if(i.getId() == idItem) {
 				PrePedidoVendaServlet.pedidoVenda.getListaProduto().remove(i);
 				InserirProdutoServlet.listaProdutosPedidoVenda.remove(i);
+				i.setQuantidade(i.getQuantidade()*-1);
+				pws.atualizarEstoque(i);
 				break;
 			}
 		}

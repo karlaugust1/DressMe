@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.vsetsistemas.model.Item;
+import br.com.vsetsistemas.services.ProdutoWebService;
 import br.com.vsetsistemas.session.ProdutoSession;
 
 
@@ -67,6 +68,9 @@ public class InserirProdutoServlet extends HttpServlet {
 		PrePedidoVendaServlet.pedidoVenda.setValorSubtotal(subTotal);
 		PrePedidoVendaServlet.pedidoVenda.setValorTotal(subTotal - PrePedidoVendaServlet.pedidoVenda.getDesconto());
 		PrePedidoVendaServlet.pedidoVenda.setListaProduto(listaProdutosPedidoVenda);
+		
+		ProdutoWebService pws = new ProdutoWebService();
+		pws.atualizarEstoque(i);
 		
 		DecimalFormat dfmt = new DecimalFormat("0.00");
 		request.getSession().setAttribute("listaProdutosPedidoVenda", listaProdutosPedidoVenda);

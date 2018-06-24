@@ -300,10 +300,15 @@
 														<i class="zmdi zmdi-edit"></i>
 													</button>
 												</form>
-												<button class="item" data-toggle="tooltip"
-													data-placement="top" title="Deletar">
-													<i class="zmdi zmdi-delete"></i>
-												</button>
+												<form
+													action="DeletarPedidoVendaServlet?numeroPedido=${pedidoVenda.numero}"
+													method="post">
+													<button class="item" data-toggle="tooltip"
+														name="numeroPedido" value="${pedidoVenda.numero}"
+														data-placement="top" title="Deletar">
+														<i class="zmdi zmdi-delete"></i>
+													</button>
+												</form>
 												<form
 													action="ExibirPedidoVendaServlet?numero=${pedidoVenda.numero}"
 													method="post">
@@ -407,6 +412,15 @@
 											});
 
 						});
+
+		function confirmarExclusao() {
+			var numero = document.getElementById('numeroPedidoId').value;
+			var r = confirm("Você deseja realmente excluir esse pedido?");
+			if (r == true) {
+				location.href = "DeletarPedidoVendaServlet?numeroPedido=";
+			}
+
+		}
 	</script>
 
 </body>
