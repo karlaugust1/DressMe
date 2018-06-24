@@ -22,20 +22,12 @@ import br.com.vsetsistemas.model.GeradorDeRelatorios;
 @WebServlet("/EmitirNotaServlet")
 public class EmitirNotaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
 
 	public EmitirNotaServlet() {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		// acha jrxml dentro da aplicação
 		ServletContext contexto = request.getServletContext();
 		String jrxml = contexto.getRealPath("/relatorios/nfce.jrxml");
 
@@ -47,16 +39,20 @@ public class EmitirNotaServlet extends HttpServlet {
 		try {
 			conexao = new ConnectDB().getConnection();
 
-		// gera relatório
-		GeradorDeRelatorios gerador = new GeradorDeRelatorios();
-		gerador.gerar(jrxml, Long.parseLong(request.getParameter("numero")), response.getOutputStream());
+			// gera relatório
+			GeradorDeRelatorios gerador = new GeradorDeRelatorios();
+			gerador.gerar(jrxml, Long.parseLong(request.getParameter("numero")), response.getOutputStream());
 
-		conexao.close();
-		
+			conexao.close();
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
 
 }

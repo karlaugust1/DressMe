@@ -290,10 +290,12 @@
 											<div class="table-data-feature">
 												<form action="EmitirNotaServlet?numero=${notaFiscal.numero}" method="post">
 													<button class="item" data-toggle="tooltip"
-														data-placement="top" title="Faturar">
+														data-placement="top" title="Emitir" target="_blank">
 														<i class="zmdi zmdi-local-printshop"></i>
 													</button>
 												</form>
+													<a href="EmitirNotaServlet?numero=${notaFiscal.numero}" class="item" data-toggle="tooltip"
+														data-placement="top" title="Emitir1" target="_blank"><i class="zmdi zmdi-local-printshop"></i></a>
 											</div>
 										</td>
 									</tr>
