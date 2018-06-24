@@ -9,24 +9,23 @@ public class NotaFiscal {
 	private long chaveDeAcesso;
 	private Date dataEmissao;
 	private Date dataEntradaSaida;
-	private Date horaSaida;
 	private CondicaoPagamento condPagamento;
 	private PedidoVenda pedidoVenda;
 	private Empresa empresa;
-	private boolean status;
 	
 	public NotaFiscal(long numero, int serie, long chaveDeAcesso, Date dataEmissao, Date dataEntradaSaida,
-			Date horaSaida, CondicaoPagamento condPagamento, PedidoVenda pedidoVenda, Empresa empresa, boolean status) {
+			 CondicaoPagamento condPagamento, PedidoVenda pedidoVenda, Empresa empresa) {
 		this.numero = numero;
 		this.serie = serie;
 		this.chaveDeAcesso = chaveDeAcesso;
 		this.dataEmissao = dataEmissao;
 		this.dataEntradaSaida = dataEntradaSaida;
-		this.horaSaida = horaSaida;
 		this.condPagamento = condPagamento;
 		this.pedidoVenda = pedidoVenda;
 		this.empresa = empresa;
-		this.status = status;
+	}
+
+	public NotaFiscal() {
 	}
 
 	public long getNumero() {
@@ -69,14 +68,6 @@ public class NotaFiscal {
 		this.dataEntradaSaida = dataEntradaSaida;
 	}
 
-	public Date getHoraSaida() {
-		return horaSaida;
-	}
-
-	public void setHoraSaida(Date horaSaida) {
-		this.horaSaida = horaSaida;
-	}
-
 	public CondicaoPagamento getCondPagamento() {
 		return condPagamento;
 	}
@@ -100,15 +91,5 @@ public class NotaFiscal {
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
-
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-	
-	
 	
 }

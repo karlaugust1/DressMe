@@ -816,8 +816,8 @@ public class PedidoVendaDAO extends DAO {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Date d = new Date();
-				NotaFiscal nf = new NotaFiscal(rs.getLong("numero"), 0, 0, d, d, d, new CondicaoPagamento(),
-						new PedidoVenda(), new Empresa(), true);
+				NotaFiscal nf = new NotaFiscal(rs.getLong("numero"), 0, 0, d, d, new CondicaoPagamento(),
+						new PedidoVenda(), new Empresa());
 				lista.add(nf);
 			}
 			if (lista == null || lista.isEmpty() || lista.size() == 0)

@@ -106,7 +106,8 @@ public class FaturarPedidoVendaServlet extends HttpServlet {
 		request.getSession().removeAttribute("subTotal");
 		request.getSession().removeAttribute("desconto");
 
-		String nextJSP = "/ListarPedidoVendaServlet";
+		//String nextJSP = "/ListarPedidoVendaServlet";
+		String nextJSP = "/EmitirNotaServlet";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request, response);
 	}
