@@ -53,7 +53,7 @@ public class PedidoVendaDAO extends DAO {
 	private String SQL_SEARCH_ORCAMENTO = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where (pv.numero = ? or pv.dataAbertura = ? or pv.dataFechamento = ? or pv.cliente = ? or pv.condPag = ? or pv.vendedor = ? or pv.situacao = ? or pv.valorTotal = ? or pv.valorSubtotal = ? or pv.desconto = ? or pv.numero_pontos = ? or pv.status = ? and pv.orcamento = true);";
 
 	private String SQL_INVOICE = "insert into contas_receber (id_cliente, valor_receber, data_lancamento, id_cond_pagamento) values (?,?,(date(sysdate())),?);";
-	private String SQL_INVOICE_PEDIDO = "UPDATE PedidoVenda SET status = false, situacao='Faturado' WHERE numero = ?;";
+	private String SQL_INVOICE_PEDIDO = "UPDATE PedidoVenda SET status = true, situacao='Faturado' WHERE numero = ?;";
 	private String SQL_INVOICE_PEDIDO_1 = "insert into notafiscal (numero, serie, chave_de_acesso, data_emissao, data_entrada_saida, condpag, pedidovenda, empresa) values (?,?,?,sysdate(),sysdate(),?,?,?);";
 	private String SQL_INSERT_PRODUCT_NF = "insert into produto_notafiscal (numeronota, idproduto, quantidade,desconto,subtotal,vunitario,iditem) values (?,?,?,?,?,?,?);";
 
@@ -68,7 +68,6 @@ public class PedidoVendaDAO extends DAO {
 	public void invoice(PedidoVenda pv) {
 
 		try {
-			conectar();
 			// insert into contas_receber (id_cliente, valor_receber, data_lancamento,
 			// id_cond_pagamento) values (?,?,(date(sysdate())),?)
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_INVOICE);
@@ -116,7 +115,6 @@ public class PedidoVendaDAO extends DAO {
 			}
 
 			desconectar();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -861,7 +859,11 @@ public class PedidoVendaDAO extends DAO {
 	public long obtainChaveAcesso() {
 
 		Random r = new Random();
-		return r.nextLong();
+		long i =  r.nextLong();
+		if( i < 0) {
+			i = i *-1;
+		}
+		return i;
 
 	}
 

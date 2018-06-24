@@ -514,7 +514,7 @@
 						<c:if test="${not empty utilizar}">
 							<c:set value="1" scope="request" var="valor" />
 						</c:if>
-						<input value="1" type="checkbox" name="utilizarPontos"
+						<input value="utilizarPontos" type="checkbox" name="utilizarPontos"
 							onClick="verUtilizacaoPontos(this)"
 							<c:if test="${valor != null}">checked="checked"</c:if>>Utilizar
 						pontos para gerar desconto
@@ -525,7 +525,7 @@
 						class="btn btn-secondary" data-dismiss="modal">Cancelar</a> <a
 						href="InserirPedidoVendaServlet" type="button"
 						class="btn btn-primary" data-dismiss="modal">Confirmar</a> <a
-						href="" type="button" class="btn btn-primary" data-dismiss="modal">Faturar</a>
+						href="FaturarPedidoVendaServlet?editar=true" type="button" class="btn btn-success" data-dismiss="modal">Faturar</a>
 				</div>
 			</div>
 		</div>

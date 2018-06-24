@@ -82,9 +82,9 @@ public class ProdutoDAO extends DAO {
 		try {
 
 			conectar();
-
+//UPDATE Produto SET ean = ?, descricao=?, status=?, nome=?, genero=?, tamanho=?, cor=?, vunitario=?, categoria=?, fornecedor=? WHERE id = ?
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE);
-			ps.setLong(1, p.getId());
+			ps.setLong(1, p.getEan());
 			ps.setString(2, p.getDescricao());
 			ps.setBoolean(3, p.isStatus());
 			ps.setString(4, p.getNome());
@@ -92,6 +92,9 @@ public class ProdutoDAO extends DAO {
 			ps.setString(6, p.getTamanho());
 			ps.setString(7, p.getCor());
 			ps.setDouble(8, p.getPreco());
+			ps.setLong(9, p.getCategoria().getId());
+			ps.setLong(10, p.getFornecedor().getId());
+			ps.setInt(11, p.getId());
 
 			ps.executeUpdate();
 

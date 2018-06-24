@@ -31,7 +31,7 @@ import br.com.vsetsistemas.session.ProdutoSession;
 public class PrePedidoVendaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static PedidoVenda pedidoVenda;
-	private double vlrDesconto = 0;
+	public static double vlrDesconto = 0;
 
 	/**
 	 * @see HttpServlet#HttpServlet()

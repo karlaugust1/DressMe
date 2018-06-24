@@ -32,6 +32,19 @@ public class ClienteSession {
 		return false;
 
 	}
+	
+	public boolean updatePoints(Cliente c) {
+
+		try {
+
+			dao.updatePoints(c);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+
+	}
 
 	public boolean deleteCliente(Cliente c) {
 

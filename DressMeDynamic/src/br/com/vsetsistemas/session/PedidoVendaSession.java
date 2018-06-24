@@ -45,7 +45,7 @@ public class PedidoVendaSession {
 
 	public boolean insertPedidoVenda(PedidoVenda pv) {
 
-		pv.setNumeroPontos(convertIntoPoints(pv.getValorTotal()));
+		//pv.setNumeroPontos(convertIntoPoints(pv.getValorTotal()));
 
 		try {
 			dao.insert(pv);
