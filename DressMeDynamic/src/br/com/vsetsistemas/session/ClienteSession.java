@@ -32,6 +32,19 @@ public class ClienteSession {
 		return false;
 
 	}
+	
+	public boolean updatePoints(Cliente c) {
+
+		try {
+
+			dao.updatePoints(c);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+
+	}
 
 	public boolean deleteCliente(Cliente c) {
 
@@ -51,6 +64,18 @@ public class ClienteSession {
 
 		try {
 			c1 = dao.obtainByCpf(cpf);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return c1;
+	}
+	
+	public Cliente obtainById(long id) {
+
+		Cliente c1 = null;
+
+		try {
+			c1 = dao.obtainById(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -37,7 +37,7 @@ public class PedidoVendaDAO extends DAO {
 
 	/* DONE */private String SQL_DELETE_PRODUCT = "DELETE FROM produto_pedidovenda WHERE (idpedido=? AND idproduto=? AND iditem=?);";
 
-	/* DONE */private String SQL_SELECT = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where pv.status = true and pv.orcamento=false;";
+	/* DONE */private String SQL_SELECT = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where pv.status = true and pv.orcamento=false and pv.situacao='Realizado';";
 
 	/* DONE */private String SQL_SELECT_BUDGES = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where pv.status = true and pv.orcamento=true;";
 
@@ -53,22 +53,22 @@ public class PedidoVendaDAO extends DAO {
 	private String SQL_SEARCH_ORCAMENTO = "select pv.numero, pv.orcamento, pv.dataAbertura, pv.dataFechamento, pv.cliente, pv.condPag, pv.vendedor, pv.situacao, pv.valorTotal,pv.valorSubtotal, pv.desconto, pv.numero_pontos, pv.status from pedidovenda pv where (pv.numero = ? or pv.dataAbertura = ? or pv.dataFechamento = ? or pv.cliente = ? or pv.condPag = ? or pv.vendedor = ? or pv.situacao = ? or pv.valorTotal = ? or pv.valorSubtotal = ? or pv.desconto = ? or pv.numero_pontos = ? or pv.status = ? and pv.orcamento = true);";
 
 	private String SQL_INVOICE = "insert into contas_receber (id_cliente, valor_receber, data_lancamento, id_cond_pagamento) values (?,?,(date(sysdate())),?);";
-	private String SQL_INVOICE_PEDIDO = "UPDATE PedidoVenda SET status = false, situacao='Faturado' WHERE numero = ?;";
+	private String SQL_INVOICE_PEDIDO = "UPDATE PedidoVenda SET status = true, situacao='Faturado' WHERE numero = ?;";
 	private String SQL_INVOICE_PEDIDO_1 = "insert into notafiscal (numero, serie, chave_de_acesso, data_emissao, data_entrada_saida, condpag, pedidovenda, empresa) values (?,?,?,sysdate(),sysdate(),?,?,?);";
 	private String SQL_INSERT_PRODUCT_NF = "insert into produto_notafiscal (numeronota, idproduto, quantidade,desconto,subtotal,vunitario,iditem) values (?,?,?,?,?,?,?);";
 
-	private String SQL_OBTAIN_LAST_REGISTER = "select count(numero)+1 ultimo from pedidovenda;";
+	private String SQL_OBTAIN_LAST_REGISTER = "select * from pedidovenda where numero = (select max(numero) from pedidovenda);";
 	private String SQL_OBTAIN_LAST_REGISTER_NF = "select * from notafiscal;";
 
 	private String SQL_OBTAIN_SUM_VALUES = "SELECT SUM(VUNITARIO*QUANTIDADE) as total_geral, SUM(desconto) as total_desconto FROM produto_pedidovenda WHERE idpedido=?;";
 	private String SQL_OBTAIN_PEDIDOS_MONTH = "select distinct count(numero) quantidade from pedidovenda where status = 1 and dataAbertura >= (select date_sub(curdate(), interval day(curdate())-1 day));";
 	private String SQL_COUNT_PEDIDOS = "select distinct count(numero) quantidade from pedidovenda where status = 1;";
 	private String SQL_SUM_ALL_VALUES = "select sum(valorTotal) soma from pedidovenda where status = 1 and situacao = 'Faturado';";
+	private String SQL_DELETE_PRODUCT_PEDIDO = "delete from produto_pedidovenda WHERE idpedido = ?;";
 
 	public void invoice(PedidoVenda pv) {
 
 		try {
-			conectar();
 			// insert into contas_receber (id_cliente, valor_receber, data_lancamento,
 			// id_cond_pagamento) values (?,?,(date(sysdate())),?)
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_INVOICE);
@@ -116,7 +116,6 @@ public class PedidoVendaDAO extends DAO {
 			}
 
 			desconectar();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -217,7 +216,7 @@ public class PedidoVendaDAO extends DAO {
 
 	}
 
-	public Double[] insertProduct(Item i) {
+	public void insertProduct(Item i) {
 
 		try {
 			conectar();
@@ -239,18 +238,12 @@ public class PedidoVendaDAO extends DAO {
 			e.printStackTrace();
 		}
 
-		return this.sumValues(i.getPedido().getNumero());
-
 	}
 
 	public void update(PedidoVenda p) {
 
 		try {
 			conectar();
-
-			// UPDATE PedidoVenda SET dataFechamento=?, orcamento=?, cliente=?, condPag=?
-			// , vendedor=?, situacao=?, valorTotal=?, valorSubtotal=?, desconto=?,
-			// numero_pontos=?, status=? WHERE numero = ?;
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE);
 
 			ps.setDate(1, p.getDataFechamento());
@@ -800,7 +793,8 @@ public class PedidoVendaDAO extends DAO {
 			conectar();
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_LAST_REGISTER);
 			ResultSet rs = ps.executeQuery();
-			i = rs.getInt("ultimo");
+			while (rs.next())
+				i = rs.getLong("numero") + 1;
 			desconectar();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -819,8 +813,8 @@ public class PedidoVendaDAO extends DAO {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Date d = new Date();
-				NotaFiscal nf = new NotaFiscal(rs.getLong("numero"), 0, 0, d, d, d, new CondicaoPagamento(),
-						new PedidoVenda(), new Empresa(), true);
+				NotaFiscal nf = new NotaFiscal(rs.getLong("numero"), 0, 0, d, d, new CondicaoPagamento(),
+						new PedidoVenda(), new Empresa());
 				lista.add(nf);
 			}
 			if (lista == null || lista.isEmpty() || lista.size() == 0)
@@ -862,7 +856,11 @@ public class PedidoVendaDAO extends DAO {
 	public long obtainChaveAcesso() {
 
 		Random r = new Random();
-		return r.nextLong();
+		long i =  r.nextLong();
+		if( i < 0) {
+			i = i *-1;
+		}
+		return i;
 
 	}
 
@@ -960,5 +958,20 @@ public class PedidoVendaDAO extends DAO {
 
 		return retorno;
 	}
+	
+
+	public void deleteProductPedido(PedidoVenda pv) {
+
+		try {
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_DELETE_PRODUCT_PEDIDO);
+			ps.setLong(1, pv.getNumero());
+			ps.executeUpdate();
+			desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 
 }

@@ -29,7 +29,7 @@ public class FuncionarioService {
 		List<Funcionario> lf = session.listAll();
 		
 		if(lf == null || lf.size()==0) {
-		return Response.status(400).entity("Nﾃ｣o existem funcionﾃ｡rios cadastrados!").build();
+		return Response.status(400).entity("Não existem funcionários cadastrados!").build();
 		}
 		return Response.status(200).entity(lf).build();
 		

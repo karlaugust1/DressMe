@@ -5,12 +5,13 @@ import java.util.List;
 
 import br.com.vsetsistemas.dao.ProdutoDAO;
 import br.com.vsetsistemas.model.Item;
+import br.com.vsetsistemas.model.PedidoVenda;
 import br.com.vsetsistemas.model.Produto;
 
 public class ProdutoSession {
 
 	private ProdutoDAO dao = new ProdutoDAO();
-	
+
 	public Produto obtain(Produto p) {
 		Produto retp = null;
 		try {
@@ -21,7 +22,7 @@ public class ProdutoSession {
 		return retp;
 	}
 
-	public List<Produto> listAll(){
+	public List<Produto> listAll() {
 		List<Produto> l = new ArrayList<>();
 		try {
 			l = dao.select();
@@ -30,7 +31,7 @@ public class ProdutoSession {
 		}
 		return l;
 	}
-	
+
 	public Produto obtainById(int i) {
 		Produto p = null;
 		try {
@@ -40,17 +41,20 @@ public class ProdutoSession {
 		}
 		return p;
 	}
-	
+
 	public void updateEstoque(Item i) {
-		
+
 		try {
+
 			Produto p = this.obtainById(i.getProduto().getId());
-			p.setQuantidadeEstoque(p.getQuantidadeEstoque()-i.getQuantidade());
+			p.setQuantidadeEstoque(p.getQuantidadeEstoque() - i.getQuantidade());
 			dao.update(p);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
+
+	
 }

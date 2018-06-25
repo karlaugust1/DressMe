@@ -1,8 +1,6 @@
 package br.com.vsetsistemas.servlet;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,70 +10,67 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import br.com.vsetsistemas.model.Cliente;
-import br.com.vsetsistemas.model.CondicaoPagamento;
-import br.com.vsetsistemas.model.Funcionario;
-import br.com.vsetsistemas.model.Item;
+
 import br.com.vsetsistemas.model.PedidoVenda;
-import br.com.vsetsistemas.session.ClienteSession;
-import br.com.vsetsistemas.session.CondicaoPagamentoSession;
-import br.com.vsetsistemas.session.FuncionarioSession;
 import br.com.vsetsistemas.session.PedidoVendaSession;
 
-
+/**
+ * Servlet implementation class InserirPedidoVendaServlet
+ */
 @WebServlet("/InserirPedidoVendaServlet")
 public class InserirPedidoVendaServlet extends HttpServlet {
-	private static final long serialVersionUID = 1;
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public InserirPedidoVendaServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		PedidoVendaSession pvs = new PedidoVendaSession();
-		// Obter parametros do formulário
-		String numero = request.getParameter("numero");
-		//String dataAbertura = request.getParameter("dataAbertura");
-		//String dataFechamento = request.getParameter("dataFechamento");
-		String cliente = request.getParameter("cliente");
-		String condPag = request.getParameter("condPag");
-		String vendedor = request.getParameter("vendedor");
-		String valorTotal = request.getParameter("valorTotal");
-		String valorSubtotal = request.getParameter("valorSubtotal");
-		String valorDesconto = request.getParameter("desconto");
-
-		PedidoVenda pv = new PedidoVenda();
-		pv.setNumero(new Long(0).parseLong(numero));
-		SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy");
-		// pv.setDataAbertura(sf.parse(dataAbertura));
-		// pv.setDataFechamento(dataFechamento);
-		ClienteSession cs = new ClienteSession();
-		Cliente c = cs.obtainByCpf(new Long(0).parseLong(cliente));
-		pv.setCliente(c);
-		CondicaoPagamentoSession cps = new CondicaoPagamentoSession();
-		CondicaoPagamento cp = cps.obtainById(new Integer(0).parseInt(condPag));
-		pv.setCondPagamento(cp);
-		FuncionarioSession fs = new FuncionarioSession();
-		Funcionario f = fs.getFuncionarioById(new Long(0).parseLong(vendedor));
-		pv.setVendedor(f);
-		pv.setValorTotal(new Double(0.0).parseDouble(valorTotal));
-		pv.setValorSubtotal(new Double(0.0).parseDouble(valorSubtotal));
-		pv.setDesconto(new Double(0.0).parseDouble(valorDesconto));
-		pv.setListaProduto(pvs.listAllProduct(pv));
-		pv.setSituacao("Realizado");
-		pv.setStatus(true);
-
-		pvs.insertPedidoVenda(pv);
-
-		List<PedidoVenda> lista = pvs.listAll();
-
-		if (lista == null)
-			lista = new ArrayList<PedidoVenda>();
-
-		request.setAttribute("w", lista);
-
-		String nextJSP = "/pedidovenda/listarPedidosVendas.jsp";
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		PedidoVendaSession session = new PedidoVendaSession();
+		
+		PrePedidoVendaServlet.pedidoVenda.setOrcamento(false);
+		PrePedidoVendaServlet.pedidoVenda.setSituacao("Realizado");
+		PrePedidoVendaServlet.pedidoVenda.setStatus(true);
+		PrePedidoVendaServlet.pedidoVenda.setValorTotal(PrePedidoVendaServlet.pedidoVenda.getValorSubtotal() - PrePedidoVendaServlet.pedidoVenda.getDesconto());
+		PrePedidoVendaServlet.pedidoVenda.setNumeroPontos(session.convertIntoPoints(PrePedidoVendaServlet.pedidoVenda.getValorTotal()));
+		
+		session.insertPedidoVenda(PrePedidoVendaServlet.pedidoVenda);
+		
+		for(int i = 0; i < PrePedidoVendaServlet.pedidoVenda.getListaProduto().size(); i++) {
+			PrePedidoVendaServlet.pedidoVenda.getListaProduto().get(i).setPedido(PrePedidoVendaServlet.pedidoVenda);
+			session.insertProduct(PrePedidoVendaServlet.pedidoVenda.getListaProduto().get(i));
+		}
+	
+		request.getSession().removeAttribute("cliente");
+		request.getSession().removeAttribute("vendedor");
+		request.getSession().removeAttribute("condPag");
+		request.getSession().removeAttribute("listaProdutosPedidoVenda");
+		request.getSession().removeAttribute("subTotal");
+		request.getSession().removeAttribute("desconto");
+		
+		/*String nextJSP = "/ListarPedidoVendaServlet";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-		dispatcher.forward(request, response);
+		dispatcher.forward(request, response);*/
+		String nextJSP = "/DressMeDynamic/ListarPedidoVendaServlet";
+		response.sendRedirect(nextJSP);
 
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

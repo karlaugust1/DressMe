@@ -1,5 +1,8 @@
 package br.com.vsetsistemas.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"idItem"})
 public class Item {
 
 	private long idItem;
@@ -20,6 +23,9 @@ public class Item {
 		this.valorUnitario = valorUnitario;
 		this.pedido = pedido;
 	}
+	
+	public Item() {}
+	
 	public long getId() {
 		return idItem;
 	}

@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.vsetsistemas.dao.PedidoVendaDAO;
+import br.com.vsetsistemas.model.Cliente;
 import br.com.vsetsistemas.model.Item;
 import br.com.vsetsistemas.model.PedidoVenda;
 import br.com.vsetsistemas.model.Produto;
+import br.com.vsetsistemas.servlet.InserirClienteServlet;
 
 public class PedidoVendaSession {
 
@@ -43,8 +45,7 @@ public class PedidoVendaSession {
 
 	public boolean insertPedidoVenda(PedidoVenda pv) {
 
-		// pv.setNumero(obtainLastRegister());
-		pv.setNumeroPontos(convertIntoPoints(pv.getValorTotal()));
+		//pv.setNumeroPontos(convertIntoPoints(pv.getValorTotal()));
 
 		try {
 			dao.insert(pv);
@@ -131,25 +132,14 @@ public class PedidoVendaSession {
 		return retPv;
 	}
 
-	public Double[] insertProduct(Item i) {
+	public void insertProduct(Item i) {
 
 		try {
-			ProdutoSession ps = new ProdutoSession();
-			Produto p = ps.obtainById(i.getProduto().getId());
-
-			if (p.getQuantidadeEstoque() > i.getQuantidade()) {
-				// se a posição 0 do array for 0 então algo errado aconteceu
-				Double[] d = { 0.0 };
-				d[0] = 0.0;
-				return d;
-			}
-
-			return dao.insertProduct(i);
+			dao.insertProduct(i);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return null;
 	}
 
 	public void deleteProduct(Produto p) {
@@ -240,6 +230,14 @@ public class PedidoVendaSession {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public void deleteProdutoPedido(PedidoVenda pv) {
+		try {
+			dao.deleteProductPedido(pv);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

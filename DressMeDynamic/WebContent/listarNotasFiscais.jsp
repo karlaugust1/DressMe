@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 
 <head>
@@ -58,14 +59,14 @@
 			<div class="menu-sidebar2__content js-scrollbar1">
 				<div class="account2">
 					<div class="image img-cir img-120">
-						<img src="images/icon/avatar-big-01.jpg" alt="John Doe" />
+						<img src="images/icon/avatar-big-01.jpg" alt="Bad Taco" />
 					</div>
-					<h4 class="name">john doe</h4>
-					<a href="login.html">Sign out</a>
+					<h4 class="name">Bad Taco</h4>
+					<a href="login.html">Sair</a>
 				</div>
 				<nav class="navbar-sidebar2">
 					<ul class="list-unstyled navbar__list">
-						<li><a href="../index2.html"> <i
+						<li><a href="DashboardServlet"> <i
 								class="fas fa-tachometer-alt"></i>Painel Principal
 						</a></li>
 						<li class="active has-sub"><a class="js-arrow" href="#">
@@ -74,23 +75,22 @@
 							</span>
 						</a>
 							<ul class="list-unstyled navbar__sub-list js-sub-list">
-								<li><a href="index2.html"> <i
-										class="fas fa-pencil-square-o"></i>Orçamento
+								<li><a href="#"> <i class="fas fa-pencil-square-o"></i>Orçamento
 								</a></li>
-								<li><a href="pedidovenda/listarPedidosVendas.jsp"> <i
+								<li><a href="ListarPedidoVendaServlet"> <i
 										class="fas fa-shopping-cart"></i>Pedido de Venda
 								</a></li>
-								<li><a href="index2.html"> <i class="fas fa-print"></i>Nota
+								<li><a href="#"> <i class="fas fa-print"></i>Nota
 										Fiscal
 								</a></li>
-								<li><a href="index2.html"> <i class="fas fa-file"></i>Relatórios
+								<li><a href="#"> <i class="fas fa-file"></i>Relatórios
 								</a></li>
 							</ul></li>
-						<li><a href="../index2.html"> <i class="fas fa-download"></i>Compras
+						<li><a href="#"> <i class="fas fa-download"></i>Compras
 						</a></li>
-						<li><a href="../index2.html"> <i class="fas fa-inbox"></i>Estoque
+						<li><a href="#"> <i class="fas fa-inbox"></i>Estoque
 						</a></li>
-						<li><a href="../index2.html"> <i class="fas fa-group"></i>Fidelização
+						<li><a href="#"> <i class="fas fa-group"></i>Fidelização
 						</a></li>
 
 					</ul>
@@ -169,46 +169,45 @@
 			<aside class="menu-sidebar2 js-right-sidebar d-block d-lg-none">
 				<div class="logo">
 					<a href="#"> <img src="images/icon/logo-white.png"
-						alt="Cool Admin" />
+						alt="DressMe" />
 					</a>
 				</div>
 				<div class="menu-sidebar2__content js-scrollbar2">
 					<div class="account2">
 						<div class="image img-cir img-120">
-							<img src="images/icon/avatar-big-01.jpg" alt="John Doe" />
+							<img src="images/icon/avatar-big-01.jpg" alt="Bad Taco" />
 						</div>
-						<h4 class="name">john doe</h4>
-						<a href="#">Sign out</a>
+						<h4 class="name">Bad Taco</h4>
+						<a href="#">Sair</a>
 					</div>
 					<nav class="navbar-sidebar2">
 						<ul class="list-unstyled navbar__list">
-						<li><a href="../index2.html"> <i
-								class="fas fa-tachometer-alt"></i>Painel Principal
-						</a></li>
-						<li class="active has-sub"><a class="js-arrow" href="#">
-								<i class="fas fa-shopping-basket"></i>Vendas <span class="arrow">
-									<i class="fas fa-angle-down"></i>
-							</span>
-						</a>
-							<ul class="list-unstyled navbar__sub-list js-sub-list">
-								<li><a href="index2.html"> <i
-										class="fas fa-pencil-square-o"></i>Orçamento
-								</a></li>
-								<li><a href="pedidovenda/listarPedidosVendas.jsp"> <i
-										class="fas fa-shopping-cart"></i>Pedido de Venda
-								</a></li>
-								<li><a href="index2.html"> <i class="fas fa-print"></i>Nota
-										Fiscal
-								</a></li>
-								<li><a href="index2.html"> <i class="fas fa-file"></i>Relatórios
-								</a></li>
-							</ul></li>
-						<li><a href="../index2.html"> <i class="fas fa-download"></i>Compras
-						</a></li>
-						<li><a href="../index2.html"> <i class="fas fa-inbox"></i>Estoque
-						</a></li>
-						<li><a href="../index2.html"> <i class="fas fa-group"></i>Fidelização
-						</a></li>
+							<li><a href="DashboardServlet"> <i
+									class="fas fa-tachometer-alt"></i>Painel Principal
+							</a></li>
+							<li class="active has-sub"><a class="js-arrow" href="#">
+									<i class="fas fa-shopping-basket"></i>Vendas <span
+									class="arrow"> <i class="fas fa-angle-down"></i>
+								</span>
+							</a>
+								<ul class="list-unstyled navbar__sub-list js-sub-list">
+									<li><a href="#"> <i class="fas fa-pencil-square-o"></i>Orçamento
+									</a></li>
+									<li><a href="ListarPedidoVendaServlet"> <i
+											class="fas fa-shopping-cart"></i>Pedido de Venda
+									</a></li>
+									<li><a href="#"> <i class="fas fa-print"></i>Nota
+											Fiscal
+									</a></li>
+									<li><a href="#"> <i class="fas fa-file"></i>Relatórios
+									</a></li>
+								</ul></li>
+							<li><a href="#"> <i class="fas fa-download"></i>Compras
+							</a></li>
+							<li><a href="#"> <i class="fas fa-inbox"></i>Estoque
+							</a></li>
+							<li><a href="#"> <i class="fas fa-group"></i>Fidelização
+							</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -220,14 +219,104 @@
 				<div class="section__content section__content--p30">
 					<div class="container-fluid">
 						<div class="row">
-							<div class="col-md-12">
-								
+							<div class="col-md-12"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- END BREADCRUMB-->
+
+			<!-- LISTAGEM DE PEDIDOS -->
+
+			<br>
+			<h3 class="title-5 m-b-35">Pedidos de Venda</h3>
+			<!-- 
+			<div class="table-data__tool">
+							<div class="table-data__tool-left">
+							</div>
+							<div class="table-data__tool-right">
+								<a href="PrePedidoVendaServlet" class="au-btn au-btn-icon au-btn--green au-btn--small" align="center">
+									<i class="zmdi zmdi-plus"></i>Novo Pedido
+								</a>
+							</div>
+						</div>
+			-->
+			<div class="table-data__tool">
+				<div class="table-data__tool-left">
+					<div class="input-group">
+						<div class="input-group-btn">
+							<button class="au-btn-filter">
+								<i class="zmdi zmdi-filter-list"></i>Filtrar
+							</button>
+							<input type="form-control" id="filtroped" name="input1-group2"
+								placeholder="Parâmetros..." class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<c:choose>
+				<c:when test="${not empty listaNotaFiscal}">
+					<div class="table-responsive table-responsive-data2">
+						<table class="table table-data2">
+							<thead>
+								<tr>
+									<th>número</th>
+									<th>serie</th>
+									<th>data</th>
+									<th>chave de acesso</th>
+									<th>cliente</th>
+									<th>total</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody id="listaNotas">
+								<c:forEach var="notaFiscal" items="${listaNotaFiscal}">
+									<tr class="tr-shadow">
+										<td class="desc">${notaFiscal.numero}</td>
+										<td>${notaFiscal.serie}</td>
+										<td class="desc">${notaFiscal.dataEmissao}</td>
+										<td>${notaFiscal.chaveDeAcesso}</td>
+										<td><span class="status--process">${notaFiscal.pedidoVenda.cliente.nome}</span></td>
+										<td><span>${notaFiscal.pedidoVenda.valorTotal}</span></td>
+										<td>
+											<div class="table-data-feature">
+												<a href="EmitirNotaServlet?numero=${notaFiscal.numero}"
+													class="item" data-toggle="tooltip" data-placement="top"
+													title="Emitir" target="_blank"><i
+													class="zmdi zmdi-local-printshop"></i></a>
+											</div>
+										</td>
+									</tr>
+									<tr class="spacer"></tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<br>
+					<div class="alert alert-info">Nenhum Pedido de Venda
+						encontrado!</div>
+				</c:otherwise>
+			</c:choose>
+			<!-- FIM DA LISTAGEM DE PEDIDOS -->
+
+
+			<!-- Footer -->
+			<section>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="copyright">
+								<p>Copyright © 2018 VSET Sistemas. Nenhum direito reservado.
+								</p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
-			<!-- END BREADCRUMB-->			
+
+			<!-- END PAGE CONTAINER -->
 		</div>
 
 	</div>
@@ -263,6 +352,36 @@
 
 	<!-- Main JS-->
 	<script src="js/main.js"></script>
+
+	<!-- Scripts -->
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$("#filtroped")
+									.on(
+											"keyup",
+											function() {
+												var value = $(this).val()
+														.toLowerCase();
+												$("#listaNotas tr")
+														.filter(
+																function() {
+																	$(this)
+																			.toggle(
+																					$(
+																							this)
+																							.text()
+																							.toLowerCase()
+																							.indexOf(
+																									value) > -1)
+																});
+											});
+
+						});
+
+		}
+	</script>
 
 </body>
 

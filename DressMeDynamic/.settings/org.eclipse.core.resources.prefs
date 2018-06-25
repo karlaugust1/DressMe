@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
+encoding//WebContent/editarPedidoVenda.jsp=UTF-8
+encoding//WebContent/exibirPedidoVenda.jsp=UTF-8
+encoding//WebContent/inserirPedidoVenda.jsp=UTF-8
 encoding//src/br/com/vsetsistemas/rest/FuncionarioService.java=UTF-8

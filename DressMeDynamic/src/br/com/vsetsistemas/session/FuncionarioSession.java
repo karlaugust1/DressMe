@@ -67,7 +67,12 @@ public class FuncionarioSession {
 	}
 	
 	public Funcionario getFuncionarioById(Long l) {
-		return new Funcionario();
+		
+		try {
+			return dao.obtainById(l);
+		} catch (Exception e) {
+		}
+		return null;
 	}
 
 	public boolean verifyFuncionario(Funcionario f) {

@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import br.com.vsetsistemas.model.CondicaoPagamento;
 import br.com.vsetsistemas.session.CondicaoPagamentoSession;
 
-@Path("/CondicaoPagamento")
+@Path("/condicaoPagamento")
 public class CondicaoPagamentoService {
 	
 	CondicaoPagamentoSession session = new CondicaoPagamentoSession();
@@ -32,14 +32,11 @@ public class CondicaoPagamentoService {
 	@GET
 	@Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response listAll() {
+	public List<CondicaoPagamento> listAll() {
 
 		List<CondicaoPagamento> lista = session.listAll();
 		
-		if(lista == null || lista.size() == 0) {
-			return Response.status(400).entity("Não existem condições de pagamento!").build();
-		}
-		return Response.status(200).entity(lista).build();
+		return lista;
 	}
 	
 }
