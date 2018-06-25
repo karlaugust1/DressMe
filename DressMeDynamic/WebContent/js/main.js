@@ -252,9 +252,11 @@
     const brandProduct = 'rgba(0,181,233,0.8)'
     const brandService = 'rgba(0,173,95,0.8)'
 
-    var elements = 10
-    var data1 = [52, 60, 55, 50, 65, 80, 57, 70, 105, 115]
-    var data2 = [102, 70, 80, 100, 56, 53, 80, 75, 65, 90]
+    var elements = 7
+    var elemento1 = document.getElementById("totes2").value;
+    var elemento2 = document.getElementById("totes").value;
+    var data1 = [0, 0, 0, 0, 0, elemento1, 0]
+    var data2 = [0, 0, 0, 0, 0, elemento2, 0]
 
     var ctx = document.getElementById("recent-rep-chart");
     if (ctx) {
@@ -262,7 +264,7 @@
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', ''],
+          labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'],
           datasets: [
             {
               label: 'Vendas',
