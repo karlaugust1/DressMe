@@ -48,9 +48,11 @@ public class InserirClienteServlet extends HttpServlet {
 		PrePedidoVendaServlet.pedidoVenda.setCliente(cliente);
 		request.getSession().setAttribute("cliente", cliente);
 		
-		String nextJSP = "/PrePedidoVendaServlet";
+		/*String nextJSP = "/PrePedidoVendaServlet";
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);
-		dispatcher.forward(request, response);
+		dispatcher.forward(request, response);*/
+		String nextJSP = "/DressMeDynamic/PrePedidoVendaServlet";
+		response.sendRedirect(nextJSP);
 	}
 	
 }

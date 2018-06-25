@@ -231,5 +231,13 @@ public class PedidoVendaSession {
 		}
 		return false;
 	}
+	
+	public void deleteProdutoPedido(PedidoVenda pv) {
+		try {
+			dao.deleteProductPedido(pv);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }

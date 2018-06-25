@@ -50,7 +50,8 @@
 <script>
 	var controleProduto = 0; // Para Listagem
 	var date = today.getDate() + '/' + (today.getMonth() + 1) + '/'
-			+ today.getFullYear(); //Data
+	+ today.getFullYear(); //Data
+	var validaproduto = "vazio";
 </script>
 
 </head>
@@ -73,7 +74,7 @@
 				</div>
 				<nav class="navbar-sidebar2">
 					<ul class="list-unstyled navbar__list">
-						<li><a href="#"> <i class="fas fa-tachometer-alt"></i>Painel
+						<li><a href="DashboardServlet"> <i class="fas fa-tachometer-alt"></i>Painel
 								Principal
 						</a></li>
 						<li class="active has-sub"><a class="js-arrow" href="#">
@@ -87,7 +88,7 @@
 								<li><a href="ListarPedidoVendaServlet"> <i
 										class="fas fa-shopping-cart"></i>Pedido de Venda
 								</a></li>
-								<li><a href="#"> <i class="fas fa-print"></i>Nota
+								<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
 										Fiscal
 								</a></li>
 								<li><a href="#"> <i class="fas fa-file"></i>Relat&oacute;rios
@@ -189,7 +190,7 @@
 					</div>
 					<nav class="navbar-sidebar2">
 						<ul class="list-unstyled navbar__list">
-							<li><a href="#"> <i class="fas fa-tachometer-alt"></i>Painel
+							<li><a href="DashboardServlet"> <i class="fas fa-tachometer-alt"></i>Painel
 									Principal
 							</a></li>
 							<li class="active has-sub"><a class="js-arrow" href="#">
@@ -203,7 +204,7 @@
 									<li><a href="ListarPedidoVendaServlet"> <i
 											class="fas fa-shopping-cart"></i>Pedido de Venda
 									</a></li>
-									<li><a href="#"> <i class="fas fa-print"></i>Nota
+									<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
 											Fiscal
 									</a></li>
 									<li><a href="#"> <i class="fas fa-file"></i>Relatóios
@@ -281,8 +282,7 @@
 								do Cliente</label>
 							<div class="input-group">
 								<input id="clientenome" name="clientenome" type="text"
-									class="form-control clientenome"
-									value="${pedidoVenda.cliente.nome}"
+									class="form-control clientenome" value="${pedidoVenda.cliente.nome}"
 									placeholder="Nome do Cliente" autocomplete="off" disabled="">
 
 							</div>
@@ -303,8 +303,8 @@
 								Estadual</label>
 							<div class="input-group">
 								<input id="ies" name="ies" type="text" class="form-control ies"
-									value="${pedidoVenda.cliente.inscricaoEstadual}"
-									placeholder="IES" autocomplete="off" disabled="">
+									value="${pedidoVenda.cliente.inscricaoEstadual}" placeholder="IES"
+									autocomplete="off" disabled="">
 
 							</div>
 						</div>
@@ -315,16 +315,16 @@
 							<div class="form-group">
 								<label for="rua" class="control-label mb-1">Rua </label> <input
 									id="rua" name="rua" type="text" class="form-control rua"
-									value="${pedidoVenda.cliente.rua}" placeholder="Rua"
-									disabled="" autocomplete="rua">
+									value="${pedidoVenda.cliente.rua}" placeholder="Rua" disabled=""
+									autocomplete="rua">
 							</div>
 						</div>
 						<div class="col-2">
 							<label for="nst" class="control-label mb-1">N&#250;mero</label>
 							<div class="input-group">
 								<input id="nst" name="nst" type="text" class="form-control nst"
-									value="${pedidoVenda.cliente.numero}"
-									placeholder="N&uacute;mero" autocomplete="off" disabled="">
+									value="${pedidoVenda.cliente.numero}" placeholder="N&uacute;mero"
+									autocomplete="off" disabled="">
 
 							</div>
 						</div>
@@ -345,16 +345,16 @@
 							<div class="form-group">
 								<label for="cdd" class="control-label mb-1">Cidade </label> <input
 									id="cdd" name="cdd" type="text" class="form-control cdd"
-									value="${pedidoVenda.cliente.cidade}" placeholder="Cidade"
-									disabled="" autocomplete="cdd">
+									value="${pedidoVenda.cliente.cidade}" placeholder="Cidade" disabled=""
+									autocomplete="cdd">
 							</div>
 						</div>
 						<div class="col-5">
 							<label for="cmp" class="control-label mb-1">Complemento</label>
 							<div class="input-group">
 								<input id="cmp" name="cmp" type="text" class="form-control ies"
-									value="${pedidoVenda.cliente.complemento}"
-									placeholder="Complemento" autocomplete="off" disabled="">
+									value="${pedidoVenda.cliente.complemento}" placeholder="Complemento"
+									autocomplete="off" disabled="">
 
 							</div>
 						</div>
@@ -375,8 +375,7 @@
 									</div>
 									<input type="text" id="condpag" name="condpag"
 										placeholder="Condi&ccedil;&atilde;o de Pagamento"
-										class="form-control" disabled=""
-										value="${pedidoVenda.condPagamento.descricao}">
+										class="form-control" disabled="" value="${pedidoVenda.condPagamento.descricao}">
 								</div>
 							</div>
 						</div>
@@ -396,6 +395,8 @@
 						</div>
 					</div>
 				</div>
+
+
 			</div>
 
 
@@ -414,7 +415,7 @@
 					<c:choose>
 						<c:when test="${not empty pedidoVenda.listaProduto}">
 							<div class="table-responsive table-responsive-data2">
-								<table class="table table-data2">
+								<table class="table table-data2" id="tableProdutos">
 									<thead>
 										<tr>
 											<th>ID</th>
@@ -422,7 +423,7 @@
 											<th>cor</th>
 											<th>tamanho</th>
 											<th>quantidade</th>
-											<th>valor unitário</th>
+											<th>valor unit&aacute;rio</th>
 											<th>valor total</th>
 											<th></th>
 										</tr>
@@ -439,8 +440,7 @@
 												<td><span class="block-email">${item.valorUnitario*item.quantidade}</span></td>
 												<td>
 													<div class="table-data-feature">
-														<form
-															action="EditarPedidoVendaServlet?idProduto=${item.id}&acao=5"
+														<form action="EditarPedidoVendaServlet?idProduto=${item.id}&acao=5"
 															method="post">
 															<button class="item" data-toggle="tooltip"
 																data-placement="top" title="Deletar">
@@ -459,10 +459,16 @@
 									</tbody>
 								</table>
 							</div>
+							<script>
+							validaproduto="produto";
+							</script>
 						</c:when>
 						<c:otherwise>
 							<br>
 							<div class="alert alert-info">Nenhum Produto Inserido!</div>
+							<script>
+							validaproduto="vazio";
+							</script>
 						</c:otherwise>
 					</c:choose>
 
@@ -472,9 +478,9 @@
 						<div class="col-2">
 							<div class="form-group">
 								<label for="rua" class="control-label mb-1">Subtotal </label> <input
-									id="rua" name="rua" type="text" class="form-control subtotal"
-									value="${pedidoVenda.valorSubtotal}" placeholder="0.00"
-									disabled="" autocomplete="rua">
+									id="sbtt" name="sbtt" type="text" class="form-control subtotal"
+									value="${pedidoVenda.valorSubtotal}" placeholder="0.00" disabled=""
+									autocomplete="rua">
 							</div>
 						</div>
 						<div class="col-2">
@@ -483,15 +489,14 @@
 								<form action="EditarPedidoVendaServlet?acao=6" method="post">
 									<div class="table-data-feature">
 										<input id="nst" name="vlrDesconto" type="text"
-											value="${pedidoVenda.desconto}" class="form-control nst"
-											value="" placeholder="0.00" autocomplete="off">
-										<div style="margin-top: 4px; margin-left: 4px">
-											<button class="item" data-toggle="tooltip"
-												data-placement="top" title="Confirmar desconto"
-												id="desconto">
-												<i class="zmdi zmdi-check"></i>
-											</button>
-										</div>
+											value="${pedidoVenda.desconto}" class="form-control-nst" value=""
+											placeholder="${pedidoVenda.desconto}" autocomplete="off">
+									</div>
+									<div style="margin-top: 4px; margin-left: 4px">
+										<button class="item" data-toggle="tooltip"
+											data-placement="top" title="Confirmar desconto" id="desconto">
+											<i class="zmdi zmdi-check"></i>
+										</button>
 									</div>
 								</form>
 							</div>
@@ -501,9 +506,8 @@
 							<label for="brr" class="control-label mb-1">Total</label>
 							<div class="input-group">
 								<input id="brr" name="brr" type="text" class="form-control brr"
-									value="${pedidoVenda.valorTotal}"
-									placeholder="${pedidoVenda.valorTotal}" autocomplete="off"
-									disabled="">
+									value="${pedidoVenda.valorTotal}" placeholder="${pedidoVenda.valorTotal}"
+									autocomplete="off" disabled="">
 
 
 							</div>
@@ -514,7 +518,7 @@
 						<c:if test="${not empty utilizar}">
 							<c:set value="1" scope="request" var="valor" />
 						</c:if>
-						<input value="utilizarPontos" type="checkbox" name="utilizarPontos"
+						<input value="1" type="checkbox" name="utilizarPontos"
 							onClick="verUtilizacaoPontos(this)"
 							<c:if test="${valor != null}">checked="checked"</c:if>>Utilizar
 						pontos para gerar desconto
@@ -522,10 +526,17 @@
 				</div>
 				<div style="text-align: right; display-inline: block;">
 					<a href="ListarPedidoVendaServlet" type="button"
-						class="btn btn-secondary" data-dismiss="modal">Cancelar</a> <a
-						href="InserirPedidoVendaServlet" type="button"
-						class="btn btn-primary" data-dismiss="modal">Confirmar</a> <a
-						href="FaturarPedidoVendaServlet?editar=true" type="button" class="btn btn-success" data-dismiss="modal">Faturar</a>
+						class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+					<form style="display: inline" action="SalvarPedidoVendaServlet"
+						method="post">
+						<button class="btn btn-primary" type="submit" id="butfin"
+							disabled="">Salvar</button>
+					</form>
+					<form style="display: inline" action="FaturarPedidoVendaServlet?editar=true"
+						method="post">
+						<button class="btn btn-success" type="submit" id="butfin1"
+							disabled="">Faturar</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -558,7 +569,7 @@
 								</div>
 							</div>
 							<div class="table-responsive table-responsive-data2">
-								<table class="table table-data2">
+								<table class="table table-data2" id="tableProdutos">
 									<thead>
 										<tr>
 											<th>ID</th>
@@ -577,23 +588,24 @@
 												<td>${produto.descricao}</td>
 												<td class="desc">${produto.cor}</td>
 												<td>${produto.tamanho}</td>
-												<td><span class="status--process">${produto.quantidadeEstoque}</span></td>
+												<td><input type="text" id="estoque" name="estoque"
+													placeholder="${produto.quantidadeEstoque}" class="estoque"
+													align="center" disabled=""></td>
 												<td><span class="block-email">${produto.preco}</span></td>
 												<td>
 													<form
 														action="EditarPedidoVendaServlet?idProduto=${produto.id}&acao=4"
-														method="post">
+														method="post" id="formProdutos" name="formProdutos">
 														<div class="table-data-feature">
 															<input type="text" id="qtdProduto" name="qtdProduto"
 																placeholder="Quantidade" class="form-control"
 																align="center">
-															<div style="margin-left: 17px; margin-top: 4px;">
-																<button class="item" data-toggle="tooltip"
-																	data-placement="top" title="Adicionar ao Pedido"
-																	data-toggle="modal" data-target="#modalQuantia">
-																	<i class="zmdi zmdi-assignment-check"></i>
-																</button>
-															</div>
+															<button class="item" data-toggle="tooltip"
+																data-placement="top" title="Adicionar ao Pedido"
+																data-toggle="modal" data-target="#modalQuantia"
+																disabled="">
+																<i class="zmdi zmdi-assignment-check"></i>
+															</button>
 														</div>
 													</form>
 												</td>
@@ -617,37 +629,6 @@
 		</div>
 	</div>
 	<!-- end modal produtos -->
-
-	<!-- modal quantiaProdutos -->
-	<div class="modal fade" id="modalQuantia" tabindex="-1" role="dialog"
-		aria-labelledby="staticModalLabel" aria-hidden="true"
-		data-backdrop="static">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="staticModalLabel">Quantia</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label for="quantia" class="control-label mb-1">Quantia </label> <input
-							id="quantia" name="quantia" type="text"
-							class="form-control npedido" value=""
-							placeholder="Insira Quantia de Produto">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Cancelar</button>
-					<button type="button" class="btn btn-primary">Confirmar</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end modal quantiaProdutos -->
 
 	<!-- modal clientes -->
 	<div class="modal fade" id="ModalClientes" tabindex="-1" role="dialog"
@@ -818,8 +799,7 @@
 												<td>${cp.id}</td>
 												<td>${cp.descricao}</td>
 												<td>
-													<form
-														action="EditarPedidoVendaServlet?idCP=${cp.id}&acao=3"
+													<form action="EditarPedidoVendaServlet?idCP=${cp.id}&acao=3"
 														method="post">
 														<div class="table-data-feature">
 															<button class="item" data-toggle="tooltip"
@@ -904,79 +884,171 @@
 	<!-- Scripts -->
 	<script>
 		$(document)
-				.ready(
-						function() {
-							$("#buscaClientes")
-									.on(
-											"keyup",
-											function() {
-												var value = $(this).val()
-														.toLowerCase();
-												$("#tabelaClientes tr")
-														.filter(
-																function() {
-																	$(this)
-																			.toggle(
-																					$(
-																							this)
-																							.text()
-																							.toLowerCase()
-																							.indexOf(
-																									value) > -1)
-																});
-											});
-
-							$("#buscaVendedores")
-									.on(
-											"keyup",
-											function() {
-												var value = $(this).val()
-														.toLowerCase();
-												$("#tabelaVendedores tr")
-														.filter(
-																function() {
-																	$(this)
-																			.toggle(
-																					$(
-																							this)
-																							.text()
-																							.toLowerCase()
-																							.indexOf(
-																									value) > -1)
-																});
-											});
-
-							$("#buscaCP")
-									.on(
-											"keyup",
-											function() {
-												var value = $(this).val()
-														.toLowerCase();
-												$("#tabelaCP tr")
-														.filter(
-																function() {
-																	$(this)
-																			.toggle(
-																					$(
-																							this)
-																							.text()
-																							.toLowerCase()
-																							.indexOf(
-																									value) > -1)
-																});
-											});
-
-						});
-
+			.ready(
+				function() {
+					$("#buscaClientes")
+						.on(
+							"keyup",
+							function() {
+								var value = $(this).val()
+									.toLowerCase();
+								$("#tabelaClientes tr")
+									.filter(
+										function() {
+											$(this)
+												.toggle(
+													$(
+														this)
+														.text()
+														.toLowerCase()
+														.indexOf(
+															value) > -1)
+										});
+							});
+	
+					$("#buscaVendedores")
+						.on(
+							"keyup",
+							function() {
+								var value = $(this).val()
+									.toLowerCase();
+								$("#tabelaVendedores tr")
+									.filter(
+										function() {
+											$(this)
+												.toggle(
+													$(
+														this)
+														.text()
+														.toLowerCase()
+														.indexOf(
+															value) > -1)
+										});
+							});
+	
+					$("#buscaCP")
+						.on(
+							"keyup",
+							function() {
+								var value = $(this).val()
+									.toLowerCase();
+								$("#tabelaCP tr")
+									.filter(
+										function() {
+											$(this)
+												.toggle(
+													$(
+														this)
+														.text()
+														.toLowerCase()
+														.indexOf(
+															value) > -1)
+										});
+							});
+	
+				});
+	
 		function verUtilizacaoPontos(campo) {
 			if (campo.checked) {
 				location.href = "EditarPedidoVendaServlet?utilizarPontos=true";
 			} else {
 				location.href = "EditarPedidoVendaServlet?utilizarPontos=false";
 			}
-
+	
 		}
 	</script>
+
+
+	*
+	<script type="text/javascript">
+		//Script de Validação de Quantidade de Produto
+		$(function() {
+	
+			var $tblrows = $("#tableProdutos tbody tr");
+			$tblrows.each(function(index) {
+	
+				var $tblrow = $(this);
+	
+				$tblrow.find('.form-control').on('change', function() {
+					$tblrow.find('.item').attr('disabled', false);
+					var quantidade = $tblrow.find(".form-control").val();
+					var quantidade = parseInt(quantidade);
+					var estoque = $tblrow.find(".estoque").attr('placeholder');
+					var estoque = parseInt(estoque);
+	
+					if (!isNaN(quantidade) && quantidade != 0) {
+	
+						if (quantidade > estoque) {
+							$('.form-control').val('');
+							$tblrow.find('.item').attr('disabled', true);
+							alert("Quantia n&atilde;o pode ser maior do que o estoque.");
+						}
+					}
+	
+					if (quantidade <= 0 || isNaN(quantidade)) {
+	
+						$('.form-control').val('');
+						$tblrow.find('.item').attr('disabled', true);
+						alert("Quantia inválida!");
+	
+					}
+				});
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+	//Script de Validação de Desconto
+	
+		$(function() {
+	
+	
+			var nst = $('#nst').val();
+			var subtotal = $('#sbtt').val();
+	
+			$('.col-2').on('change', '#nst', function() {
+	
+				var desconto = $(".form-control-nst").val();
+				var desconto = parseFloat(desconto);
+	
+	
+				if (!isNaN(desconto) && desconto != 0 && !isNaN(subtotal) && subtotal != 0) {
+	
+					if (desconto < 0 || desconto > subtotal) {
+						alert("Valor de desconto inv&aacute;lido!");
+						$('.form-control-nst').val('');
+					}
+	
+				}
+	
+	
+			});
+	
+	
+	
+		});
+	</script>
+
+	<script type="text/javascript">
+	//Script de Validação de Pedido
+	
+		$(function() {
+	
+
+			var cli = $('#clientecod').val();
+			var cpag = $('#condpag').val();
+			var vend = $('#vendedor').val();
+			
+				
+				if(cli!="" && cpag!="" && vend!="" && validaproduto!="vazio") {
+					$('#butfin').attr('disabled', false);
+					$('#butfin1').attr('disabled', false);
+				}
+				
+	
+		});
+	</script>
+
 
 </body>
 

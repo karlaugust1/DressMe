@@ -18,6 +18,7 @@ import br.com.vsetsistemas.model.Funcionario;
 import br.com.vsetsistemas.model.Item;
 import br.com.vsetsistemas.model.PedidoVenda;
 import br.com.vsetsistemas.model.Produto;
+import br.com.vsetsistemas.services.ProdutoWebService;
 import br.com.vsetsistemas.session.ClienteSession;
 import br.com.vsetsistemas.session.CondicaoPagamentoSession;
 import br.com.vsetsistemas.session.FuncionarioSession;
@@ -47,7 +48,6 @@ public class EditarPedidoVendaServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("Entrou no get");
 
 		/* Lógica da utilização dos pontos here */
 		if (request.getParameter("utilizarPontos") != null)
@@ -60,7 +60,6 @@ public class EditarPedidoVendaServlet extends HttpServlet {
 		}
 		if (request.getParameter("utilizarPontos") != null) {
 			if (request.getParameter("utilizarPontos").equals("true")) {
-				System.out.println("Entrou no true");
 
 				if (pv.getCliente() != null && pv.getValorSubtotal() != 0) {
 
@@ -153,6 +152,8 @@ public class EditarPedidoVendaServlet extends HttpServlet {
 					* Integer.parseInt(request.getParameter("qtdProduto")));
 
 			pv.getListaProduto().add(i);
+			ProdutoWebService pws = new ProdutoWebService();
+			pws.atualizarEstoque(i);
 
 			Double subTotal = 0.0;
 
@@ -168,6 +169,7 @@ public class EditarPedidoVendaServlet extends HttpServlet {
 			for (Item i : pv.getListaProduto()) {
 				if (i.getId() == idItem) {
 					pv.getListaProduto().remove(i);
+					
 					break;
 				}
 			}

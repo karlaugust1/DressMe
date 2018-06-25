@@ -46,9 +46,11 @@ public class InserirCondPagamentoServlet extends HttpServlet {
 		PrePedidoVendaServlet.pedidoVenda.setCondPagamento(condPag);
 		request.getSession().setAttribute("condPag", condPag);
 		
-		String nextJSP = "/PrePedidoVendaServlet";
+		/*String nextJSP = "/PrePedidoVendaServlet";
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);
-		dispatcher.forward(request, response);
+		dispatcher.forward(request, response);*/
+		String nextJSP = "/DressMeDynamic/PrePedidoVendaServlet";
+		response.sendRedirect(nextJSP);
 	}
 
 }

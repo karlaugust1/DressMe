@@ -84,9 +84,11 @@ public class PrePedidoVendaServlet extends HttpServlet {
 		if (request.getParameter("vlrDesconto") != null) {
 
 			String vlrDesc = request.getParameter("vlrDesconto");
-			vlrDesc = vlrDesc.replaceAll(",", ".");
-			pedidoVenda.setDesconto(Double.parseDouble(vlrDesc) + vlrDesconto);
-			pedidoVenda.setValorTotal(pedidoVenda.getValorSubtotal() - pedidoVenda.getDesconto());
+			if (!vlrDesc.isEmpty()) {
+				vlrDesc = vlrDesc.replaceAll(",", ".");
+				pedidoVenda.setDesconto(Double.parseDouble(vlrDesc) + vlrDesconto);
+				pedidoVenda.setValorTotal(pedidoVenda.getValorSubtotal() - pedidoVenda.getDesconto());
+			}
 
 		}
 
@@ -98,7 +100,7 @@ public class PrePedidoVendaServlet extends HttpServlet {
 				pedidoVenda.setDesconto(pedidoVenda.getDesconto() - vlrDesconto);
 				vlrDesconto = 0;
 				pedidoVenda.setValorTotal(pedidoVenda.getValorSubtotal() - pedidoVenda.getDesconto());
-			
+
 			}
 		if (request.getParameter("utilizarPontos") != null) {
 			if (request.getParameter("utilizarPontos").equals("true")) {

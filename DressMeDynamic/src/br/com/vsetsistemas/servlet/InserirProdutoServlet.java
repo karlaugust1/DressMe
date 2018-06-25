@@ -77,9 +77,11 @@ public class InserirProdutoServlet extends HttpServlet {
 		request.getSession().setAttribute("subTotal", dfmt.format(subTotal));
 		
 		
-		String nextJSP = "/PrePedidoVendaServlet";
+		/*String nextJSP = "/PrePedidoVendaServlet";
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);
-		dispatcher.forward(request, response);
+		dispatcher.forward(request, response);*/
+		String nextJSP = "/DressMeDynamic/PrePedidoVendaServlet";
+		response.sendRedirect(nextJSP);
 		
 	}
 

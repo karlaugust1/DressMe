@@ -183,7 +183,7 @@
 					</div>
 					<nav class="navbar-sidebar2">
 						<ul class="list-unstyled navbar__list">
-							<li><a href="DashboardServlet"> <i
+							<li><a href="#"> <i
 									class="fas fa-tachometer-alt"></i>Painel Principal
 							</a></li>
 							<li class="active has-sub"><a class="js-arrow" href="#">
@@ -198,7 +198,7 @@
 									<li><a href="ListarPedidoVendaServlet"> <i
 											class="fas fa-shopping-cart"></i>Pedido de Venda
 									</a></li>
-									<li><a href=#> <i class="fas fa-print"></i>Nota
+									<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
 											Fiscal
 									</a></li>
 									<li><a href="#"> <i class="fas fa-file"></i>Relatórios

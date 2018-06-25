@@ -8,6 +8,7 @@ import java.util.List;
 import br.com.vsetsistemas.model.Categoria;
 import br.com.vsetsistemas.model.Fornecedor;
 import br.com.vsetsistemas.model.Item;
+import br.com.vsetsistemas.model.PedidoVenda;
 import br.com.vsetsistemas.model.Produto;
 
 public class ProdutoDAO extends DAO {
@@ -24,6 +25,8 @@ public class ProdutoDAO extends DAO {
 
 	private String SQL_OBTAIN = "select * from produto WHERE status = true AND id = ?;";
 	private String SQL_OBTAIN_BY_ID = "SELECT * FROM produto WHERE status = true AND id = ?;";
+
+	
 
 	public void insert(Produto p) {
 
@@ -60,29 +63,14 @@ public class ProdutoDAO extends DAO {
 
 	}
 
-	/*
-	 * public void insert(Produto p) {
-	 * 
-	 * try { conectar();
-	 * 
-	 * PreparedStatement ps = db.getConnection().prepareStatement(SQL_INSERT);
-	 * ps.setInt(1, p.getId()); ps.setString(2, p.getDescricao()); ps.setLong(3,
-	 * p.getEan()); ps.setBoolean(3, p.isStatus());
-	 * 
-	 * ps.executeUpdate();
-	 * 
-	 * desconectar(); }
-	 * 
-	 * catch (Exception e) { e.printStackTrace(); }
-	 * 
-	 * }
-	 */
 	public void update(Produto p) {
 
 		try {
 
 			conectar();
-//UPDATE Produto SET ean = ?, descricao=?, status=?, nome=?, genero=?, tamanho=?, cor=?, vunitario=?, categoria=?, fornecedor=?, qtd_estoque = ? WHERE id = ?
+			// UPDATE Produto SET ean = ?, descricao=?, status=?, nome=?, genero=?,
+			// tamanho=?, cor=?, vunitario=?, categoria=?, fornecedor=?, qtd_estoque = ?
+			// WHERE id = ?
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE);
 			ps.setLong(1, p.getEan());
 			ps.setString(2, p.getDescricao());
@@ -152,7 +140,8 @@ public class ProdutoDAO extends DAO {
 			while (rs.next()) {
 				Produto p = new Produto(rs.getInt("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
-						rs.getString("cor"), rs.getDouble("vunitario"), rs.getInt("qtd_estoque"), new Categoria(), new Fornecedor());
+						rs.getString("cor"), rs.getDouble("vunitario"), rs.getInt("qtd_estoque"), new Categoria(),
+						new Fornecedor());
 				l.add(p);
 			}
 
@@ -179,9 +168,9 @@ public class ProdutoDAO extends DAO {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				rp = new Produto(rs.getInt("id"), rs.getLong("ean"), rs.getString("descricao"),
-						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
-						rs.getString("cor"), rs.getDouble("vunitario"), rs.getInt("qtd_estoque"), new Categoria(), new Fornecedor());
+				rp = new Produto(rs.getInt("id"), rs.getLong("ean"), rs.getString("descricao"), rs.getBoolean("status"),
+						rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"), rs.getString("cor"),
+						rs.getDouble("vunitario"), rs.getInt("qtd_estoque"), new Categoria(), new Fornecedor());
 				break;
 			}
 
@@ -199,29 +188,30 @@ public class ProdutoDAO extends DAO {
 	public Produto obtainById(long id) {
 
 		Produto p = null;
-		
+
 		try {
-			
+
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_BY_ID);
 			ps.setLong(1, id);
 			ResultSet rs = ps.executeQuery();
-			
-			//Item i = new Item(1, pdao.obtainById(1), 1, 0, 99.99, 99.99, pv);
-			//SELECT * FROM produto WHERE status = true AND id = ?;
+
+			// Item i = new Item(1, pdao.obtainById(1), 1, 0, 99.99, 99.99, pv);
+			// SELECT * FROM produto WHERE status = true AND id = ?;
 			CategoriaDAO cdao = new CategoriaDAO();
 			Categoria c = null;
-					//cdao.obtainById(rs.getLong("categoria"));
-			
+			// cdao.obtainById(rs.getLong("categoria"));
+
 			FornecedorDAO fdao = new FornecedorDAO();
 			Fornecedor f = null;
-					//fdao.obtainById(rs.getLong("fornecedor"));
+			// fdao.obtainById(rs.getLong("fornecedor"));
 
 			while (rs.next()) {
 				Produto newP = new Produto(rs.getInt("id"), rs.getLong("ean"), rs.getString("descricao"),
 						rs.getBoolean("status"), rs.getString("nome"), rs.getString("genero"), rs.getString("tamanho"),
-						rs.getString("cor"), rs.getDouble("vunitario"), rs.getInt("qtd_estoque"),(c = cdao.obtainById(rs.getLong("categoria"))), (fdao.obtainById(rs.getLong("fornecedor"))));
+						rs.getString("cor"), rs.getDouble("vunitario"), rs.getInt("qtd_estoque"),
+						(c = cdao.obtainById(rs.getLong("categoria"))), (fdao.obtainById(rs.getLong("fornecedor"))));
 				if (newP != null) {
 					p = newP;
 					break;

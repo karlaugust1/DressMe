@@ -80,7 +80,7 @@
 								<li><a href="ListarPedidoVendaServlet"> <i
 										class="fas fa-shopping-cart"></i>Pedido de Venda
 								</a></li>
-								<li><a href="#"> <i class="fas fa-print"></i>Nota
+								<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
 										Fiscal
 								</a></li>
 								<li><a href="#"> <i class="fas fa-file"></i>Relatórios
@@ -196,7 +196,7 @@
 									<li><a href="ListarPedidoVendaServlet"> <i
 											class="fas fa-shopping-cart"></i>Pedido de Venda
 									</a></li>
-									<li><a href="#"> <i class="fas fa-print"></i>Nota
+									<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
 											Fiscal
 									</a></li>
 									<li><a href="#"> <i class="fas fa-file"></i>Relatórios
@@ -288,10 +288,6 @@
 										<td><span class="block-email">${pedidoVenda.valorTotal}</span></td>
 										<td>
 											<div class="table-data-feature">
-												<button class="item" data-toggle="tooltip"
-													data-placement="top" title="Faturar">
-													<i class="zmdi zmdi-assignment-check"></i>
-												</button>
 												<form
 													action="EditarPedidoVendaServlet?numero=${pedidoVenda.numero}"
 													method="post">

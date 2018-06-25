@@ -57,9 +57,11 @@ public class InserirPedidoVendaServlet extends HttpServlet {
 		request.getSession().removeAttribute("subTotal");
 		request.getSession().removeAttribute("desconto");
 		
-		String nextJSP = "/ListarPedidoVendaServlet";
+		/*String nextJSP = "/ListarPedidoVendaServlet";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-		dispatcher.forward(request, response);
+		dispatcher.forward(request, response);*/
+		String nextJSP = "/DressMeDynamic/ListarPedidoVendaServlet";
+		response.sendRedirect(nextJSP);
 
 	}
 

@@ -64,6 +64,7 @@ public class PedidoVendaDAO extends DAO {
 	private String SQL_OBTAIN_PEDIDOS_MONTH = "select distinct count(numero) quantidade from pedidovenda where status = 1 and dataAbertura >= (select date_sub(curdate(), interval day(curdate())-1 day));";
 	private String SQL_COUNT_PEDIDOS = "select distinct count(numero) quantidade from pedidovenda where status = 1;";
 	private String SQL_SUM_ALL_VALUES = "select sum(valorTotal) soma from pedidovenda where status = 1 and situacao = 'Faturado';";
+	private String SQL_DELETE_PRODUCT_PEDIDO = "delete from produto_pedidovenda WHERE idpedido = ?;";
 
 	public void invoice(PedidoVenda pv) {
 
@@ -243,10 +244,6 @@ public class PedidoVendaDAO extends DAO {
 
 		try {
 			conectar();
-
-			// UPDATE PedidoVenda SET dataFechamento=?, orcamento=?, cliente=?, condPag=?
-			// , vendedor=?, situacao=?, valorTotal=?, valorSubtotal=?, desconto=?,
-			// numero_pontos=?, status=? WHERE numero = ?;
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_UPDATE);
 
 			ps.setDate(1, p.getDataFechamento());
@@ -961,5 +958,20 @@ public class PedidoVendaDAO extends DAO {
 
 		return retorno;
 	}
+	
+
+	public void deleteProductPedido(PedidoVenda pv) {
+
+		try {
+			conectar();
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_DELETE_PRODUCT_PEDIDO);
+			ps.setLong(1, pv.getNumero());
+			ps.executeUpdate();
+			desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 
 }

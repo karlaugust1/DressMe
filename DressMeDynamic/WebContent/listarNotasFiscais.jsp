@@ -252,14 +252,6 @@
 								placeholder="Parâmetros..." class="form-control">
 						</div>
 					</div>
-
-				</div>
-
-				<div class="table-data__tool-right">
-					<a href="PrePedidoVendaServlet"
-						class="au-btn au-btn-icon au-btn--green au-btn--small"
-						align="center"> <i class="zmdi zmdi-plus"></i>Novo Pedido
-					</a>
 				</div>
 			</div>
 			<c:choose>
@@ -288,14 +280,10 @@
 										<td><span>${notaFiscal.pedidoVenda.valorTotal}</span></td>
 										<td>
 											<div class="table-data-feature">
-												<form action="EmitirNotaServlet?numero=${notaFiscal.numero}" method="post">
-													<button class="item" data-toggle="tooltip"
-														data-placement="top" title="Emitir" target="_blank">
-														<i class="zmdi zmdi-local-printshop"></i>
-													</button>
-												</form>
-													<a href="EmitirNotaServlet?numero=${notaFiscal.numero}" class="item" data-toggle="tooltip"
-														data-placement="top" title="Emitir1" target="_blank"><i class="zmdi zmdi-local-printshop"></i></a>
+												<a href="EmitirNotaServlet?numero=${notaFiscal.numero}"
+													class="item" data-toggle="tooltip" data-placement="top"
+													title="Emitir" target="_blank"><i
+													class="zmdi zmdi-local-printshop"></i></a>
 											</div>
 										</td>
 									</tr>
@@ -376,7 +364,7 @@
 											function() {
 												var value = $(this).val()
 														.toLowerCase();
-												$("#listaPedidos tr")
+												$("#listaNotas tr")
 														.filter(
 																function() {
 																	$(this)
@@ -391,13 +379,6 @@
 											});
 
 						});
-
-		function confirmarExclusao() {
-			var numero = document.getElementById('numeroPedidoId').value;
-			var r = confirm("Você deseja realmente excluir esse pedido?");
-			if (r == true) {
-				location.href = "DeletarPedidoVendaServlet?numeroPedido=";
-			}
 
 		}
 	</script>
