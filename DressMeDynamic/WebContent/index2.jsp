@@ -296,12 +296,12 @@
 											<div class="chart-info__right">
 												<div class="chart-statis">
 													<span class="index incre"> <i
-														class="zmdi zmdi-long-arrow-up"></i>1%
+														class="zmdi zmdi-long-arrow-up"></i>
 													</span> <span class="label">Clientes</span>
 												</div>
 												<div class="chart-statis mr-0">
 													<span class="index decre"> <i
-														class="zmdi zmdi-long-arrow-down"></i>10%
+														class="zmdi zmdi-long-arrow-up"></i>
 													</span> <span class="label">Vendas</span>
 												</div>
 											</div>
@@ -362,6 +362,8 @@
 					</div>
 				</div>
 		</div>
+		<input type="hidden" id="totes" value="${sessionScope.clientes}">
+		<input type="hidden" id="totes2" value="${sessionScope.pedidosMes}">
 	</div>
 	</section>
 

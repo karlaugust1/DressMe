@@ -80,8 +80,8 @@
 								<li><a href="ListarPedidoVendaServlet"> <i
 										class="fas fa-shopping-cart"></i>Pedido de Venda
 								</a></li>
-								<li><a href="#"> <i class="fas fa-print"></i>Nota
-										Fiscal
+								<li><a href="ListarNotasFiscais"> <i
+										class="fas fa-print"></i>Nota Fiscal
 								</a></li>
 								<li><a href="#"> <i class="fas fa-file"></i>Relatórios
 								</a></li>
@@ -196,8 +196,8 @@
 									<li><a href="ListarPedidoVendaServlet"> <i
 											class="fas fa-shopping-cart"></i>Pedido de Venda
 									</a></li>
-									<li><a href="#"> <i class="fas fa-print"></i>Nota
-											Fiscal
+									<li><a href="ListarNotasFiscais"> <i
+											class="fas fa-print"></i>Nota Fiscal
 									</a></li>
 									<li><a href="#"> <i class="fas fa-file"></i>Relatórios
 									</a></li>
@@ -229,7 +229,7 @@
 			<!-- LISTAGEM DE PEDIDOS -->
 
 			<br>
-			<h3 class="title-5 m-b-35">Pedidos de Venda</h3>
+			<h3 class="title-5 m-b-35">Relatórios - Exportação</h3>
 			<!-- 
 			<div class="table-data__tool">
 							<div class="table-data__tool-left">
@@ -241,62 +241,42 @@
 							</div>
 						</div>
 			-->
-			<div class="table-data__tool">
-				<div class="table-data__tool-left">
-					<div class="input-group">
-						<div class="input-group-btn">
-							<button class="au-btn-filter">
-								<i class="zmdi zmdi-filter-list"></i>Filtrar
-							</button>
-							<input type="form-control" id="filtroped" name="input1-group2"
-								placeholder="Parâmetros..." class="form-control">
-						</div>
-					</div>
-				</div>
-			</div>
 			<c:choose>
-				<c:when test="${not empty listaNotaFiscal}">
+				<c:when test="${not empty listarPedidosVendas}">
+				<div style="display:none">
 					<div class="table-responsive table-responsive-data2">
-						<table class="table table-data2">
+						<table id="export_table" class="table table-data2">
 							<thead>
 								<tr>
 									<th>número</th>
-									<th>serie</th>
 									<th>data</th>
-									<th>chave de acesso</th>
+									<th>cod. cliente</th>
 									<th>cliente</th>
+									<th>situação</th>
 									<th>total</th>
-									<th></th>
 								</tr>
 							</thead>
-							<tbody id="listaNotas">
-								<c:forEach var="notaFiscal" items="${listaNotaFiscal}">
+							<tbody id="listaPedidos">
+								<c:forEach var="pedidoVenda" items="${listarPedidosVendas}">
 									<tr class="tr-shadow">
-										<td class="desc">${notaFiscal.numero}</td>
-										<td>${notaFiscal.serie}</td>
-										<td class="desc">${notaFiscal.dataEmissao}</td>
-										<td>${notaFiscal.chaveDeAcesso}</td>
-										<td><span class="status--process">${notaFiscal.pedidoVenda.cliente.nome}</span></td>
-										<td><span>${notaFiscal.pedidoVenda.valorTotal}</span></td>
-										<td>
-											<div class="table-data-feature">
-												<a href="EmitirNotaServlet?numero=${notaFiscal.numero}"
-													class="item" data-toggle="tooltip" data-placement="top"
-													title="Emitir" target="_blank"><i
-													class="zmdi zmdi-local-printshop"></i></a>
-											</div>
-										</td>
+										<td class="desc">${pedidoVenda.numero}</td>
+										<td>${pedidoVenda.dataAbertura}</td>
+										<td class="desc">${pedidoVenda.cliente.id}</td>
+										<td>${pedidoVenda.cliente.nome}</td>
+										<td><span class="status--process">${pedidoVenda.situacao}</span></td>
+										<td><span class="block-email">${pedidoVenda.valorTotal}</span></td>
 									</tr>
 									<tr class="spacer"></tr>
 								</c:forEach>
 							</tbody>
 						</table>
 					</div>
+					</div>
+					<button id="export" data-export="export" class="btn btn-primary">Exportar</button>
 				</c:when>
 				<c:otherwise>
 					<br>
-					<div class="alert alert-info">Nenhum Pedido de Venda
-						encontrado!</div>
+					<div class="alert alert-info">Sem dados para exportar!</div>
 				</c:otherwise>
 			</c:choose>
 			<!-- FIM DA LISTAGEM DE PEDIDOS -->
@@ -352,35 +332,17 @@
 
 	<!-- Main JS-->
 	<script src="js/main.js"></script>
+	<script src="js/jquery.tabletoCSV.js"></script>
 
 	<!-- Scripts -->
+	
 	<script>
-		$(document)
-				.ready(
-						function() {
-							$("#filtroped")
-									.on(
-											"keyup",
-											function() {
-												var value = $(this).val()
-														.toLowerCase();
-												$("#listaNotas tr")
-														.filter(
-																function() {
-																	$(this)
-																			.toggle(
-																					$(
-																							this)
-																							.text()
-																							.toLowerCase()
-																							.indexOf(
-																									value) > -1)
-																});
-											});
-
-						});
-
-	</script>
+        $(function(){
+            $("#export").click(function(){
+                $("#export_table").tableToCSV();
+            });
+        });
+    </script>
 
 </body>
 
