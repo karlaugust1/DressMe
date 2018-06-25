@@ -440,7 +440,7 @@
 												<td><span class="block-email">${item.valorUnitario*item.quantidade}</span></td>
 												<td>
 													<div class="table-data-feature">
-														<form action="DeletarProdutoServlet?idProduto=${item.id}"
+														<form action="DeletarProdutoOrcamentoServlet?idProduto=${item.id}"
 															method="post">
 															<button class="item" data-toggle="tooltip"
 																data-placement="top" title="Deletar">
