@@ -143,23 +143,6 @@ public class PedidoVendaDAO extends DAO {
 			ps.setBoolean(10, p.isStatus());
 			ps.executeUpdate();
 
-			// INSERT INTO produto_pedidovenda (idpedido, idproduto, quantidade, desconto,
-			// subtotal, vunitario, iditem) values (?, ?, ?, ?, ?, ?, ?);
-			/*
-			 * for (int i = 0; i < p.getListaProduto().size(); i++) {
-			 * 
-			 * long iditem = i + 1; PreparedStatement ps2 =
-			 * db.getConnection().prepareStatement(SQL_INSERT_PRODUCT); ps2.setLong(1,
-			 * p.getListaProduto().get(i).getPedido().getNumero()); ps2.setInt(2,
-			 * p.getListaProduto().get(i).getProduto().getId()); ps2.setInt(3,
-			 * p.getListaProduto().get(i).getQuantidade()); ps2.setDouble(4,
-			 * p.getListaProduto().get(i).getDesconto()); ps2.setDouble(5,
-			 * p.getListaProduto().get(i).getSubtotal()); ps2.setDouble(6,
-			 * p.getListaProduto().get(i).getValorUnitario()); ps2.setLong(7, iditem);
-			 * 
-			 * ps2.executeUpdate(); }
-			 */
-
 			desconectar();
 		}
 
@@ -189,23 +172,6 @@ public class PedidoVendaDAO extends DAO {
 			ps.setInt(9, p.getNumeroPontos());
 			ps.setBoolean(10, p.isStatus());
 			ps.executeUpdate();
-
-			// INSERT INTO produto_pedidovenda (idpedido, idproduto, quantidade, desconto,
-			// subtotal, vunitario, iditem) values (?, ?, ?, ?, ?, ?, ?);
-			/*
-			 * for (int i = 0; i < p.getListaProduto().size(); i++) {
-			 * 
-			 * long iditem = i + 1; PreparedStatement ps2 =
-			 * db.getConnection().prepareStatement(SQL_INSERT_PRODUCT); ps2.setLong(1,
-			 * p.getListaProduto().get(i).getPedido().getNumero()); ps2.setInt(2,
-			 * p.getListaProduto().get(i).getProduto().getId()); ps2.setInt(3,
-			 * p.getListaProduto().get(i).getQuantidade()); ps2.setDouble(4,
-			 * p.getListaProduto().get(i).getDesconto()); ps2.setDouble(5,
-			 * p.getListaProduto().get(i).getSubtotal()); ps2.setDouble(6,
-			 * p.getListaProduto().get(i).getValorUnitario()); ps2.setLong(7, iditem);
-			 * 
-			 * ps2.executeUpdate(); }
-			 */
 
 			desconectar();
 		}

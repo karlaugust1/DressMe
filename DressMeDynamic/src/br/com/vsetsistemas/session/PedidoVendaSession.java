@@ -59,10 +59,10 @@ public class PedidoVendaSession {
 	public boolean insertOrcamento(PedidoVenda pv) {
 
 		// pv.setNumero(obtainLastRegister());
-		pv.setNumeroPontos(convertIntoPoints(pv.getValorTotal()));
+		//pv.setNumeroPontos(convertIntoPoints(pv.getValorTotal()));
 
 		try {
-			dao.insert(pv);
+			dao.insertBudget(pv);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

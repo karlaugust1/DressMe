@@ -62,7 +62,7 @@
 					<div class="image img-cir img-120">
 						<img src="images/icon/avatar-big-01.jpg" alt="John Doe" />
 					</div>
-					<h4 class="name">john doe</h4>
+					<h4 class="name">Bad Taco</h4>
 					<a href="login.html">Sair</a>
 				</div>
 				<nav class="navbar-sidebar2">
@@ -76,7 +76,7 @@
 							</span>
 						</a>
 							<ul class="list-unstyled navbar__sub-list js-sub-list">
-								<li><a href="#"> <i
+								<li><a href="ListarOrcamentoServlet"> <i
 										class="fas fa-pencil-square-o"></i>Orçamento
 								</a></li>
 								<li><a href="ListarPedidoVendaServlet"> <i
@@ -85,7 +85,7 @@
 								<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
 										Fiscal
 								</a></li>
-								<li><a href="#"> <i class="fas fa-file"></i>Relatórios
+								<li><a href="GeraCSVServlet"> <i class="fas fa-file"></i>Relatórios
 								</a></li>
 							</ul></li>
 						<li><a href="#"> <i class="fas fa-download"></i>Compras
@@ -192,7 +192,7 @@
 								</span>
 							</a>
 								<ul class="list-unstyled navbar__sub-list js-sub-list">
-									<li><a href="#"> <i
+									<li><a href="ListarOrcamentoServlet"> <i
 											class="fas fa-pencil-square-o"></i>Orçamento
 									</a></li>
 									<li><a href="ListarPedidoVendaServlet"> <i
@@ -201,7 +201,7 @@
 									<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
 											Fiscal
 									</a></li>
-									<li><a href="#"> <i class="fas fa-file"></i>Relatórios
+									<li><a href="GeraCSVServlet"> <i class="fas fa-file"></i>Relatórios
 									</a></li>
 								</ul></li>
 							<li><a href="#"> <i class="fas fa-download"></i>Compras

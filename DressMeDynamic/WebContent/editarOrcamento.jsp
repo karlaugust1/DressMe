@@ -146,7 +146,7 @@
 											</a>
 										</div>
 										<div class="account-dropdown__item">
-											<a href="#"> <i class="zmdi zmdi-settings"></i>ConfigurÃ§Ãµes
+											<a href="#"> <i class="zmdi zmdi-settings"></i>Configurações
 											</a>
 										</div>
 									</div>
@@ -156,7 +156,7 @@
 											</a>
 										</div>
 										<div class="account-dropdown__item">
-											<a href="#"> <i class="zmdi zmdi-pin"></i>LocalizaÃ§Ã£o
+											<a href="#"> <i class="zmdi zmdi-pin"></i>Localização
 											</a>
 										</div>
 										<div class="account-dropdown__item">
@@ -164,7 +164,7 @@
 											</a>
 										</div>
 										<div class="account-dropdown__item">
-											<a href="#"> <i class="zmdi zmdi-notifications"></i>NotificaÃ§Ãµes
+											<a href="#"> <i class="zmdi zmdi-notifications"></i>Notificações
 											</a>
 										</div>
 									</div>
@@ -199,7 +199,7 @@
 								</span>
 							</a>
 								<ul class="list-unstyled navbar__sub-list js-sub-list">
-									<li><a href="#"> <i class="fas fa-pencil-square-o"></i>OrÃ§amento
+									<li><a href="#"> <i class="fas fa-pencil-square-o"></i>Orçamento
 									</a></li>
 									<li><a href="ListarPedidoVendaServlet"> <i
 											class="fas fa-shopping-cart"></i>Pedido de Venda
@@ -207,14 +207,14 @@
 									<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
 											Fiscal
 									</a></li>
-									<li><a href="#"> <i class="fas fa-file"></i>RelatÃ³ios
+									<li><a href="#"> <i class="fas fa-file"></i>Relatóios
 									</a></li>
 								</ul></li>
 							<li><a href="#"> <i class="fas fa-download"></i>Compras
 							</a></li>
 							<li><a href="#"> <i class="fas fa-inbox"></i>Estoque
 							</a></li>
-							<li><a href="#"> <i class="fas fa-group"></i>FidelizaÃ§Ã£o
+							<li><a href="#"> <i class="fas fa-group"></i>Fidelização
 							</a></li>
 						</ul>
 					</nav>
@@ -238,7 +238,7 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-header">
-						<strong>Novo</strong> <small> Pedido de Venda</small>
+						<strong>Editar</strong> <small> Orçamento</small>
 					</div>
 
 					<div class="row">
@@ -247,14 +247,14 @@
 								<label for="npedido" class="control-label mb-1">N&#186;
 									Pedido</label> <input id="npedido" name="npedido" type="text"
 									class="form-control npedido" placeholder="" disabled=""
-									autocomplete="npedido" value="${sessionScope.numeroPedido}">
+									autocomplete="npedido" value="${pedidoVenda.numero}">
 							</div>
 						</div>
 						<div class="col-4">
 							<label for="datap" class="control-label mb-1">Data</label>
 							<div class="input-group">
 								<input id="datap" name="datap" type="text"
-									class="form-control datap" value="${sessionScope.dataPedido}"
+									class="form-control datap" value="${pedidoVenda.dataAbertura}"
 									placeholder="" autocomplete="off" disabled="">
 							</div>
 						</div>
@@ -273,7 +273,7 @@
 									</div>
 									<input type="text" id="clientecod" name="input1-group2"
 										placeholder="Cliente" class="form-control" disabled=""
-										value="${cliente.id}">
+										value="${pedidoVenda.cliente.id}">
 								</div>
 							</div>
 						</div>
@@ -282,7 +282,7 @@
 								do Cliente</label>
 							<div class="input-group">
 								<input id="clientenome" name="clientenome" type="text"
-									class="form-control clientenome" value="${cliente.nome}"
+									class="form-control clientenome" value="${pedidoVenda.cliente.nome}"
 									placeholder="Nome do Cliente" autocomplete="off" disabled="">
 
 							</div>
@@ -294,7 +294,7 @@
 							<div class="form-group">
 								<label for="cpfcnpj" class="control-label mb-1">CPF/CNPJ
 								</label> <input id="cpfcnpj" name="cpfcnpj" type="text"
-									class="form-control cpfcnpj" value="${cliente.cpf}"
+									class="form-control cpfcnpj" value="${pedidoVenda.cliente.cpf}"
 									placeholder="CPF/CNPJ" disabled="" autocomplete="cpfcnpj">
 							</div>
 						</div>
@@ -303,7 +303,7 @@
 								Estadual</label>
 							<div class="input-group">
 								<input id="ies" name="ies" type="text" class="form-control ies"
-									value="${cliente.inscricaoEstadual}" placeholder="IES"
+									value="${pedidoVenda.cliente.inscricaoEstadual}" placeholder="IES"
 									autocomplete="off" disabled="">
 
 							</div>
@@ -315,7 +315,7 @@
 							<div class="form-group">
 								<label for="rua" class="control-label mb-1">Rua </label> <input
 									id="rua" name="rua" type="text" class="form-control rua"
-									value="${cliente.rua}" placeholder="Rua" disabled=""
+									value="${pedidoVenda.cliente.rua}" placeholder="Rua" disabled=""
 									autocomplete="rua">
 							</div>
 						</div>
@@ -323,7 +323,7 @@
 							<label for="nst" class="control-label mb-1">N&#250;mero</label>
 							<div class="input-group">
 								<input id="nst" name="nst" type="text" class="form-control nst"
-									value="${cliente.numero}" placeholder="N&uacute;mero"
+									value="${pedidoVenda.cliente.numero}" placeholder="N&uacute;mero"
 									autocomplete="off" disabled="">
 
 							</div>
@@ -345,7 +345,7 @@
 							<div class="form-group">
 								<label for="cdd" class="control-label mb-1">Cidade </label> <input
 									id="cdd" name="cdd" type="text" class="form-control cdd"
-									value="${cliente.cidade}" placeholder="Cidade" disabled=""
+									value="${pedidoVenda.cliente.cidade}" placeholder="Cidade" disabled=""
 									autocomplete="cdd">
 							</div>
 						</div>
@@ -353,7 +353,7 @@
 							<label for="cmp" class="control-label mb-1">Complemento</label>
 							<div class="input-group">
 								<input id="cmp" name="cmp" type="text" class="form-control ies"
-									value="${cliente.complemento}" placeholder="Complemento"
+									value="${pedidoVenda.cliente.complemento}" placeholder="Complemento"
 									autocomplete="off" disabled="">
 
 							</div>
@@ -375,7 +375,7 @@
 									</div>
 									<input type="text" id="condpag" name="condpag"
 										placeholder="Condi&ccedil;&atilde;o de Pagamento"
-										class="form-control" disabled="" value="${condPag.descricao}">
+										class="form-control" disabled="" value="${pedidoVenda.condPagamento.descricao}">
 								</div>
 							</div>
 						</div>
@@ -389,7 +389,7 @@
 									</button>
 								</div>
 								<input id="vendedor" name="vendedor" type="text"
-									class="form-control vdd" value="${vendedor.nome}"
+									class="form-control vdd" value="${pedidoVenda.vendedor.nome}"
 									placeholder="Vendedor" disabled="" />
 							</div>
 						</div>
@@ -413,7 +413,7 @@
 						</button>
 					</div>
 					<c:choose>
-						<c:when test="${not empty listaProdutosPedidoVenda}">
+						<c:when test="${not empty pedidoVenda.listaProduto}">
 							<div class="table-responsive table-responsive-data2">
 								<table class="table table-data2" id="tableProdutos">
 									<thead>
@@ -429,7 +429,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="item" items="${listaProdutosPedidoVenda}">
+										<c:forEach var="item" items="${pedidoVenda.listaProduto}">
 											<tr class="tr-shadow">
 												<td class="desc">${item.id}</td>
 												<td>${item.produto.descricao}</td>
@@ -440,7 +440,7 @@
 												<td><span class="block-email">${item.valorUnitario*item.quantidade}</span></td>
 												<td>
 													<div class="table-data-feature">
-														<form action="DeletarProdutoServlet?idProduto=${item.id}"
+														<form action="EditarOrcamentoServlet?idProduto=${item.id}&acao=5"
 															method="post">
 															<button class="item" data-toggle="tooltip"
 																data-placement="top" title="Deletar">
@@ -479,18 +479,18 @@
 							<div class="form-group">
 								<label for="rua" class="control-label mb-1">Subtotal </label> <input
 									id="sbtt" name="sbtt" type="text" class="form-control subtotal"
-									value="${subTotal}" placeholder="0.00" disabled=""
+									value="${pedidoVenda.valorSubtotal}" placeholder="0.00" disabled=""
 									autocomplete="rua">
 							</div>
 						</div>
 						<div class="col-2">
 							<label for="nst" class="control-label mb-1">Desconto</label>
 							<div class="input-group">
-								<form action="PrePedidoVendaServlet" method="post">
+								<form action="EditarOrcamentoServlet?acao=6" method="post">
 									<div class="table-data-feature">
 										<input id="nst" name="vlrDesconto" type="text"
-											value="${desconto}" class="form-control-nst" value=""
-											placeholder="${desconto}" autocomplete="off">
+											value="${pedidoVenda.desconto}" class="form-control-nst" value=""
+											placeholder="${pedidoVenda.desconto}" autocomplete="off">
 									</div>
 									<div style="margin-top: 4px; margin-left: 4px">
 										<button class="item" data-toggle="tooltip"
@@ -506,7 +506,7 @@
 							<label for="brr" class="control-label mb-1">Total</label>
 							<div class="input-group">
 								<input id="brr" name="brr" type="text" class="form-control brr"
-									value="${valorTotal}" placeholder="${valorTotal}"
+									value="${pedidoVenda.valorTotal}" placeholder="${pedidoVenda.valorTotal}"
 									autocomplete="off" disabled="">
 
 
@@ -525,17 +525,17 @@
 					</div>
 				</div>
 				<div style="text-align: right; display-inline: block;">
-					<a href="CancelarPedidoVendaServlet?pedidoVenda=true" type="button"
+					<a href="ListarOrcamentoServlet" type="button"
 						class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
-					<form style="display: inline" action="InserirPedidoVendaServlet"
+					<form style="display: inline" action="SalvarOrcamentoServlet"
 						method="post">
 						<button class="btn btn-primary" type="submit" id="butfin"
 							disabled="">Salvar</button>
 					</form>
-					<form style="display: inline" action="FaturarPedidoVendaServlet?inserir=true"
+					<form style="display: inline" action="TransformarEmPedidoVendaServlet?editar=true"
 						method="post">
 						<button class="btn btn-success" type="submit" id="butfin1"
-							disabled="">Faturar</button>
+							disabled="">Pedido de venda</button>
 					</form>
 				</div>
 			</div>
@@ -594,7 +594,7 @@
 												<td><span class="block-email">${produto.preco}</span></td>
 												<td>
 													<form
-														action="InserirProdutoServlet?idProduto=${produto.id}"
+														action="EditarOrcamentoServlet?idProduto=${produto.id}&acao=4"
 														method="post" id="formProdutos" name="formProdutos">
 														<div class="table-data-feature">
 															<input type="text" id="qtdProduto" name="qtdProduto"
@@ -667,7 +667,7 @@
 												<td>${cliente.cpf}</td>
 												<td>
 													<form
-														action="InserirClienteServlet?idCliente=${cliente.id}"
+														action="EditarOrcamentoServlet?idCliente=${cliente.id}&acao=1"
 														method="post">
 														<div class="table-data-feature">
 															<button class="item" data-toggle="tooltip"
@@ -733,7 +733,7 @@
 												<td>${vendedor.nome}</td>
 												<td>
 													<form
-														action="InserirVendedorServlet?idVendedor=${vendedor.id}"
+														action="EditarOrcamentoServlet?idVendedor=${vendedor.id}&acao=2"
 														method="post">
 														<div class="table-data-feature">
 															<button class="item" data-toggle="tooltip"
@@ -799,7 +799,7 @@
 												<td>${cp.id}</td>
 												<td>${cp.descricao}</td>
 												<td>
-													<form action="InserirCondPagamentoServlet?idCP=${cp.id}"
+													<form action="EditarOrcamentoServlet?idCP=${cp.id}&acao=3"
 														method="post">
 														<div class="table-data-feature">
 															<button class="item" data-toggle="tooltip"
@@ -950,9 +950,9 @@
 	
 		function verUtilizacaoPontos(campo) {
 			if (campo.checked) {
-				location.href = "PrePedidoVendaServlet?utilizarPontos=true";
+				location.href = "EditarPedidoVendaServlet?utilizarPontos=true";
 			} else {
-				location.href = "PrePedidoVendaServlet?utilizarPontos=false";
+				location.href = "EditarPedidoVendaServlet?utilizarPontos=false";
 			}
 	
 		}

@@ -18,13 +18,13 @@ import br.com.vsetsistemas.session.PedidoVendaSession;
  * Servlet implementation class ListarVendasServlet
  */
 @WebServlet("/GeraCSVServlet")
-public class GeraCSV extends HttpServlet {
+public class GeraCSVServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GeraCSV() {
+    public GeraCSVServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

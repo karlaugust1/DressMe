@@ -146,7 +146,7 @@
 											</a>
 										</div>
 										<div class="account-dropdown__item">
-											<a href="#"> <i class="zmdi zmdi-settings"></i>ConfigurÃ§Ãµes
+											<a href="#"> <i class="zmdi zmdi-settings"></i>Configurações
 											</a>
 										</div>
 									</div>
@@ -156,7 +156,7 @@
 											</a>
 										</div>
 										<div class="account-dropdown__item">
-											<a href="#"> <i class="zmdi zmdi-pin"></i>LocalizaÃ§Ã£o
+											<a href="#"> <i class="zmdi zmdi-pin"></i>Localização
 											</a>
 										</div>
 										<div class="account-dropdown__item">
@@ -164,7 +164,7 @@
 											</a>
 										</div>
 										<div class="account-dropdown__item">
-											<a href="#"> <i class="zmdi zmdi-notifications"></i>NotificaÃ§Ãµes
+											<a href="#"> <i class="zmdi zmdi-notifications"></i>Notificações
 											</a>
 										</div>
 									</div>
@@ -199,7 +199,7 @@
 								</span>
 							</a>
 								<ul class="list-unstyled navbar__sub-list js-sub-list">
-									<li><a href="#"> <i class="fas fa-pencil-square-o"></i>OrÃ§amento
+									<li><a href="#"> <i class="fas fa-pencil-square-o"></i>Orçamento
 									</a></li>
 									<li><a href="ListarPedidoVendaServlet"> <i
 											class="fas fa-shopping-cart"></i>Pedido de Venda
@@ -207,14 +207,14 @@
 									<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
 											Fiscal
 									</a></li>
-									<li><a href="#"> <i class="fas fa-file"></i>RelatÃ³ios
+									<li><a href="#"> <i class="fas fa-file"></i>Relatóios
 									</a></li>
 								</ul></li>
 							<li><a href="#"> <i class="fas fa-download"></i>Compras
 							</a></li>
 							<li><a href="#"> <i class="fas fa-inbox"></i>Estoque
 							</a></li>
-							<li><a href="#"> <i class="fas fa-group"></i>FidelizaÃ§Ã£o
+							<li><a href="#"> <i class="fas fa-group"></i>Fidelização
 							</a></li>
 						</ul>
 					</nav>
@@ -238,7 +238,7 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-header">
-						<strong>Novo</strong> <small> Pedido de Venda</small>
+						<strong>Novo</strong> <small> Orçamento</small>
 					</div>
 
 					<div class="row">
@@ -404,7 +404,7 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-header" style="text-align: center">
-						<strong>Produtos</strong> <small>- Pedido de Venda</small>
+						<strong>Produtos</strong> <small>- Orcamento</small>
 					</div>
 					<div style="text-align: right; display-inline: block;">
 						<button class="au-btn au-btn-icon au-btn--green au-btn--small"
@@ -440,7 +440,7 @@
 												<td><span class="block-email">${item.valorUnitario*item.quantidade}</span></td>
 												<td>
 													<div class="table-data-feature">
-														<form action="DeletarProdutoServlet?idProduto=${item.id}"
+														<form action="DeletarProdutoOrcamentoServlet?idProduto=${item.id}"
 															method="post">
 															<button class="item" data-toggle="tooltip"
 																data-placement="top" title="Deletar">
@@ -486,7 +486,7 @@
 						<div class="col-2">
 							<label for="nst" class="control-label mb-1">Desconto</label>
 							<div class="input-group">
-								<form action="PrePedidoVendaServlet" method="post">
+								<form action="PreOrcamentoServlet" method="post">
 									<div class="table-data-feature">
 										<input id="nst" name="vlrDesconto" type="text"
 											value="${desconto}" class="form-control-nst" value=""
@@ -525,17 +525,17 @@
 					</div>
 				</div>
 				<div style="text-align: right; display-inline: block;">
-					<a href="CancelarPedidoVendaServlet?pedidoVenda=true" type="button"
+					<a href="ListarOrcamentoServlet" type="button"
 						class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
-					<form style="display: inline" action="InserirPedidoVendaServlet"
+					<form style="display: inline" action="InserirOrcamentoServlet"
 						method="post">
 						<button class="btn btn-primary" type="submit" id="butfin"
 							disabled="">Salvar</button>
 					</form>
-					<form style="display: inline" action="FaturarPedidoVendaServlet?inserir=true"
+					<form style="display: inline" action="TransformarEmPedidoVendaServlet?inserir=true"
 						method="post">
 						<button class="btn btn-success" type="submit" id="butfin1"
-							disabled="">Faturar</button>
+							disabled="">Pedido de Venda</button>
 					</form>
 				</div>
 			</div>
@@ -594,7 +594,7 @@
 												<td><span class="block-email">${produto.preco}</span></td>
 												<td>
 													<form
-														action="InserirProdutoServlet?idProduto=${produto.id}"
+														action="InserirProdutoOrcamentoServlet?idProduto=${produto.id}"
 														method="post" id="formProdutos" name="formProdutos">
 														<div class="table-data-feature">
 															<input type="text" id="qtdProduto" name="qtdProduto"
@@ -667,7 +667,7 @@
 												<td>${cliente.cpf}</td>
 												<td>
 													<form
-														action="InserirClienteServlet?idCliente=${cliente.id}"
+														action="InserirClienteOrcamentoServlet?idCliente=${cliente.id}"
 														method="post">
 														<div class="table-data-feature">
 															<button class="item" data-toggle="tooltip"
@@ -733,7 +733,7 @@
 												<td>${vendedor.nome}</td>
 												<td>
 													<form
-														action="InserirVendedorServlet?idVendedor=${vendedor.id}"
+														action="InserirVendedorOrcamentoServlet?idVendedor=${vendedor.id}"
 														method="post">
 														<div class="table-data-feature">
 															<button class="item" data-toggle="tooltip"
@@ -799,7 +799,7 @@
 												<td>${cp.id}</td>
 												<td>${cp.descricao}</td>
 												<td>
-													<form action="InserirCondPagamentoServlet?idCP=${cp.id}"
+													<form action="InserirCondPagamentoOrcamentoServlet?idCP=${cp.id}"
 														method="post">
 														<div class="table-data-feature">
 															<button class="item" data-toggle="tooltip"
@@ -1034,7 +1034,6 @@
 	
 		$(function() {
 	
-
 			var cli = $('#clientecod').val();
 			var cpag = $('#condpag').val();
 			var vend = $('#vendedor').val();

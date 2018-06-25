@@ -80,8 +80,8 @@
 								<li><a href="ListarPedidoVendaServlet"> <i
 										class="fas fa-shopping-cart"></i>Pedido de Venda
 								</a></li>
-								<li><a href="ListarNotasFiscais"> <i
-										class="fas fa-print"></i>Nota Fiscal
+								<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
+										Fiscal
 								</a></li>
 								<li><a href="#"> <i class="fas fa-file"></i>Relatórios
 								</a></li>
@@ -196,8 +196,8 @@
 									<li><a href="ListarPedidoVendaServlet"> <i
 											class="fas fa-shopping-cart"></i>Pedido de Venda
 									</a></li>
-									<li><a href="ListarNotasFiscais"> <i
-											class="fas fa-print"></i>Nota Fiscal
+									<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
+											Fiscal
 									</a></li>
 									<li><a href="#"> <i class="fas fa-file"></i>Relatórios
 									</a></li>
@@ -229,7 +229,7 @@
 			<!-- LISTAGEM DE PEDIDOS -->
 
 			<br>
-			<h3 class="title-5 m-b-35">Relatórios - Exportação</h3>
+			<h3 class="title-5 m-b-35">Orçamentos</h3>
 			<!-- 
 			<div class="table-data__tool">
 							<div class="table-data__tool-left">
@@ -241,11 +241,31 @@
 							</div>
 						</div>
 			-->
+			<div class="table-data__tool">
+				<div class="table-data__tool-left">
+					<div class="input-group">
+						<div class="input-group-btn">
+							<button class="au-btn-filter">
+								<i class="zmdi zmdi-filter-list"></i>Filtrar
+							</button>
+							<input type="form-control" id="filtroped" name="input1-group2"
+								placeholder="Parâmetros..." class="form-control">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="table-data__tool-right">
+					<a href="PreOrcamentoServlet"
+						class="au-btn au-btn-icon au-btn--green au-btn--small"
+						align="center"> <i class="zmdi zmdi-plus"></i>Novo Orçamento
+					</a>
+				</div>
+			</div>
 			<c:choose>
-				<c:when test="${not empty listarPedidosVendas}">
-				<div style="display:none">
+				<c:when test="${not empty listarOrcamentos}">
 					<div class="table-responsive table-responsive-data2">
-						<table id="export_table" class="table table-data2">
+						<table class="table table-data2">
 							<thead>
 								<tr>
 									<th>número</th>
@@ -254,29 +274,58 @@
 									<th>cliente</th>
 									<th>situação</th>
 									<th>total</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody id="listaPedidos">
-								<c:forEach var="pedidoVenda" items="${listarPedidosVendas}">
+								<c:forEach var="orcamento" items="${listarOrcamentos}">
 									<tr class="tr-shadow">
-										<td class="desc">${pedidoVenda.numero}</td>
-										<td>${pedidoVenda.dataAbertura}</td>
-										<td class="desc">${pedidoVenda.cliente.id}</td>
-										<td>${pedidoVenda.cliente.nome}</td>
-										<td><span class="status--process">${pedidoVenda.situacao}</span></td>
-										<td><span class="block-email">${pedidoVenda.valorTotal}</span></td>
+										<td class="desc">${orcamento.numero}</td>
+										<td>${orcamento.dataAbertura}</td>
+										<td class="desc">${orcamento.cliente.id}</td>
+										<td>${orcamento.cliente.nome}</td>
+										<td><span class="status--process">${orcamento.situacao}</span></td>
+										<td><span class="block-email">${orcamento.valorTotal}</span></td>
+										<td>
+											<div class="table-data-feature">
+												<form
+													action="EditarOrcamentoServlet?numero=${orcamento.numero}"
+													method="post">
+													<button class="item" data-toggle="tooltip"
+														data-placement="top" title="Editar">
+														<i class="zmdi zmdi-edit"></i>
+													</button>
+												</form>
+												<form
+													action="DeletarOrcamentoServlet?numeroPedido=${orcamento.numero}"
+													method="post">
+													<button class="item" data-toggle="tooltip"
+														name="numeroPedido" value="${orcamento.numero}"
+														data-placement="top" title="Deletar">
+														<i class="zmdi zmdi-delete"></i>
+													</button>
+												</form>
+												<form
+													action="ExibirOrcamentoServlet?numero=${orcamento.numero}"
+													method="post">
+													<button class="item" data-toggle="tooltip"
+														data-placement="top" title="Visualizar">
+														<i class="zmdi zmdi-eye"></i>
+													</button>
+												</form>
+											</div>
+										</td>
 									</tr>
 									<tr class="spacer"></tr>
 								</c:forEach>
 							</tbody>
 						</table>
 					</div>
-					</div>
-					<button id="export" data-export="export" class="btn btn-primary">Exportar</button>
 				</c:when>
 				<c:otherwise>
 					<br>
-					<div class="alert alert-info">Sem dados para exportar!</div>
+					<div class="alert alert-info">Nenhum orcamento
+						encontrado!</div>
 				</c:otherwise>
 			</c:choose>
 			<!-- FIM DA LISTAGEM DE PEDIDOS -->
@@ -332,18 +381,43 @@
 
 	<!-- Main JS-->
 	<script src="js/main.js"></script>
-	<script src="js/jquery.tabletoCSV.js"></script>
 
 	<!-- Scripts -->
-	
 	<script>
-        $(function(){
-            $("#export").click(function(){
-                $("#export_table").tableToCSV();
-                location.href("GeraCSVServlet")
-            });
-        });
-    </script>
+		$(document)
+				.ready(
+						function() {
+							$("#filtroped")
+									.on(
+											"keyup",
+											function() {
+												var value = $(this).val()
+														.toLowerCase();
+												$("#listaPedidos tr")
+														.filter(
+																function() {
+																	$(this)
+																			.toggle(
+																					$(
+																							this)
+																							.text()
+																							.toLowerCase()
+																							.indexOf(
+																									value) > -1)
+																});
+											});
+
+						});
+
+		function confirmarExclusao() {
+			var numero = document.getElementById('numeroPedidoId').value;
+			var r = confirm("Você deseja realmente excluir esse pedido?");
+			if (r == true) {
+				location.href = "DeletarPedidoVendaServlet?numeroPedido=";
+			}
+
+		}
+	</script>
 
 </body>
 

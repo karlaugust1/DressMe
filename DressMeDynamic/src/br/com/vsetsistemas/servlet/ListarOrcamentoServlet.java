@@ -17,7 +17,7 @@ import br.com.vsetsistemas.session.PedidoVendaSession;
 /**
  * Servlet implementation class ListarVendasServlet
  */
-@WebServlet("/ListOrcamentosServlet")
+@WebServlet("/ListarOrcamentoServlet")
 public class ListarOrcamentoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,13 +33,25 @@ public class ListarOrcamentoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		PedidoVendaSession service = new PedidoVendaSession();
 		List<PedidoVenda> lista = service.listAllBudges();
 		
-		//Colocar a lista na memoria
-		request.setAttribute("listaOrcamentos", lista);
-		
-		String nextJSP = "/orcamento/listarOrcamentos.jsp";
+		//Colocar na memoria
+		request.setAttribute("listarOrcamentos", lista);
+		request.getSession().removeAttribute("cliente");
+		request.getSession().removeAttribute("vendedor");
+		request.getSession().removeAttribute("condPag");
+		request.getSession().removeAttribute("listaProdutosOrcamento");
+		request.getSession().removeAttribute("subTotal");
+		request.getSession().removeAttribute("desconto");
+		request.getSession().removeAttribute("utilizar");
+		//PrePedidoVendaServlet.pedidoVenda = new PedidoVenda();
+		PedidoVendaSession session = new PedidoVendaSession();
+		PreOrcamentoServlet.pedidoVenda = session.loadInitialParameters();
+		EditarOrcamentoServlet.pv = new PedidoVenda();
+
+		String nextJSP = "/listarOrcamentos.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
         dispatcher.forward(request, response);
 	}
@@ -49,7 +61,8 @@ public class ListarOrcamentoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
+	
 	}
 
 }
