@@ -65,6 +65,7 @@ public class PedidoVendaDAO extends DAO {
 	private String SQL_COUNT_PEDIDOS = "select distinct count(numero) quantidade from pedidovenda where status = 1;";
 	private String SQL_SUM_ALL_VALUES = "select sum(valorTotal) soma from pedidovenda where status = 1 and situacao = 'Faturado';";
 	private String SQL_DELETE_PRODUCT_PEDIDO = "delete from produto_pedidovenda WHERE idpedido = ?;";
+	private String SQL_OBTAIN_8_REGISTER = "select * from pedidovenda order by numero desc limit 8;";
 
 	public void invoice(PedidoVenda pv) {
 
@@ -373,6 +374,50 @@ public class PedidoVendaDAO extends DAO {
 			conectar();
 
 			PreparedStatement ps = db.getConnection().prepareStatement(SQL_SELECT);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				Cliente c = new Cliente();
+				c.setId(rs.getLong("cliente"));
+				c = cdao.obtain(c);
+
+				Funcionario f = new Funcionario();
+				f.setId(rs.getLong("vendedor"));
+				f = fdao.obtain(f);
+
+				CondicaoPagamento cp = new CondicaoPagamento();
+				cp.setId(rs.getInt("condPag"));
+				cp = cpdao.obtain(cp);
+
+				PedidoVenda pv = new PedidoVenda(rs.getLong("numero"), rs.getBoolean("orcamento"),
+						rs.getDate("dataabertura"), rs.getDate("datafechamento"), c, cp, f,
+						selectProduct(rs.getLong("numero")), rs.getString("situacao"), rs.getDouble("valortotal"),
+						rs.getDouble("valorsubtotal"), rs.getDouble("desconto"), rs.getBoolean("status"),
+						rs.getInt("numero_pontos"));
+				l.add(pv);
+			}
+
+			desconectar();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return l;
+	}
+
+	public List<PedidoVenda> selectPedidos() {
+
+		ClienteDAO cdao = new ClienteDAO();
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		CondicaoPagamentoDAO cpdao = new CondicaoPagamentoDAO();
+
+		List<PedidoVenda> l = new ArrayList<PedidoVenda>();
+
+		try {
+
+			conectar();
+
+			PreparedStatement ps = db.getConnection().prepareStatement(SQL_OBTAIN_8_REGISTER);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -822,9 +867,9 @@ public class PedidoVendaDAO extends DAO {
 	public long obtainChaveAcesso() {
 
 		Random r = new Random();
-		long i =  r.nextLong();
-		if( i < 0) {
-			i = i *-1;
+		long i = r.nextLong();
+		if (i < 0) {
+			i = i * -1;
 		}
 		return i;
 
@@ -924,7 +969,6 @@ public class PedidoVendaDAO extends DAO {
 
 		return retorno;
 	}
-	
 
 	public void deleteProductPedido(PedidoVenda pv) {
 
@@ -938,6 +982,5 @@ public class PedidoVendaDAO extends DAO {
 			e.printStackTrace();
 		}
 	}
-
 
 }

@@ -23,6 +23,8 @@ public class PedidoVendaSession {
 		}
 		return 0;
 	}
+	
+	
 
 	public double sumAllValues() {
 
@@ -112,6 +114,16 @@ public class PedidoVendaSession {
 		return l;
 	}
 
+	public List<PedidoVenda> listLastRegisters() {
+
+		try {
+			return dao.selectPedidos();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public PedidoVenda obtain(PedidoVenda pv) {
 		PedidoVenda retPv = null;
 		try {

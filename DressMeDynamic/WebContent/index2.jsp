@@ -279,7 +279,7 @@
 				<div class="section__content section__content--p20">
 					<div class="container-fluid">
 						<div class="row">
-							<div class="col-lg-9">
+							<div class="col-lg-12">
 								<!-- RECENT REPORT 2-->
 								<div class="au-card recent-report">
 									<div class="au-card-inner">
@@ -312,51 +312,6 @@
 									</div>
 								</div>
 								<!-- END RECENT REPORT 2             -->
-							</div>
-							<div class="col-lg-3">
-								<div
-									class="au-card au-card--bg-blue au-card-top-countries m-b-30">
-									<div class="au-card-inner">
-										<div class="table-responsive">
-											<table class="table table-top-countries">
-												<tbody>
-													<tr>
-														<td>Venda 1</td>
-														<td class="text-right">$128,265.62</td>
-													</tr>
-													<tr>
-														<td>Venda 2</td>
-														<td class="text-right">$68,784.13</td>
-													</tr>
-													<tr>
-														<td>Venda 3</td>
-														<td class="text-right">$46,399.22</td>
-													</tr>
-													<tr>
-														<td>Venda 4</td>
-														<td class="text-right">$35,364.90</td>
-													</tr>
-													<tr>
-														<td>Venda 5</td>
-														<td class="text-right">$20,366.96</td>
-													</tr>
-													<tr>
-														<td>Venda 6</td>
-														<td class="text-right">$20,366.96</td>
-													</tr>
-													<tr>
-														<td>Venda 7</td>
-														<td class="text-right">$20,366.96</td>
-													</tr>
-													<tr>
-														<td>Venda 8</td>
-														<td class="text-right">$20,366.96</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>

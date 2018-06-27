@@ -75,7 +75,7 @@
 							</span>
 						</a>
 							<ul class="list-unstyled navbar__sub-list js-sub-list">
-								<li><a href="#"> <i class="fas fa-pencil-square-o"></i>Orçamento
+								<li><a href="ListarOrcamentoServlet"> <i class="fas fa-pencil-square-o"></i>Orçamento
 								</a></li>
 								<li><a href="ListarPedidoVendaServlet"> <i
 										class="fas fa-shopping-cart"></i>Pedido de Venda
@@ -83,7 +83,7 @@
 								<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
 										Fiscal
 								</a></li>
-								<li><a href="#"> <i class="fas fa-file"></i>Relatórios
+								<li><a href="GeraCSVServlet"> <i class="fas fa-file"></i>Relatórios
 								</a></li>
 							</ul></li>
 						<li><a href="#"> <i class="fas fa-download"></i>Compras
@@ -178,7 +178,7 @@
 							<img src="images/icon/avatar-big-01.jpg" alt="Bad Taco" />
 						</div>
 						<h4 class="name">Bad Taco</h4>
-						<a href="#">Sair</a>
+						<a href="login.html">Sair</a>
 					</div>
 					<nav class="navbar-sidebar2">
 						<ul class="list-unstyled navbar__list">
@@ -191,7 +191,7 @@
 								</span>
 							</a>
 								<ul class="list-unstyled navbar__sub-list js-sub-list">
-									<li><a href="#"> <i class="fas fa-pencil-square-o"></i>Orçamento
+									<li><a href="ListarOrcamentoServlet"> <i class="fas fa-pencil-square-o"></i>Orçamento
 									</a></li>
 									<li><a href="ListarPedidoVendaServlet"> <i
 											class="fas fa-shopping-cart"></i>Pedido de Venda
@@ -199,7 +199,7 @@
 									<li><a href="ListarNotasFiscais"> <i class="fas fa-print"></i>Nota
 											Fiscal
 									</a></li>
-									<li><a href="#"> <i class="fas fa-file"></i>Relatórios
+									<li><a href="GeraCSVServlet"> <i class="fas fa-file"></i>Relatórios
 									</a></li>
 								</ul></li>
 							<li><a href="#"> <i class="fas fa-download"></i>Compras

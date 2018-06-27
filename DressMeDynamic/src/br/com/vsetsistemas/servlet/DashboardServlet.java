@@ -38,12 +38,15 @@ public class DashboardServlet extends HttpServlet {
 		ClienteSession cs = new ClienteSession();
 		List<PedidoVenda> listaPedidos = null;
 		listaPedidos = ps.listAll();
-		
+		List<PedidoVenda> listaUltimos = null;
+		listaPedidos = ps.listLastRegisters();
+
 		request.getSession().setAttribute("clientes", cs.countClientes());
 		request.getSession().setAttribute("pedidos", ps.countPedidoVendas());
 		request.getSession().setAttribute("pedidosMes",ps.countPedidoVendasMes());
 		request.getSession().setAttribute("total", ps.sumAllValues());
 		request.getSession().setAttribute("listaPedidos", listaPedidos);
+		request.getSession().setAttribute("listaUltimos", listaUltimos);
 		
 		String nextJSP = "/index2.jsp";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
